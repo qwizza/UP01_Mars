@@ -10,16 +10,17 @@ namespace YPMarsLib
 {
     public class UserPgRepository : IUserRepository
     {
-        private readonly string connectionString_ = "Host=localhost;Username=postgres;Password=123;Database=MarsFactoryDB";
-
-        public UserPgRepository()
-        {
-        }
+        private readonly string connectionString_ = "Host=localhost;Username=postgres;Password=123456;Database=MarsFactoryDB";
 
         public UserPgRepository(string connectionString)
         {
             connectionString_ = connectionString;
         }
+
+        public UserPgRepository()
+        {
+        }
+
         public bool AuthenticateUser(string login, string password)
         {
             var user = GetUserByLogin(login);
@@ -63,7 +64,52 @@ namespace YPMarsLib
 
             return user;
         }
-        private string HashPassword(string password) 
+        public bool AddUser(User user)
+        {
+            string query = "INSERT INTO users (login, password_hash, full_name, department, role) " +
+                       "VALUES (@login, @password_hash, @full_name, @department, @role)";
+
+            try
+            {
+                using (var connection = new NpgsqlConnection(connectionString_))
+                {
+                    connection.Open();
+                    using (var cmd = new NpgsqlCommand(query, connection))
+                    {
+                        cmd.Parameters.AddWithValue("login", user.Login);
+                        cmd.Parameters.AddWithValue("password_hash", user.PasswordHash);
+                        cmd.Parameters.AddWithValue("full_name", user.FullName);
+                        cmd.Parameters.AddWithValue("department", user.Department);
+                        cmd.Parameters.AddWithValue("role", user.Role.ToString());
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        return rowsAffected > 0;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public bool CheckIfUserExists(string login)
+        {
+            string query = "SELECT COUNT(1) FROM users WHERE login = @login";
+
+            using (var connection = new NpgsqlConnection(connectionString_))
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand(query, connection))
+                {
+                    cmd.Parameters.AddWithValue("login", login);
+
+                    long count = (long)cmd.ExecuteScalar();
+                    return count > 0;
+                }
+            }
+        }
+
+        public static string HashPassword(string password) 
         {
             using (var sha256 = SHA256.Create())
             {

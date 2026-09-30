@@ -11,12 +11,27 @@ namespace YPMarsLib
         public string Login { get; set; }
         public string PasswordHash { get; set; }
         public string FullName { get; set; }
+        public string Department { get; set; }
         public UserRole Role { get; set; }
-        public enum UserRole 
+
+        // Пустой конструктор (нужен для десериализации и т.п.)
+        public User() { }
+
+        // Конструктор для создания нового пользователя
+        public User(string login, string passwordHash, UserRole role, string fullName, string department = null)
+        {
+            Login = login;
+            PasswordHash = passwordHash;
+            Role = role;
+            FullName = fullName;
+            Department = department;
+        }
+
+        public enum UserRole
         {
             SuperUser,
-            Manage_Sale,
-            Warehouser
+            ManagerSale,
+            Warehouse
         }
     }
 }

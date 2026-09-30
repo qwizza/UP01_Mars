@@ -43,7 +43,7 @@
             // 
             this.tbLogin.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tbLogin.Location = new System.Drawing.Point(131, 108);
-            this.tbLogin.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbLogin.Margin = new System.Windows.Forms.Padding(4);
             this.tbLogin.Name = "tbLogin";
             this.tbLogin.Size = new System.Drawing.Size(268, 29);
             this.tbLogin.TabIndex = 0;
@@ -52,7 +52,7 @@
             // 
             this.tbPassword.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tbPassword.Location = new System.Drawing.Point(131, 167);
-            this.tbPassword.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tbPassword.Margin = new System.Windows.Forms.Padding(4);
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.Size = new System.Drawing.Size(268, 29);
             this.tbPassword.TabIndex = 1;
@@ -62,7 +62,7 @@
             // 
             this.HeadName.AutoSize = true;
             this.HeadName.Font = new System.Drawing.Font("Times New Roman", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.HeadName.Location = new System.Drawing.Point(112, 27);
+            this.HeadName.Location = new System.Drawing.Point(135, 27);
             this.HeadName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.HeadName.Name = "HeadName";
             this.HeadName.Size = new System.Drawing.Size(161, 31);
@@ -96,7 +96,7 @@
             this.Imput.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.Imput.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Imput.Location = new System.Drawing.Point(36, 229);
-            this.Imput.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Imput.Margin = new System.Windows.Forms.Padding(4);
             this.Imput.Name = "Imput";
             this.Imput.Size = new System.Drawing.Size(157, 36);
             this.Imput.TabIndex = 5;
@@ -109,7 +109,7 @@
             this.Cancel.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.Cancel.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Cancel.Location = new System.Drawing.Point(243, 229);
-            this.Cancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Cancel.Margin = new System.Windows.Forms.Padding(4);
             this.Cancel.Name = "Cancel";
             this.Cancel.Size = new System.Drawing.Size(157, 36);
             this.Cancel.TabIndex = 6;
@@ -124,7 +124,7 @@
             this.ToggleButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ToggleButton.Image = ((System.Drawing.Image)(resources.GetObject("ToggleButton.Image")));
             this.ToggleButton.Location = new System.Drawing.Point(361, 171);
-            this.ToggleButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.ToggleButton.Margin = new System.Windows.Forms.Padding(4);
             this.ToggleButton.Name = "ToggleButton";
             this.ToggleButton.Size = new System.Drawing.Size(32, 27);
             this.ToggleButton.TabIndex = 7;
@@ -147,7 +147,7 @@
             this.Controls.Add(this.tbLogin);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AuthForm";

@@ -48,3 +48,5 @@ C:\Users\itearzyouworld\source\mars\YPMars\YPMars\obj\Debug\YPMars.csproj.CoreCo
 C:\Users\itearzyouworld\source\mars\YPMars\YPMars\obj\Debug\YPMars.csproj.Up2Date
 C:\Users\itearzyouworld\source\mars\YPMars\YPMars\obj\Debug\YPMars.exe
 C:\Users\itearzyouworld\source\mars\YPMars\YPMars\obj\Debug\YPMars.pdb
+C:\Users\itearzyouworld\source\mars\YPMars\YPMars\obj\Debug\YPMars.exe.config
+C:\Users\itearzyouworld\source\mars\YPMars\YPMars\obj\Debug\YPMars.RegistrForm.resources

@@ -21,6 +21,17 @@ namespace YPMars
             InitializeComponent();
             loader_ = loader;
             currentUser_ = currentUser;
+
+            if (currentUser_.Role != User.UserRole.SuperUser)
+            {
+                RegistrButton.Visible = false; 
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            RegistrForm registrForm = new RegistrForm(loader_, currentUser_);
+            registrForm.Show();
         }
     }
 }

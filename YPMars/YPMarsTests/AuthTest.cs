@@ -53,13 +53,13 @@ namespace YPMarsTests
                 {
                     Login = "petrov_a",
                     FullName = "Петров Алексей Сергеевич",
-                    Role = User.UserRole.Warehouser 
+                    Role = User.UserRole.Warehouse
                 });
             IUserRepository repository = mock.Object;
             User user = repository.GetUserByLogin("petrov_a");
             Assert.IsNotNull(user);
             Assert.AreEqual("Петров Алексей Сергеевич", user.FullName);
-            Assert.AreEqual(User.UserRole.Warehouser, user.Role);
+            Assert.AreEqual(User.UserRole.Warehouse, user.Role);
         }
 
         //Тест валидатора длины и алфавита пароля
@@ -68,7 +68,7 @@ namespace YPMarsTests
         public void Password_Short()
         {
             string password = "12345";
-            var result = AuthValidator.ValidatePassword(password);
+            var result = Validator.ValidatePassword(password);
             Assert.IsFalse(result.IsValid);
             Assert.AreEqual("Длина пароля должна составлять не менее 8 символов (текущая длина: 5)", result.Message);
         }
@@ -77,7 +77,7 @@ namespace YPMarsTests
         public void Password_Spaces()
         {
             string password = "Pass 123!";
-            var result = AuthValidator.ValidatePassword(password);
+            var result = Validator.ValidatePassword(password);
             Assert.IsFalse(result.IsValid);
             Assert.AreEqual("Пароль содержит недопустимые символы или пробелы. Разрешены латинские и русские буквы, цифры и спецсимволы (!@#$%^&*_-)", result.Message);
         }
