@@ -52,7 +52,6 @@ namespace YPMarsLib
                         {
                             user = new User
                             {
-                                // Читаем значения по именам колонок из PostgreSQL
                                 Login = reader["login"].ToString(),
                                 PasswordHash = reader["password_hash"].ToString(),
                                 Role = (User.UserRole)Enum.Parse(typeof(User.UserRole), reader["role"].ToString())

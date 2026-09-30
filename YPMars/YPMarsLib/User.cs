@@ -13,11 +13,8 @@ namespace YPMarsLib
         public string FullName { get; set; }
         public string Department { get; set; }
         public UserRole Role { get; set; }
-
-        // Пустой конструктор (нужен для десериализации и т.п.)
         public User() { }
 
-        // Конструктор для создания нового пользователя
         public User(string login, string passwordHash, UserRole role, string fullName, string department = null)
         {
             Login = login;
