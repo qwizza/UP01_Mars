@@ -36,7 +36,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.Imput = new System.Windows.Forms.Button();
             this.Cancel = new System.Windows.Forms.Button();
-            this.ToggleButten = new System.Windows.Forms.Button();
+            this.ToggleButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tbLogin
@@ -54,6 +54,7 @@
             this.tbPassword.Name = "tbPassword";
             this.tbPassword.Size = new System.Drawing.Size(202, 29);
             this.tbPassword.TabIndex = 1;
+            this.tbPassword.UseSystemPasswordChar = true;
             // 
             // HeadName
             // 
@@ -95,6 +96,7 @@
             this.Imput.TabIndex = 5;
             this.Imput.Text = "Войти";
             this.Imput.UseVisualStyleBackColor = false;
+            this.Imput.Click += new System.EventHandler(this.Imput_Click);
             // 
             // Cancel
             // 
@@ -106,18 +108,20 @@
             this.Cancel.TabIndex = 6;
             this.Cancel.Text = "Отмена";
             this.Cancel.UseVisualStyleBackColor = false;
+            this.Cancel.Click += new System.EventHandler(this.Cancel_Click);
             // 
-            // ToggleButten
+            // ToggleButton
             // 
-            this.ToggleButten.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ToggleButten.FlatAppearance.BorderSize = 0;
-            this.ToggleButten.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ToggleButten.Image = ((System.Drawing.Image)(resources.GetObject("ToggleButten.Image")));
-            this.ToggleButten.Location = new System.Drawing.Point(273, 140);
-            this.ToggleButten.Name = "ToggleButten";
-            this.ToggleButten.Size = new System.Drawing.Size(24, 22);
-            this.ToggleButten.TabIndex = 7;
-            this.ToggleButten.UseVisualStyleBackColor = false;
+            this.ToggleButton.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.ToggleButton.FlatAppearance.BorderSize = 0;
+            this.ToggleButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ToggleButton.Image = ((System.Drawing.Image)(resources.GetObject("ToggleButton.Image")));
+            this.ToggleButton.Location = new System.Drawing.Point(274, 136);
+            this.ToggleButton.Name = "ToggleButton";
+            this.ToggleButton.Size = new System.Drawing.Size(24, 22);
+            this.ToggleButton.TabIndex = 7;
+            this.ToggleButton.UseVisualStyleBackColor = false;
+            this.ToggleButton.Click += new System.EventHandler(this.ToggleButton_Click);
             // 
             // AuthForm
             // 
@@ -125,7 +129,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(329, 237);
-            this.Controls.Add(this.ToggleButten);
+            this.Controls.Add(this.ToggleButton);
             this.Controls.Add(this.Cancel);
             this.Controls.Add(this.Imput);
             this.Controls.Add(this.label3);
@@ -150,6 +154,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button Imput;
         private System.Windows.Forms.Button Cancel;
-        private System.Windows.Forms.Button ToggleButten;
+        private System.Windows.Forms.Button ToggleButton;
     }
 }

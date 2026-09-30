@@ -10,7 +10,12 @@ namespace YPMarsLib
 {
     public class UserPgRepository : IUserRepository
     {
-        private readonly string connectionString_;
+        private readonly string connectionString_ = "Host=localhost;Username=postgres;Password=123;Database=MarsFactoryDB";
+
+        public UserPgRepository()
+        {
+        }
+
         public UserPgRepository(string connectionString)
         {
             connectionString_ = connectionString;
@@ -26,11 +31,12 @@ namespace YPMarsLib
             string hashedPassword = HashPassword(password);
             return user.PasswordHash == hashedPassword;
         }
+       
 
         public User GetUserByLogin(string login)
         {
             User user = null;
-            string query = "SELECT login, password_hash, full_name, role FROM users WHERE login = @login";
+            string query = "SELECT * FROM users WHERE login = @login;";
 
             using (var connection = new NpgsqlConnection(connectionString_))
             {
@@ -45,10 +51,10 @@ namespace YPMarsLib
                         {
                             user = new User
                             {
-                                Login = reader.GetString(0),
-                                PasswordHash = reader.GetString(1),
-                                FullName = reader.GetString(2),
-                                Role = (User.UserRole)Enum.Parse(typeof(User.UserRole), reader.GetString(3))
+                                // Читаем значения по именам колонок из PostgreSQL
+                                Login = reader["login"].ToString(),
+                                PasswordHash = reader["password_hash"].ToString(),
+                                Role = (User.UserRole)Enum.Parse(typeof(User.UserRole), reader["role"].ToString())
                             };
                         }
                     }

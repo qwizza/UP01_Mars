@@ -104,12 +104,6 @@
     <Compile Include="UserPgRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\YPMars\YPMars.csproj">
-      <Project>{07650edd-7bbb-4be4-aac9-2d264324c32d}</Project>
-      <Name>YPMars</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
