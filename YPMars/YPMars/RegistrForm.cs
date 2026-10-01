@@ -58,7 +58,7 @@ namespace YPMars
                               MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 RegPasswordTb.Clear();
                 RegConfirmPasswordTb.Clear();
-                RegPasswordTb.Focus(); // Возвращаем курсор в поле ввода пароля
+                RegPasswordTb.Focus();
                 return;
             }
 
