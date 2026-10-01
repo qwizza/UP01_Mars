@@ -419,11 +419,11 @@ FodyWeavers.xsd
 .history/
 
 # Built Visual Studio Code Extensions
-*.vsix 
+*.vsix
 
 # Windows Installer files from build outputs
 *.cab
 *.msi
 *.msix
 *.msm
-*.msp
+*.msp 
