@@ -428,3 +428,9 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+# Новые файлы кэша и базы данных Visual Studio
+*.slnx.sqlite
+DocumentLayout.json
+VSWorkspaceState.json
+*.vsidx
+*.wsuo
