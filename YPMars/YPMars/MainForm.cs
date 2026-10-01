@@ -28,10 +28,10 @@ namespace YPMars
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void RegistrButton_Click(object sender, EventArgs e)
         {
             RegistrForm registrForm = new RegistrForm(loader_, currentUser_);
             registrForm.Show();
-        }
+        }       
     }
 }

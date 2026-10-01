@@ -50,18 +50,16 @@
             // RegConfirmPasswordTb
             // 
             this.RegConfirmPasswordTb.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.RegConfirmPasswordTb.Location = new System.Drawing.Point(284, 183);
-            this.RegConfirmPasswordTb.Margin = new System.Windows.Forms.Padding(4);
+            this.RegConfirmPasswordTb.Location = new System.Drawing.Point(213, 149);
             this.RegConfirmPasswordTb.Name = "RegConfirmPasswordTb";
-            this.RegConfirmPasswordTb.Size = new System.Drawing.Size(253, 29);
+            this.RegConfirmPasswordTb.Size = new System.Drawing.Size(191, 29);
             this.RegConfirmPasswordTb.TabIndex = 34;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.Location = new System.Drawing.Point(13, 187);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(10, 152);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(197, 21);
             this.label1.TabIndex = 33;
@@ -73,10 +71,9 @@
             this.ToggleButton.FlatAppearance.BorderSize = 0;
             this.ToggleButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ToggleButton.Image = ((System.Drawing.Image)(resources.GetObject("ToggleButton.Image")));
-            this.ToggleButton.Location = new System.Drawing.Point(502, 138);
-            this.ToggleButton.Margin = new System.Windows.Forms.Padding(4);
+            this.ToggleButton.Location = new System.Drawing.Point(376, 112);
             this.ToggleButton.Name = "ToggleButton";
-            this.ToggleButton.Size = new System.Drawing.Size(32, 27);
+            this.ToggleButton.Size = new System.Drawing.Size(24, 22);
             this.ToggleButton.TabIndex = 32;
             this.ToggleButton.UseVisualStyleBackColor = false;
             this.ToggleButton.Click += new System.EventHandler(this.ToggleButton_Click);
@@ -85,10 +82,9 @@
             // 
             this.RegCancelButten.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.RegCancelButten.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.RegCancelButten.Location = new System.Drawing.Point(296, 401);
-            this.RegCancelButten.Margin = new System.Windows.Forms.Padding(4);
+            this.RegCancelButten.Location = new System.Drawing.Point(222, 326);
             this.RegCancelButten.Name = "RegCancelButten";
-            this.RegCancelButten.Size = new System.Drawing.Size(196, 36);
+            this.RegCancelButten.Size = new System.Drawing.Size(147, 29);
             this.RegCancelButten.TabIndex = 31;
             this.RegCancelButten.Text = "Отмена";
             this.RegCancelButten.UseVisualStyleBackColor = false;
@@ -98,10 +94,9 @@
             // 
             this.RegImputButten.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.RegImputButten.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.RegImputButten.Location = new System.Drawing.Point(55, 401);
-            this.RegImputButten.Margin = new System.Windows.Forms.Padding(4);
+            this.RegImputButten.Location = new System.Drawing.Point(41, 326);
             this.RegImputButten.Name = "RegImputButten";
-            this.RegImputButten.Size = new System.Drawing.Size(196, 36);
+            this.RegImputButten.Size = new System.Drawing.Size(147, 29);
             this.RegImputButten.TabIndex = 30;
             this.RegImputButten.Text = "Зарегистрироваться";
             this.RegImputButten.UseVisualStyleBackColor = false;
@@ -111,36 +106,32 @@
             // 
             this.RegRoleCb.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.RegRoleCb.FormattingEnabled = true;
-            this.RegRoleCb.Location = new System.Drawing.Point(284, 336);
-            this.RegRoleCb.Margin = new System.Windows.Forms.Padding(4);
+            this.RegRoleCb.Location = new System.Drawing.Point(213, 273);
             this.RegRoleCb.Name = "RegRoleCb";
-            this.RegRoleCb.Size = new System.Drawing.Size(253, 29);
+            this.RegRoleCb.Size = new System.Drawing.Size(191, 29);
             this.RegRoleCb.TabIndex = 29;
             // 
             // RegDepartmentTb
             // 
             this.RegDepartmentTb.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.RegDepartmentTb.Location = new System.Drawing.Point(284, 282);
-            this.RegDepartmentTb.Margin = new System.Windows.Forms.Padding(4);
+            this.RegDepartmentTb.Location = new System.Drawing.Point(213, 229);
             this.RegDepartmentTb.Name = "RegDepartmentTb";
-            this.RegDepartmentTb.Size = new System.Drawing.Size(253, 29);
+            this.RegDepartmentTb.Size = new System.Drawing.Size(191, 29);
             this.RegDepartmentTb.TabIndex = 28;
             // 
             // RegFullNameTb
             // 
             this.RegFullNameTb.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.RegFullNameTb.Location = new System.Drawing.Point(284, 232);
-            this.RegFullNameTb.Margin = new System.Windows.Forms.Padding(4);
+            this.RegFullNameTb.Location = new System.Drawing.Point(213, 188);
             this.RegFullNameTb.Name = "RegFullNameTb";
-            this.RegFullNameTb.Size = new System.Drawing.Size(253, 29);
+            this.RegFullNameTb.Size = new System.Drawing.Size(191, 29);
             this.RegFullNameTb.TabIndex = 27;
             // 
             // departmentLab
             // 
             this.departmentLab.AutoSize = true;
             this.departmentLab.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.departmentLab.Location = new System.Drawing.Point(13, 285);
-            this.departmentLab.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.departmentLab.Location = new System.Drawing.Point(10, 232);
             this.departmentLab.Name = "departmentLab";
             this.departmentLab.Size = new System.Drawing.Size(101, 21);
             this.departmentLab.TabIndex = 26;
@@ -150,8 +141,7 @@
             // 
             this.RoleLab.AutoSize = true;
             this.RoleLab.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.RoleLab.Location = new System.Drawing.Point(16, 339);
-            this.RoleLab.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.RoleLab.Location = new System.Drawing.Point(12, 275);
             this.RoleLab.Name = "RoleLab";
             this.RoleLab.Size = new System.Drawing.Size(49, 21);
             this.RoleLab.TabIndex = 25;
@@ -161,8 +151,7 @@
             // 
             this.fullnameLab.AutoSize = true;
             this.fullnameLab.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.fullnameLab.Location = new System.Drawing.Point(13, 236);
-            this.fullnameLab.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.fullnameLab.Location = new System.Drawing.Point(10, 192);
             this.fullnameLab.Name = "fullnameLab";
             this.fullnameLab.Size = new System.Drawing.Size(51, 21);
             this.fullnameLab.TabIndex = 24;
@@ -172,8 +161,7 @@
             // 
             this.passwordLab.AutoSize = true;
             this.passwordLab.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.passwordLab.Location = new System.Drawing.Point(13, 138);
-            this.passwordLab.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.passwordLab.Location = new System.Drawing.Point(10, 112);
             this.passwordLab.Name = "passwordLab";
             this.passwordLab.Size = new System.Drawing.Size(69, 21);
             this.passwordLab.TabIndex = 23;
@@ -183,8 +171,7 @@
             // 
             this.loginLab.AutoSize = true;
             this.loginLab.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.loginLab.Location = new System.Drawing.Point(13, 91);
-            this.loginLab.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.loginLab.Location = new System.Drawing.Point(10, 74);
             this.loginLab.Name = "loginLab";
             this.loginLab.Size = new System.Drawing.Size(61, 21);
             this.loginLab.TabIndex = 22;
@@ -193,18 +180,16 @@
             // RegPasswordTb
             // 
             this.RegPasswordTb.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.RegPasswordTb.Location = new System.Drawing.Point(284, 134);
-            this.RegPasswordTb.Margin = new System.Windows.Forms.Padding(4);
+            this.RegPasswordTb.Location = new System.Drawing.Point(213, 109);
             this.RegPasswordTb.Name = "RegPasswordTb";
-            this.RegPasswordTb.Size = new System.Drawing.Size(253, 29);
+            this.RegPasswordTb.Size = new System.Drawing.Size(191, 29);
             this.RegPasswordTb.TabIndex = 21;
             // 
             // HeadName
             // 
             this.HeadName.AutoSize = true;
             this.HeadName.Font = new System.Drawing.Font("Times New Roman", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.HeadName.Location = new System.Drawing.Point(190, 6);
-            this.HeadName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.HeadName.Location = new System.Drawing.Point(142, 5);
             this.HeadName.Name = "HeadName";
             this.HeadName.Size = new System.Drawing.Size(156, 31);
             this.HeadName.TabIndex = 20;
@@ -213,18 +198,17 @@
             // RegLoginTb
             // 
             this.RegLoginTb.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.RegLoginTb.Location = new System.Drawing.Point(284, 87);
-            this.RegLoginTb.Margin = new System.Windows.Forms.Padding(4);
+            this.RegLoginTb.Location = new System.Drawing.Point(213, 71);
             this.RegLoginTb.Name = "RegLoginTb";
-            this.RegLoginTb.Size = new System.Drawing.Size(253, 29);
+            this.RegLoginTb.Size = new System.Drawing.Size(191, 29);
             this.RegLoginTb.TabIndex = 19;
             // 
             // RegistrForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.ClientSize = new System.Drawing.Size(560, 450);
+            this.ClientSize = new System.Drawing.Size(420, 366);
             this.Controls.Add(this.RegConfirmPasswordTb);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ToggleButton);
@@ -243,9 +227,11 @@
             this.Controls.Add(this.RegLoginTb);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "RegistrForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RegistrForm";
             this.ResumeLayout(false);
             this.PerformLayout();

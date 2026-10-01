@@ -57,7 +57,7 @@ namespace YPMars
             MainForm mainForm = new MainForm(loader_, currentUser_);
             mainForm.Show();
 
-            this.Hide(); // Скрываем форму входа
+            this.Hide(); 
         }
 
         private void Cancel_Click(object sender, EventArgs e)
