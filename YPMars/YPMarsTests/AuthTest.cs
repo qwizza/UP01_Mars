@@ -68,7 +68,7 @@ namespace YPMarsTests
         public void Password_Short()
         {
             string password = "12345";
-            var result = AuthValidator.ValidatePassword(password);
+            var result = Validator.ValidatePassword(password);
             Assert.IsFalse(result.IsValid);
             Assert.AreEqual("Длина пароля должна составлять не менее 8 символов (текущая длина: 5)", result.Message);
         }
@@ -77,7 +77,7 @@ namespace YPMarsTests
         public void Password_Spaces()
         {
             string password = "Pass 123!";
-            var result = AuthValidator.ValidatePassword(password);
+            var result = Validator.ValidatePassword(password);
             Assert.IsFalse(result.IsValid);
             Assert.AreEqual("Пароль содержит недопустимые символы или пробелы. Разрешены латинские и русские буквы, цифры и спецсимволы (!@#$%^&*_-)", result.Message);
         }

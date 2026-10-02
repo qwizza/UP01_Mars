@@ -10,5 +10,7 @@ namespace YPMarsLib
     {
         bool AuthenticateUser(string login, string password);
         User GetUserByLogin(string login);
+        bool AddUser(User user);
+        bool CheckIfUserExists(string login);
     }
 }
