@@ -7,8 +7,16 @@ using System.Threading.Tasks;
 
 namespace YPMarsLib
 {
-    public class AuthValidator
+    public class Validator
     {
+        public static (bool IsValid, string Message) ValidateLogin(string login)
+        {
+            if (string.IsNullOrWhiteSpace(login))
+            {
+                return (false, "Поле \"Логин\" не может быть пустым");
+            }
+            return (true, string.Empty);
+        }
         public static (bool IsValid, string Message) ValidatePassword(string password)
         {
             if (string.IsNullOrEmpty(password) || password.Length < 8)
@@ -20,6 +28,24 @@ namespace YPMarsLib
             if (!Regex.IsMatch(password, pattern))
             {
                 return (false, "Пароль содержит недопустимые символы или пробелы. Разрешены латинские и русские буквы, цифры и спецсимволы (!@#$%^&*_-)");
+            }
+            return (true, string.Empty);
+        }
+        public static (bool IsValid, string Message) ValidateRegistration(string login, string password, string fullName, User.UserRole? role)
+        {
+            var loginResult = ValidateLogin(login);
+            if (!loginResult.IsValid)
+            {
+                return loginResult;
+            }
+            var passwordResult = ValidatePassword(password);
+            if (!passwordResult.IsValid)
+            {
+                return passwordResult;
+            }
+            if (role == null)
+            {
+                return (false, "Необходимо выбрать роль пользователя из списка");
             }
             return (true, string.Empty);
         }
