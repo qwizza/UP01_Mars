@@ -10,7 +10,7 @@ namespace YPMarsLib
 {
     public class UserPgRepository : IUserRepository
     {
-        private readonly string connectionString_ = "Host=localhost;Username=postgres;Password=123;Database=MarsFactoryDB";
+        private readonly string connectionString_ = "Host=localhost;Username=postgres;Password=123456;Database=MarsFactoryDB";
 
         public UserPgRepository()
         {

@@ -97,6 +97,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IOrderListRepository.cs" />
+    <Compile Include="OrderDateFilter.cs" />
+    <Compile Include="OrderItem.cs" />
+    <Compile Include="OrderListRepository.cs" />
+    <Compile Include="OrderRow.cs" />
+    <Compile Include="OrderStatus.cs" />
     <Compile Include="Validator.cs" />
     <Compile Include="IUserRepository.cs" />
     <Compile Include="User.cs" />

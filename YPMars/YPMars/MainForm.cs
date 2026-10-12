@@ -33,5 +33,11 @@ namespace YPMars
             RegistrForm registrForm = new RegistrForm(loader_, currentUser_);
             registrForm.Show();
         }
+
+        private void OrderListLLab_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            OrderListForm orderListForm = new OrderListForm(loader_, currentUser_);
+            orderListForm.Show();
+        }
     }
 }
