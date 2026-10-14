@@ -112,7 +112,7 @@ namespace YPMarsLib
                     connection.Open();
                     using (var cmd = new NpgsqlCommand(query, connection))
                     {
-                        cmd.Parameters.AddWithValue("status", newStatus.ToString());
+                        cmd.Parameters.AddWithValue("status", (int)newStatus);
                         cmd.Parameters.AddWithValue("contractNumber", contractNumber);
 
                         int rowsAffected = cmd.ExecuteNonQuery();
