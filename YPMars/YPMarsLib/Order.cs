@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace YPMarsLib
 {
-    public class OrderRow : INotifyPropertyChanged
+    public class Order : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

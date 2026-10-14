@@ -8,8 +8,8 @@ namespace YPMarsLib
 {
     public interface IOrderListRepository
     {
-        List<OrderRow> GetOrdersByPeriod(OrderDateFilter filter, out string error);
-        List<OrderRow> GetAllOrders(out string error);
+        List<Order> GetOrdersByPeriod(OrderDateFilter filter, out string error);
+        List<Order> GetAllOrders(out string error);
         string UpdateOrderStatus(string contractNumber, OrderStatus newStatus);
     }
 }

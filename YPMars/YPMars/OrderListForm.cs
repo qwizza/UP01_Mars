@@ -62,7 +62,7 @@ namespace YPMars
                 EndDate = EndDateDatetimePick.Value.Date.AddDays(1).AddTicks(-1)
             };
 
-            List<OrderRow> orders = _orderManager.GetOrders(filterDate, out string error);
+            List<Order> orders = _orderManager.GetOrders(filterDate, out string error);
 
             if (!string.IsNullOrEmpty(error))
             {
@@ -111,7 +111,7 @@ namespace YPMars
                 return;
             }
 
-            var selectedOrder = (OrderRow)OrdersDataGridView.SelectedRows[0].DataBoundItem;
+            var selectedOrder = (Order)OrdersDataGridView.SelectedRows[0].DataBoundItem;
             var selectedPair = (KeyValuePair<OrderStatus, string>)StatusCoboBox.SelectedItem;
             OrderStatus newStatus = selectedPair.Key;
 

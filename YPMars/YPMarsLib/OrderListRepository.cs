@@ -13,10 +13,10 @@ namespace YPMarsLib
         {
         }
 
-        public List<OrderRow> GetOrdersByPeriod(OrderDateFilter filterDate, out string error)
+        public List<Order> GetOrdersByPeriod(OrderDateFilter filterDate, out string error)
         {
             error = string.Empty;
-            var ordersDict = new Dictionary<int, OrderRow>();
+            var ordersDict = new Dictionary<int, Order>();
 
             // Заменено n.id на n.item_id для соединения с номенклатурой
             string query = @"
@@ -55,7 +55,7 @@ namespace YPMarsLib
 
                                 if (!ordersDict.TryGetValue(orderId, out var orderRow))
                                 {
-                                    orderRow = new OrderRow
+                                    orderRow = new Order
                                     {
                                         ContractNumber = reader["contract_number"].ToString(),
                                         OrderDate = Convert.ToDateTime(reader["order_date"]),
@@ -85,13 +85,13 @@ namespace YPMarsLib
             catch (Exception ex)
             {
                 error = "Ошибка при загрузке списка заказов: " + ex.Message;
-                return new List<OrderRow>();
+                return new List<Order>();
             }
 
-            return new List<OrderRow>(ordersDict.Values);
+            return new List<Order>(ordersDict.Values);
         }
 
-        public List<OrderRow> GetAllOrders(out string error)
+        public List<Order> GetAllOrders(out string error)
         {
             var filter = new OrderDateFilter
             {

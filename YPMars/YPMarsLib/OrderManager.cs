@@ -9,14 +9,14 @@ namespace YPMarsLib
     public class OrderManager
     {
         private readonly IOrderListRepository _repository;
-        private readonly List<OrderRow> _currentOrders = new List<OrderRow>();
+        private readonly List<Order> _currentOrders = new List<Order>();
 
         public OrderManager(IOrderListRepository repository)
         {
             _repository = repository;
         }
 
-        public List<OrderRow> GetOrders(OrderDateFilter filterDate, out string error)
+        public List<Order> GetOrders(OrderDateFilter filterDate, out string error)
         {
             var orders = _repository.GetOrdersByPeriod(filterDate, out error);
             if (string.IsNullOrEmpty(error))
@@ -47,7 +47,7 @@ namespace YPMarsLib
             return sum;
         }
 
-        public decimal CalculateTotalSum(List<OrderRow> orders)
+        public decimal CalculateTotalSum(List<Order> orders)
         {
             decimal sum = 0;
             foreach (var ord in orders)

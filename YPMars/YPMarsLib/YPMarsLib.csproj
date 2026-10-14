@@ -103,7 +103,7 @@
     <Compile Include="OrderItem.cs" />
     <Compile Include="OrderListRepository.cs" />
     <Compile Include="OrderManager.cs" />
-    <Compile Include="OrderRow.cs" />
+    <Compile Include="Order.cs" />
     <Compile Include="OrderStatus.cs" />
     <Compile Include="Validator.cs" />
     <Compile Include="IUserRepository.cs" />
