@@ -100,11 +100,13 @@
     <Compile Include="ContractNumberGenerator.cs" />
     <Compile Include="DBConnection.cs" />
     <Compile Include="IOrderListRepository.cs" />
+    <Compile Include="IOrderRepository.cs" />
     <Compile Include="OrderDateFilter.cs" />
     <Compile Include="OrderItem.cs" />
     <Compile Include="OrderListRepository.cs" />
     <Compile Include="OrderManager.cs" />
     <Compile Include="Order.cs" />
+    <Compile Include="OrderRepository.cs" />
     <Compile Include="OrderStatus.cs" />
     <Compile Include="OrderValidator.cs" />
     <Compile Include="Validator.cs" />
