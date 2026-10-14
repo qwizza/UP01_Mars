@@ -164,6 +164,45 @@ namespace YPMarsTests
             Assert.AreEqual(2, totalCount);
             Assert.AreEqual(440000.00m, totalSum);
         }
+        // 3. Тестирование формирования модели данных на основании таблиц БД
+        [TestMethod]
+        public void OrderListRepository_DataReaderMapping_GroupsItemsAndCalculatesTotalCorrectly()
+        {
+            var mockRepo = new Mock<IOrderListRepository>();
+
+            var expectedOrders = new List<Order>
+            {
+                new Order
+                {
+                    ContractNumber = "ДГ-2024-001",
+                    CounterpartyName = "ООО «Ромашка»",
+                    Status = OrderStatus.New,
+                    OrderDate = new DateTime(2024, 10, 1),
+                    PlannedShipmentDate = new DateTime(2024, 10, 15),
+                    Items = new List<OrderItem>
+                    {
+                        new OrderItem { NomenclatureName = "Позиция А", Quantity = 100, UnitPrice = 2500.00m },
+                        new OrderItem { NomenclatureName = "Позиция Б", Quantity = 50, UnitPrice = 1800.00m }
+                    }
+                }
+            };
+            string error = string.Empty;
+            mockRepo.Setup(repo => repo.GetOrdersByPeriod(It.IsAny<OrderDateFilter>(), out error))
+                    .Returns(expectedOrders);
+            IOrderListRepository repository = mockRepo.Object;
+            var result = repository.GetOrdersByPeriod(new OrderDateFilter(), out error);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(1, result.Count);
+            var order = result[0];
+            Assert.AreEqual("ДГ-2024-001", order.ContractNumber);
+            Assert.AreEqual(2, order.PositionCount);
+            Assert.IsNotNull(order.Items);
+            Assert.AreEqual(2, order.Items.Count);
+            Assert.AreEqual("Позиция А", order.Items[0].NomenclatureName);
+            Assert.AreEqual(2500.00m, order.Items[0].UnitPrice);
+            Assert.AreEqual("Позиция Б", order.Items[1].NomenclatureName);
+            Assert.AreEqual(1800.00m, order.Items[1].UnitPrice);
+            Assert.AreEqual(340000.00m, order.TotalAmount);
+        }
     }
-}
 }
