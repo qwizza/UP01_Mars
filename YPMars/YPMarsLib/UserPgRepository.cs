@@ -10,15 +10,8 @@ namespace YPMarsLib
 {
     public class UserPgRepository : IUserRepository
     {
-        private readonly string connectionString_ = "Host=localhost;Username=postgres;Password=123456;Database=MarsFactoryDB";
-
         public UserPgRepository()
         {
-        }
-
-        public UserPgRepository(string connectionString)
-        {
-            connectionString_ = connectionString;
         }
         public bool AuthenticateUser(string login, string password)
         {
@@ -38,7 +31,7 @@ namespace YPMarsLib
             User user = null;
             string query = "SELECT * FROM users WHERE login = @login;";
 
-            using (var connection = new NpgsqlConnection(connectionString_))
+            using (var connection = DBConnection.GetConnection())
             {
                 connection.Open();
                 using (var cmd = new NpgsqlCommand(query, connection))
@@ -70,7 +63,7 @@ namespace YPMarsLib
 
             try
             {
-                using (var connection = new NpgsqlConnection(connectionString_))
+                using (var connection = DBConnection.GetConnection())
                 {
                     connection.Open();
                     using (var cmd = new NpgsqlCommand(query, connection))
@@ -95,7 +88,7 @@ namespace YPMarsLib
         {
             string query = "SELECT COUNT(1) FROM users WHERE login = @login";
 
-            using (var connection = new NpgsqlConnection(connectionString_))
+            using (var connection = DBConnection.GetConnection())
             {
                 connection.Open();
                 using (var cmd = new NpgsqlCommand(query, connection))

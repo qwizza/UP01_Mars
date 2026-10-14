@@ -9,13 +9,11 @@ namespace YPMarsLib
 {
     public class OrderListRepository : IOrderListRepository
     {
-        private readonly string _connectionString = "Host=localhost;Username=postgres;Password=123456;Database=MarsFactoryDB";
-
         public OrderListRepository()
         {
         }
 
-        public List<OrderRow> GetOrdersByPeriod(OrderDateFilter filter, out string error)
+        public List<OrderRow> GetOrdersByPeriod(OrderDateFilter filterDate, out string error)
         {
             error = string.Empty;
             var ordersDict = new Dictionary<int, OrderRow>();
@@ -41,13 +39,13 @@ namespace YPMarsLib
 
             try
             {
-                using (var connection = new NpgsqlConnection(_connectionString))
+                using (var connection = DBConnection.GetConnection())
                 {
                     connection.Open();
                     using (var cmd = new NpgsqlCommand(query, connection))
                     {
-                        cmd.Parameters.AddWithValue("startDate", filter.StartDate);
-                        cmd.Parameters.AddWithValue("endDate", filter.EndDate);
+                        cmd.Parameters.AddWithValue("startDate", filterDate.StartDate);
+                        cmd.Parameters.AddWithValue("endDate", filterDate.EndDate);
 
                         using (var reader = cmd.ExecuteReader())
                         {
@@ -109,7 +107,7 @@ namespace YPMarsLib
 
             try
             {
-                using (var connection = new NpgsqlConnection(_connectionString))
+                using (var connection = DBConnection.GetConnection())
                 {
                     connection.Open();
                     using (var cmd = new NpgsqlCommand(query, connection))
