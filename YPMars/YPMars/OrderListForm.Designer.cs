@@ -18,7 +18,7 @@
         private System.Windows.Forms.Label TotalSumLabel;
 
         // Таблица заказов
-        private System.Windows.Forms.DataGridView OrdersDataGrideView;
+        private System.Windows.Forms.DataGridView OrdersDataGridView;
 
         // Нижняя панель смены статуса
         private System.Windows.Forms.Panel panelBottom;
@@ -47,14 +47,14 @@
             this.panelSummary = new System.Windows.Forms.Panel();
             this.TotalCountLabel = new System.Windows.Forms.Label();
             this.TotalSumLabel = new System.Windows.Forms.Label();
-            this.OrdersDataGrideView = new System.Windows.Forms.DataGridView();
+            this.OrdersDataGridView = new System.Windows.Forms.DataGridView();
             this.panelBottom = new System.Windows.Forms.Panel();
             this.StatusLabel = new System.Windows.Forms.Label();
             this.StatusCoboBox = new System.Windows.Forms.ComboBox();
             this.ChangeStatusButton = new System.Windows.Forms.Button();
             this.panelTop.SuspendLayout();
             this.panelSummary.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.OrdersDataGrideView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.OrdersDataGridView)).BeginInit();
             this.panelBottom.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -161,34 +161,34 @@
             this.TotalSumLabel.TabIndex = 1;
             this.TotalSumLabel.Text = "Итоговая сумма: 0,00 руб.";
             // 
-            // OrdersDataGrideView
+            // OrdersDataGridView
             // 
-            this.OrdersDataGrideView.AllowUserToAddRows = false;
-            this.OrdersDataGrideView.AllowUserToDeleteRows = false;
+            this.OrdersDataGridView.AllowUserToAddRows = false;
+            this.OrdersDataGridView.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
-            this.OrdersDataGrideView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.OrdersDataGrideView.BackgroundColor = System.Drawing.Color.White;
-            this.OrdersDataGrideView.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.OrdersDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.OrdersDataGridView.BackgroundColor = System.Drawing.Color.White;
+            this.OrdersDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F);
             dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
             dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.OrdersDataGrideView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
-            this.OrdersDataGrideView.ColumnHeadersHeight = 32;
-            this.OrdersDataGrideView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.OrdersDataGrideView.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.OrdersDataGrideView.Location = new System.Drawing.Point(0, 90);
-            this.OrdersDataGrideView.MultiSelect = false;
-            this.OrdersDataGrideView.Name = "OrdersDataGrideView";
-            this.OrdersDataGrideView.ReadOnly = true;
-            this.OrdersDataGrideView.RowHeadersVisible = false;
-            this.OrdersDataGrideView.RowTemplate.Height = 26;
-            this.OrdersDataGrideView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.OrdersDataGrideView.Size = new System.Drawing.Size(1100, 505);
-            this.OrdersDataGrideView.TabIndex = 0;
+            this.OrdersDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.OrdersDataGridView.ColumnHeadersHeight = 32;
+            this.OrdersDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.OrdersDataGridView.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.OrdersDataGridView.Location = new System.Drawing.Point(0, 90);
+            this.OrdersDataGridView.MultiSelect = false;
+            this.OrdersDataGridView.Name = "OrdersDataGridView";
+            this.OrdersDataGridView.ReadOnly = true;
+            this.OrdersDataGridView.RowHeadersVisible = false;
+            this.OrdersDataGridView.RowTemplate.Height = 26;
+            this.OrdersDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.OrdersDataGridView.Size = new System.Drawing.Size(1100, 505);
+            this.OrdersDataGridView.TabIndex = 0;
             // 
             // panelBottom
             // 
@@ -244,7 +244,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1100, 650);
-            this.Controls.Add(this.OrdersDataGrideView);
+            this.Controls.Add(this.OrdersDataGridView);
             this.Controls.Add(this.panelBottom);
             this.Controls.Add(this.panelSummary);
             this.Controls.Add(this.panelTop);
@@ -258,7 +258,7 @@
             this.panelTop.PerformLayout();
             this.panelSummary.ResumeLayout(false);
             this.panelSummary.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.OrdersDataGrideView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.OrdersDataGridView)).EndInit();
             this.panelBottom.ResumeLayout(false);
             this.panelBottom.PerformLayout();
             this.ResumeLayout(false);
