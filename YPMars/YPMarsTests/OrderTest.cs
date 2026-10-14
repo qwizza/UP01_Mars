@@ -73,7 +73,6 @@ namespace YPMarsTests
 
             Assert.IsNotNull(result);
             Assert.AreEqual(3, result.Count);
-            // Проверяем, что свойства модели заполняются корректно
             Assert.AreEqual(1, result[0].PositionCount);
             Assert.AreEqual(1000m, result[0].TotalAmount);
             Assert.AreEqual(0, result[2].PositionCount);
@@ -102,5 +101,69 @@ namespace YPMarsTests
             Assert.AreEqual(0, result.Count);
             Assert.IsTrue(string.IsNullOrEmpty(error));
         }
+
+        // 2. Тестирование агрегации суммы и позиций в Order / OrderManager
+        // Сценарий 1: Заказ с двумя позициями (проверка вычисляемых свойств)
+        [TestMethod]
+        public void Order_TwoItems_CalculatesPositionCountAndTotalAmountCorrectly()
+        {
+            var order = new Order
+            {
+                ContractNumber = "ДГ-2024-001",
+                Items = new List<OrderItem>
+                {
+                    new OrderItem { NomenclatureName = "Позиция А", Quantity = 100, UnitPrice = 2500.00m },
+                    new OrderItem { NomenclatureName = "Позиция Б", Quantity = 50, UnitPrice = 1800.00m }
+                }
+            };
+            Assert.AreEqual(2, order.PositionCount);
+            Assert.AreEqual(2, order.Items.Count);
+            Assert.AreEqual("Позиция А", order.Items[0].NomenclatureName);
+            Assert.AreEqual("Позиция Б", order.Items[1].NomenclatureName);
+            Assert.AreEqual(340000.00m, order.TotalAmount);
+        }
+
+        // Сценарий 2: Заказ без позиций
+        [TestMethod]
+        public void OrderRow_EmptyItems_ReturnsZeroValues()
+        {
+            var order = new Order
+            {
+                ContractNumber = "ДГ-2024-002",
+                Items = new List<OrderItem>()
+            };
+            Assert.AreEqual(0, order.PositionCount);
+            Assert.IsNotNull(order.Items);
+            Assert.AreEqual(0, order.Items.Count);
+            Assert.AreEqual(0.00m, order.TotalAmount);
+        }
+
+        // Сценарий 3: Подсчёт общих итогов по всем выведенным заказам через OrderManager
+        [TestMethod]
+        public void OrderManager_CalculateTotals_ReturnsCorrectAggregates()
+        {
+            var mockRepo = new Mock<IOrderListRepository>();
+            var orders = new List<Order>
+            {
+                new Order
+                {
+                    Items = new List<OrderItem> { new OrderItem { Quantity = 1, UnitPrice = 340000.00m } }
+                },
+                new Order
+                {
+                    Items = new List<OrderItem> { new OrderItem { Quantity = 1, UnitPrice = 100000.00m } }
+                }
+            };
+            string error = string.Empty;
+            mockRepo.Setup(repo => repo.GetOrdersByPeriod(It.IsAny<OrderDateFilter>(), out error))
+                    .Returns(orders);
+            var manager = new OrderManager(mockRepo.Object);
+            var loadedOrders = manager.GetOrders(new OrderDateFilter(), out error);
+            int totalCount = manager.GetTotalCount();
+            decimal totalSum = manager.GetTotalSum();
+            Assert.AreEqual(2, totalCount);
+            Assert.AreEqual(440000.00m, totalSum);
+        }
     }
+}
 }
