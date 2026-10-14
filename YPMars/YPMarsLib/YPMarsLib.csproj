@@ -99,6 +99,7 @@
   <ItemGroup>
     <Compile Include="ContractNumberGenerator.cs" />
     <Compile Include="DBConnection.cs" />
+    <Compile Include="Directory.cs" />
     <Compile Include="IOrderListRepository.cs" />
     <Compile Include="IOrderRepository.cs" />
     <Compile Include="OrderDateFilter.cs" />
