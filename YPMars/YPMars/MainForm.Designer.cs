@@ -38,7 +38,7 @@
             this.RegistrButton.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.RegistrButton.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.RegistrButton.Location = new System.Drawing.Point(9, 9);
-            this.RegistrButton.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.RegistrButton.Margin = new System.Windows.Forms.Padding(2);
             this.RegistrButton.Name = "RegistrButton";
             this.RegistrButton.Size = new System.Drawing.Size(169, 36);
             this.RegistrButton.TabIndex = 1;
