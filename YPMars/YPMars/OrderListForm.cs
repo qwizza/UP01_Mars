@@ -35,7 +35,7 @@ namespace YPMars
             RefreshButton.Click += RefreshButton_Click;
             ChangeStatusButton.Click += ChangeStatusButton_Click;
             this.Load += OrderListForm_Load;
-            NewOrderButton.Visible = (_currentUser.Role == User.UserRole.Manage_Sale);
+            NewOrderButton.Visible = (_currentUser.Role == User.UserRole.ManageSale);
             NewOrderButton.Click += NewOrderButton_Click;
         }
 

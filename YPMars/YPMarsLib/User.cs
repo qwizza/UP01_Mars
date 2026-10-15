@@ -25,7 +25,7 @@ namespace YPMarsLib
         public enum UserRole 
         {
             SuperUser,
-            Manage_Sale,
+            ManageSale,
             Warehouser
         }
     }
