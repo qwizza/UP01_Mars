@@ -25,6 +25,7 @@
         private System.Windows.Forms.Label StatusLabel;
         private System.Windows.Forms.ComboBox StatusCoboBox;
         private System.Windows.Forms.Button ChangeStatusButton;
+        private System.Windows.Forms.Button NewOrderButton;
 
         protected override void Dispose(bool disposing)
         {
@@ -44,6 +45,7 @@
             this.EndDateLabel = new System.Windows.Forms.Label();
             this.EndDateDatetimePick = new System.Windows.Forms.DateTimePicker();
             this.RefreshButton = new System.Windows.Forms.Button();
+            this.NewOrderButton = new System.Windows.Forms.Button();
             this.panelSummary = new System.Windows.Forms.Panel();
             this.TotalCountLabel = new System.Windows.Forms.Label();
             this.TotalSumLabel = new System.Windows.Forms.Label();
@@ -67,6 +69,7 @@
             this.panelTop.Controls.Add(this.EndDateLabel);
             this.panelTop.Controls.Add(this.EndDateDatetimePick);
             this.panelTop.Controls.Add(this.RefreshButton);
+            this.panelTop.Controls.Add(this.NewOrderButton);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
@@ -126,6 +129,22 @@
             this.RefreshButton.TabIndex = 4;
             this.RefreshButton.Text = "Обновить";
             this.RefreshButton.UseVisualStyleBackColor = false;
+            // 
+            // NewOrderButton
+            // 
+            this.NewOrderButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(150)))), ((int)(((byte)(90)))));
+            this.NewOrderButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.NewOrderButton.FlatAppearance.BorderSize = 0;
+            this.NewOrderButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.NewOrderButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
+            this.NewOrderButton.ForeColor = System.Drawing.Color.White;
+            this.NewOrderButton.Location = new System.Drawing.Point(740, 13);
+            this.NewOrderButton.Name = "NewOrderButton";
+            this.NewOrderButton.Size = new System.Drawing.Size(160, 28);
+            this.NewOrderButton.TabIndex = 5;
+            this.NewOrderButton.Text = "Новый заказ";
+            this.NewOrderButton.UseVisualStyleBackColor = false;
+            this.NewOrderButton.Click += new System.EventHandler(this.NewOrderButton_Click);
             // 
             // panelSummary
             // 
