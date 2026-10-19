@@ -233,6 +233,7 @@
             this.OrdersDataGridView.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
             this.OrdersDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.OrdersDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.OrdersDataGridView.BackgroundColor = System.Drawing.SystemColors.InactiveBorder;
             this.OrdersDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -323,7 +324,6 @@
             this.Text = "Главная форма - Управление заказами (Завод МАРС)";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.panelHeader.ResumeLayout(false);
-            this.panelHeader.PerformLayout();
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();
             this.panelSummary.ResumeLayout(false);
@@ -332,6 +332,7 @@
             this.panelBottom.ResumeLayout(false);
             this.panelBottom.PerformLayout();
             this.ResumeLayout(false);
+
         }
     }
 }

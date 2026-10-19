@@ -123,6 +123,7 @@
             this.ItemsDataGridView.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
             this.ItemsDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.ItemsDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.ItemsDataGridView.BackgroundColor = System.Drawing.SystemColors.InactiveBorder;
             this.ItemsDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -156,7 +157,6 @@
             this.colName.HeaderText = "Наименование";
             this.colName.Name = "colName";
             this.colName.ReadOnly = true;
-            this.colName.Width = 330;
             // 
             // colQuantity
             // 
@@ -164,7 +164,6 @@
             this.colQuantity.HeaderText = "Количество";
             this.colQuantity.Name = "colQuantity";
             this.colQuantity.ReadOnly = true;
-            this.colQuantity.Width = 120;
             // 
             // colUnitPrice
             // 
@@ -172,7 +171,6 @@
             this.colUnitPrice.HeaderText = "Цена за ед.";
             this.colUnitPrice.Name = "colUnitPrice";
             this.colUnitPrice.ReadOnly = true;
-            this.colUnitPrice.Width = 150;
             // 
             // colTotalPrice
             // 
@@ -180,7 +178,6 @@
             this.colTotalPrice.HeaderText = "Сумма";
             this.colTotalPrice.Name = "colTotalPrice";
             this.colTotalPrice.ReadOnly = true;
-            this.colTotalPrice.Width = 160;
             // 
             // OrderDetailsForm
             // 

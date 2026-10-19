@@ -34,9 +34,9 @@
             this.HeadName = new System.Windows.Forms.Label();
             this.login = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.Imput = new System.Windows.Forms.Button();
             this.Cancel = new System.Windows.Forms.Button();
             this.ToggleButton = new System.Windows.Forms.Button();
+            this.Imput = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tbLogin
@@ -86,18 +86,6 @@
             this.label3.TabIndex = 4;
             this.label3.Text = "Пароль";
             // 
-            // Imput
-            // 
-            this.Imput.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.Imput.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.Imput.Location = new System.Drawing.Point(27, 186);
-            this.Imput.Name = "Imput";
-            this.Imput.Size = new System.Drawing.Size(118, 29);
-            this.Imput.TabIndex = 5;
-            this.Imput.Text = "Войти";
-            this.Imput.UseVisualStyleBackColor = false;
-            this.Imput.Click += new System.EventHandler(this.Imput_Click);
-            // 
             // Cancel
             // 
             this.Cancel.BackColor = System.Drawing.SystemColors.ActiveCaption;
@@ -123,6 +111,18 @@
             this.ToggleButton.UseVisualStyleBackColor = false;
             this.ToggleButton.Click += new System.EventHandler(this.ToggleButton_Click);
             // 
+            // Imput
+            // 
+            this.Imput.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.Imput.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Imput.Location = new System.Drawing.Point(27, 186);
+            this.Imput.Name = "Imput";
+            this.Imput.Size = new System.Drawing.Size(118, 29);
+            this.Imput.TabIndex = 5;
+            this.Imput.Text = "Войти";
+            this.Imput.UseVisualStyleBackColor = false;
+            this.Imput.Click += new System.EventHandler(this.Imput_Click);
+            // 
             // AuthForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -142,7 +142,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AuthForm";
-            this.Text = "В";
+            this.Text = "Авторизация";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -155,8 +155,8 @@
         private System.Windows.Forms.Label HeadName;
         private System.Windows.Forms.Label login;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button Imput;
         private System.Windows.Forms.Button Cancel;
         private System.Windows.Forms.Button ToggleButton;
+        private System.Windows.Forms.Button Imput;
     }
 }
