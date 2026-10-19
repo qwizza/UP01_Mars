@@ -65,6 +65,7 @@
             this.NomenclatureComboBox.Name = "NomenclatureComboBox";
             this.NomenclatureComboBox.Size = new System.Drawing.Size(240, 28);
             this.NomenclatureComboBox.TabIndex = 1;
+            this.NomenclatureComboBox.SelectedIndexChanged += new System.EventHandler(this.NomenclatureComboBox_SelectedIndexChanged);
             // 
             // QtyLabel
             // 
@@ -145,6 +146,7 @@
             this.SaveButton.TabIndex = 0;
             this.SaveButton.Text = "Сохранить";
             this.SaveButton.UseVisualStyleBackColor = false;
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
             // CancelButton
             // 
@@ -160,6 +162,7 @@
             this.CancelButton.TabIndex = 1;
             this.CancelButton.Text = "Отмена";
             this.CancelButton.UseVisualStyleBackColor = false;
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
             // ItemEditForm
             // 

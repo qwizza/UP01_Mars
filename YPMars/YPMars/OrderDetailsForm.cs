@@ -68,7 +68,6 @@ namespace YPMars
                 if (success)
                 {
                     LoadOrderItems();
-                    DialogResult = DialogResult.OK;
                 }
                 else
                 {
@@ -88,7 +87,7 @@ namespace YPMars
             var selectedItem = ItemsDataGridView.SelectedRows[0].DataBoundItem as OrderItem;
             if (selectedItem == null) return;
 
-            var editForm = new ItemEditForm(selectedItem);
+            var editForm = new ItemEditForm(new OrderListRepository(), selectedItem);
             if (editForm.ShowDialog() == DialogResult.OK)
             {
                 string error;
@@ -98,7 +97,6 @@ namespace YPMars
                 if (success)
                 {
                     LoadOrderItems();
-                    DialogResult = DialogResult.OK;
                 }
                 else
                 {
@@ -131,7 +129,6 @@ namespace YPMars
                 if (success)
                 {
                     LoadOrderItems();
-                    DialogResult = DialogResult.OK;
                 }
                 else
                 {

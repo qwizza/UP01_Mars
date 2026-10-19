@@ -16,5 +16,6 @@ namespace YPMarsLib
         bool AddOrderItem(string contractNumber, OrderItem item, out string error);
         bool UpdateOrderItem(string contractNumber, OrderItem item, out string error);
         bool DeleteOrderItem(string contractNumber, OrderItem item, out string error);
+        Dictionary<string, decimal> GetNomenclaturePrices(out string error);
     }
 }

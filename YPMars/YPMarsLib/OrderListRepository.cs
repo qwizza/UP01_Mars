@@ -190,12 +190,12 @@ namespace YPMarsLib
                 return false;
             }
 
-            string query = @"
-                INSERT INTO order_items (order_id, item_id, quantity, unit_price)
-                SELECT o.order_id, n.item_id, @quantity, n.price
-                FROM customer_orders o
-                CROSS JOIN nomenclature n
-                WHERE o.contract_number = @contractNumber AND n.name = @nomenclatureName;";
+                        string query = @"
+        INSERT INTO order_items (order_id, item_id, quantity, unit_price)
+        SELECT o.order_id, n.item_id, @quantity, @unitPrice
+        FROM customer_orders o
+        CROSS JOIN nomenclature n
+        WHERE o.contract_number = @contractNumber AND n.name = @nomenclatureName;";
 
             try
             {
@@ -206,6 +206,7 @@ namespace YPMarsLib
                     {
                         cmd.Parameters.AddWithValue("contractNumber", contractNumber);
                         cmd.Parameters.AddWithValue("quantity", item.Quantity);
+                        cmd.Parameters.AddWithValue("unitPrice", item.UnitPrice); // Передаем цену
                         cmd.Parameters.AddWithValue("nomenclatureName", item.NomenclatureName);
 
                         int rowsAffected = cmd.ExecuteNonQuery();
@@ -303,6 +304,60 @@ namespace YPMarsLib
                 error = "Ошибка базы данных при удалении позиции: " + ex.Message;
                 return false;
             }
+        }
+
+        public Dictionary<string, decimal> GetNomenclaturePrices(out string error)
+        {
+            error = string.Empty;
+            var nomenclaturePrices = new Dictionary<string, decimal>();
+
+            // Сначала заполняем всю номенклатуру из справочника с базовой ценой 0
+            string queryNom = "SELECT name FROM nomenclature ORDER BY name;";
+
+            // И подтягиваем реальные цены из истории заказов (order_items), если они там есть
+            string queryPrices = @"
+        SELECT n.name, oi.unit_price 
+        FROM nomenclature n
+        JOIN order_items oi ON n.item_id = oi.item_id;";
+
+            try
+            {
+                using (var connection = DBConnection.GetConnection())
+                {
+                    connection.Open();
+
+                    using (var cmd = new NpgsqlCommand(queryNom, connection))
+                    {
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                nomenclaturePrices[reader["name"].ToString()] = 0m;
+                            }
+                        }
+                    }
+
+                    using (var cmd = new NpgsqlCommand(queryPrices, connection))
+                    {
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                string name = reader["name"].ToString();
+                                decimal price = Convert.ToDecimal(reader["unit_price"]);
+                                nomenclaturePrices[name] = price; 
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                error = "Ошибка загрузки цен номенклатуры: " + ex.Message;
+                nomenclaturePrices.Clear();
+            }
+
+            return nomenclaturePrices;
         }
     }
 }
