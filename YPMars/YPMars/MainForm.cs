@@ -37,7 +37,7 @@ namespace YPMars
                 panelBottom.Visible = false;
             }
 
-            NewOrderButton.Visible = (currentUser_.Role != User.UserRole.SuperUser && currentUser_.Role != User.UserRole.ManageSale);
+            NewOrderButton.Visible = (currentUser_.Role == User.UserRole.ManageSale);
 
             RefreshButton.Click += RefreshButton_Click;
             ChangeStatusButton.Click += ChangeStatusButton_Click;
@@ -151,5 +151,7 @@ namespace YPMars
             RegistrForm registrForm = new RegistrForm(loader_, currentUser_);
             registrForm.Show();
         }
+
+        
     }
 }

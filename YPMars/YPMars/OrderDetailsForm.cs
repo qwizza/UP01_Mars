@@ -7,14 +7,54 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using YPMarsLib;
 
 namespace YPMars
 {
     public partial class OrderDetailsForm : Form
     {
-        public OrderDetailsForm()
+        private readonly Order order_;
+        private readonly OrderManager orderManager_;
+        public OrderDetailsForm(Order order, OrderManager orderManager)
         {
+            order_ = order;
+            orderManager_ = orderManager;
+
             InitializeComponent();
+            LoadOrderItems();
+        }
+        private void LoadOrderItems()
+        {
+            string error;
+            var items = orderManager_.GetOrderItems(order_.ContractNumber, out error);
+
+            if (!string.IsNullOrEmpty(error))
+            {
+                MessageBox.Show(error, "Ошибка загрузки", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            order_.Items = items;
+            ItemsDataGridView.DataSource = null;
+            ItemsDataGridView.DataSource = order_.Items;
+
+            UpdateSummary();
+        }
+        private void UpdateSummary()
+        {
+            if (order_.Items == null || order_.Items.Count == 0)
+            {
+                SummaryLabel.Text = "В заказе нет позиций. Итоговая сумма: 0,00 руб.";
+            }
+            else
+            {
+                decimal totalSum = 0;
+                foreach (var item in order_.Items)
+                {
+                    totalSum += item.Quantity * item.UnitPrice;
+                }
+                SummaryLabel.Text = $"Всего позиций: {order_.Items.Count}. Итоговая сумма: {totalSum.ToString("N2")} руб.";
+            }
         }
     }
 }
