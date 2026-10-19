@@ -64,27 +64,16 @@ namespace YPMarsLib
         }
 
         [DisplayName("План. отгрузка")]
-        public DateTime PlannedShipmentDate { get; set; }
+        public DateTime? PlannedShipmentDate { get; set; }  
 
         [Browsable(false)]
         public List<OrderItem> Items { get; set; } = new List<OrderItem>();
 
         [DisplayName("Кол-во позиций")]
-        public int PositionCount => Items.Count;
+        public int PositionCount => Items?.Count ?? 0;
 
         [DisplayName("Итоговая сумма")]
-        public decimal TotalAmount
-        {
-            get
-            {
-                decimal sum = 0;
-                foreach (var item in Items)
-                {
-                    sum += item.TotalPrice;
-                }
-                return sum;
-            }
-        }
+        public decimal TotalAmount => Items?.Sum(i => i.TotalPrice) ?? 0m;
 
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
