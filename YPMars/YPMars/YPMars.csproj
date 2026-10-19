@@ -108,11 +108,6 @@
     <Compile Include="AuthForm.Designer.cs">
       <DependentUpon>AuthForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="AuthForm1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AuthForm.resx</DependentUpon>
-    </Compile>
     <Compile Include="ItemEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
