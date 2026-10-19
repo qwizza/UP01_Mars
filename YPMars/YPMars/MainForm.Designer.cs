@@ -149,7 +149,7 @@
             // 
             // RefreshButton
             // 
-            this.RefreshButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.RefreshButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
             this.RefreshButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.RefreshButton.FlatAppearance.BorderSize = 0;
             this.RefreshButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -320,9 +320,10 @@
             this.MinimumSize = new System.Drawing.Size(900, 500);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Управление заказами (Завод МАРС)";
+            this.Text = "Главная форма - Управление заказами (Завод МАРС)";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.panelHeader.ResumeLayout(false);
+            this.panelHeader.PerformLayout();
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();
             this.panelSummary.ResumeLayout(false);
@@ -331,7 +332,6 @@
             this.panelBottom.ResumeLayout(false);
             this.panelBottom.PerformLayout();
             this.ResumeLayout(false);
-
         }
     }
 }

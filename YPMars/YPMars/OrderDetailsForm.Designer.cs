@@ -83,7 +83,6 @@
             this.AddItemButton.TabIndex = 0;
             this.AddItemButton.Text = "Добавить позицию";
             this.AddItemButton.UseVisualStyleBackColor = false;
-            this.AddItemButton.Click += new System.EventHandler(this.AddItemButton_Click);
             // 
             // EditItemButton
             // 
