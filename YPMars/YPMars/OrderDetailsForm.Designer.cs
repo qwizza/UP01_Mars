@@ -115,6 +115,7 @@
             this.DeleteItemButton.TabIndex = 2;
             this.DeleteItemButton.Text = "Удалить позицию";
             this.DeleteItemButton.UseVisualStyleBackColor = false;
+            this.DeleteItemButton.Click += new System.EventHandler(this.DeleteItemButton_Click);
             // 
             // ItemsDataGridView
             // 

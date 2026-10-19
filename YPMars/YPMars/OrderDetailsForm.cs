@@ -106,5 +106,38 @@ namespace YPMars
                 }
             }
         }
+
+        private void DeleteItemButton_Click(object sender, EventArgs e)
+        {
+            if (ItemsDataGridView.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Выберите позицию для удаления.", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var selectedItem = ItemsDataGridView.SelectedRows[0].DataBoundItem as OrderItem;
+            if (selectedItem == null) return;
+
+            var confirmResult = MessageBox.Show($"Вы действительно хотите удалить позицию \"{selectedItem.NomenclatureName}\"?",
+                                                "Подтверждение удаления",
+                                                MessageBoxButtons.YesNo,
+                                                MessageBoxIcon.Question);
+
+            if (confirmResult == DialogResult.Yes)
+            {
+                string error;
+                bool success = orderManager_.DeleteItemFromOrder(order_.ContractNumber, selectedItem, out error);
+
+                if (success)
+                {
+                    LoadOrderItems();
+                    DialogResult = DialogResult.OK;
+                }
+                else
+                {
+                    MessageBox.Show(error, "Ошибка удаления", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
     }
 }
