@@ -152,6 +152,37 @@ namespace YPMars
             registrForm.Show();
         }
 
-        
+        private void OpenOrderDetails()
+        {
+            if (OrdersDataGridView.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Выберите заказ в таблице для просмотра состава.", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var selectedOrder = OrdersDataGridView.SelectedRows[0].DataBoundItem as Order;
+            if (selectedOrder == null) return;
+
+            IOrderListRepository repository = new OrderListRepository();
+            var orderManager = new OrderManager(repository);
+
+            var detailsForm = new OrderDetailsForm(selectedOrder, orderManager);
+            if (detailsForm.ShowDialog(this) == DialogResult.OK)
+            {
+                LoadOrders();
+            }
+        }
+
+        private void OrderDetailsButton_Click(object sender, EventArgs e)
+        {
+            OpenOrderDetails();
+        }
+
+        private void OrdersDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            {
+                OpenOrderDetails();
+            }
+        }
     }
 }
