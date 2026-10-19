@@ -13,7 +13,7 @@ namespace YPMarsLib
 
         static DBConnection()
         {
-            _connectionString = "Host=localhost;Username=postgres;Password=123;Database=MarsFactoryDB"; 
+            _connectionString = "Host=localhost;Username=postgres;Password=123456;Database=MarsFactoryDB"; 
         }
         public static string ConnectionString
         {

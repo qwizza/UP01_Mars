@@ -142,7 +142,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AuthForm";
-            this.Text = "Авторизация";
+            this.Text = "В";
             this.ResumeLayout(false);
             this.PerformLayout();
 
