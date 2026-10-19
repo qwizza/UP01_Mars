@@ -14,6 +14,10 @@ namespace YPMars
     {
         public ItemEditForm()
         {
+        }
+
+        public ItemEditForm(YPMarsLib.OrderItem selectedItem)
+        {
             InitializeComponent();
         }
     }

@@ -99,6 +99,7 @@
             this.EditItemButton.TabIndex = 1;
             this.EditItemButton.Text = "Редактировать позицию";
             this.EditItemButton.UseVisualStyleBackColor = false;
+            this.EditItemButton.Click += new System.EventHandler(this.EditItemButton_Click);
             // 
             // DeleteItemButton
             // 

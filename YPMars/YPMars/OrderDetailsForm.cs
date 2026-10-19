@@ -76,5 +76,35 @@ namespace YPMars
                 }
             }
         }
+
+        private void EditItemButton_Click(object sender, EventArgs e)
+        {
+            if (ItemsDataGridView.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Выберите позицию для редактирования.", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var selectedItem = ItemsDataGridView.SelectedRows[0].DataBoundItem as OrderItem;
+            if (selectedItem == null) return;
+
+            var editForm = new ItemEditForm(selectedItem);
+            if (editForm.ShowDialog() == DialogResult.OK)
+            {
+                string error;
+                selectedItem.Quantity = editForm.Item.Quantity;
+                bool success = orderManager_.UpdateItemInOrder(order_.ContractNumber, selectedItem, out error);
+
+                if (success)
+                {
+                    LoadOrderItems();
+                    DialogResult = DialogResult.OK;
+                }
+                else
+                {
+                    MessageBox.Show(error, "Ошибка сохранения", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
     }
 }
