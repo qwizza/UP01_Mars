@@ -56,5 +56,25 @@ namespace YPMars
                 SummaryLabel.Text = $"Всего позиций: {order_.Items.Count}. Итоговая сумма: {totalSum.ToString("N2")} руб.";
             }
         }
+
+        private void AddItemButton_Click(object sender, EventArgs e)
+        {
+            var editForm = new ItemEditForm();
+            if (editForm.ShowDialog() == DialogResult.OK)
+            {
+                string error;
+                bool success = orderManager_.AddItemToOrder(order_.ContractNumber, editForm.Item, out error);
+
+                if (success)
+                {
+                    LoadOrderItems();
+                    DialogResult = DialogResult.OK;
+                }
+                else
+                {
+                    MessageBox.Show(error, "Ошибка добавления", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
     }
 }
