@@ -56,5 +56,25 @@ namespace YPMarsLib
             }
             return sum;
         }
+
+        public List<OrderItem> GetOrderItems(string contractNumber, out string error)
+        {
+            return _repository.GetOrderItemsByContract(contractNumber, out error);
+        }
+
+        public bool AddItemToOrder(string contractNumber, OrderItem item, out string error)
+        {
+            return _repository.AddOrderItem(contractNumber, item, out error);
+        }
+
+        public bool UpdateItemInOrder(string contractNumber, OrderItem item, out string error)
+        {
+            return _repository.UpdateOrderItem(contractNumber, item, out error);
+        }
+
+        public bool DeleteItemFromOrder(string contractNumber, OrderItem item, out string error)
+        {
+            return _repository.DeleteOrderItem(contractNumber, item, out error);
+        }
     }
 }
