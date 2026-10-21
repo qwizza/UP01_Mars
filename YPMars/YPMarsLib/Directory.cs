@@ -47,10 +47,6 @@ namespace YPMarsLib
             return list;
         }
 
-        /// <summary>
-        /// Цена за единицу по наименованию номенклатуры.
-        /// TODO: если в nomenclature нет колонки unit_price — заменить запрос.
-        /// </summary>
         public decimal GetUnitPrice(string nomenclatureName)
         {
             using (var connection = DBConnection.GetConnection())
@@ -68,6 +64,56 @@ namespace YPMarsLib
                     return Convert.ToDecimal(result);
                 }
             }
+        }
+
+        public List<string> SearchCounterparties(string query)
+        {
+            var list = new List<string>();
+            if (string.IsNullOrWhiteSpace(query)) return list;
+
+            using (var connection = DBConnection.GetConnection())
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand(
+                    "SELECT name FROM counterparties WHERE name ILIKE @q ORDER BY name LIMIT 20;",
+                    connection))
+                {
+                    cmd.Parameters.AddWithValue("q", $"%{query}%");
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(reader["name"].ToString());
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+
+        public List<string> SearchNomenclature(string query)
+        {
+            var list = new List<string>();
+            if (string.IsNullOrWhiteSpace(query)) return list;
+
+            using (var connection = DBConnection.GetConnection())
+            {
+                connection.Open();
+                using (var cmd = new NpgsqlCommand(
+                    "SELECT name FROM nomenclature WHERE name ILIKE @q ORDER BY name LIMIT 20;",
+                    connection))
+                {
+                    cmd.Parameters.AddWithValue("q", $"%{query}%");
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            list.Add(reader["name"].ToString());
+                        }
+                    }
+                }
+            }
+            return list;
         }
     }
 }

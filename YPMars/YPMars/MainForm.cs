@@ -18,6 +18,9 @@ namespace YPMars
         private User currentUser_;
         private OrderManager _orderManager;
 
+        private string _currentSortField = "OrderDate";
+        private bool _isAscending = false;
+
         public MainForm(UserPgRepository loader, User currentUser)
         {
             InitializeComponent();
@@ -28,14 +31,10 @@ namespace YPMars
             _orderManager = new OrderManager(repository);
 
             if (currentUser_.Role != User.UserRole.SuperUser)
-            {
                 RegistrButton.Visible = false;
-            }
 
             if (currentUser_.Role != User.UserRole.SuperUser && currentUser_.Role != User.UserRole.Warehouser)
-            {
                 panelBottom.Visible = false;
-            }
 
             NewOrderButton.Visible = (currentUser_.Role == User.UserRole.ManageSale);
 
@@ -44,6 +43,29 @@ namespace YPMars
             NewOrderButton.Click += NewOrderButton_Click;
             RegistrButton.Click += RegistrButton_Click;
             this.Load += MainForm_Load;
+
+            if (OrdersDataGridView.Columns["ContractNumber"] != null)
+                OrdersDataGridView.Columns["ContractNumber"].DataPropertyName = "ContractNumber";
+            if (OrdersDataGridView.Columns["OrderDate"] != null)
+                OrdersDataGridView.Columns["OrderDate"].DataPropertyName = "OrderDate";
+            if (OrdersDataGridView.Columns["Status"] != null)
+                OrdersDataGridView.Columns["Status"].DataPropertyName = "StatusText"; 
+            if (OrdersDataGridView.Columns["PlannedShipmentDate"] != null)
+                OrdersDataGridView.Columns["PlannedShipmentDate"].DataPropertyName = "PlannedShipmentDate";
+            if (OrdersDataGridView.Columns["CounterpartyName"] != null)
+                OrdersDataGridView.Columns["CounterpartyName"].DataPropertyName = "CounterpartyName";
+
+            foreach (DataGridViewColumn col in OrdersDataGridView.Columns)
+            {
+                col.SortMode = DataGridViewColumnSortMode.Programmatic;
+            }
+
+            OrdersDataGridView.ColumnHeaderMouseClick += OrdersDataGridView_ColumnHeaderMouseClick;
+            OrdersDataGridView.CellFormatting += OrdersDataGridView_CellFormatting;
+
+            var dir = new Directory();
+            cmbCounterparty.DataSource = dir.GetCounterparties();
+            cmbCounterparty.SelectedIndex = -1;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -55,11 +77,6 @@ namespace YPMars
             EndDateDatetimePick.Value = DateTime.Now;
 
             SetupStatusComboBox();
-            LoadOrders();
-        }
-
-        private void RefreshButton_Click(object sender, EventArgs e)
-        {
             LoadOrders();
         }
 
@@ -81,8 +98,78 @@ namespace YPMars
                 return;
             }
 
+            if (cmbCounterparty.SelectedIndex >= 0 && !string.IsNullOrWhiteSpace(cmbCounterparty.Text))
+            {
+                orders = orders.Where(o => o.CounterpartyName == cmbCounterparty.Text).ToList();
+            }
+
             OrdersDataGridView.DataSource = orders;
             UpdateFooter();
+        }
+
+        private void RefreshButton_Click(object sender, EventArgs e)
+        {
+            LoadOrders();
+        }
+
+        private void ApplyFilterButton_Click(object sender, EventArgs e)
+        {
+            LoadOrders();
+        }
+
+        private void OrdersDataGridView_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            string clickedColumn = OrdersDataGridView.Columns[e.ColumnIndex].DataPropertyName;
+
+            if (string.IsNullOrWhiteSpace(clickedColumn))
+                return;
+
+            if (_currentSortField == clickedColumn)
+            {
+                _isAscending = !_isAscending;
+            }
+            else
+            {
+                _currentSortField = clickedColumn;
+                _isAscending = true;
+            }
+
+            if (OrdersDataGridView.DataSource is List<Order> currentList)
+            {
+                List<Order> sortedList;
+                switch (_currentSortField)
+                {
+                    case "ContractNumber":
+                        sortedList = _isAscending ? currentList.OrderBy(o => o.ContractNumber).ToList() : currentList.OrderByDescending(o => o.ContractNumber).ToList();
+                        break;
+                    case "OrderDate":
+                        sortedList = _isAscending ? currentList.OrderBy(o => o.OrderDate).ToList() : currentList.OrderByDescending(o => o.OrderDate).ToList();
+                        break;
+                    case "StatusText":
+                        sortedList = _isAscending ? currentList.OrderBy(o => o.Status).ToList() : currentList.OrderByDescending(o => o.Status).ToList();
+                        break;
+                    case "PlannedShipmentDate":
+                        sortedList = _isAscending ? currentList.OrderBy(o => o.PlannedShipmentDate).ToList() : currentList.OrderByDescending(o => o.PlannedShipmentDate).ToList();
+                        break;
+                    default:
+                        sortedList = currentList;
+                        break;
+                }
+                OrdersDataGridView.DataSource = sortedList;
+            }
+        }
+
+        private void OrdersDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.Value is DateTime dateValue)
+            {
+                string colName = OrdersDataGridView.Columns[e.ColumnIndex].DataPropertyName;
+                if (colName == "OrderDate" || colName == "PlannedShipmentDate")
+                {
+                    e.Value = dateValue.ToString("dd.MM.yyyy");
+                    e.FormattingApplied = true;
+                }
+            }
         }
 
         private void SetupStatusComboBox()
@@ -128,6 +215,7 @@ namespace YPMars
             if (string.IsNullOrEmpty(error))
             {
                 selectedOrder.Status = newStatus;
+                OrdersDataGridView.Refresh();
                 UpdateFooter();
                 MessageBox.Show("Статус заказа успешно обновлён!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -180,9 +268,7 @@ namespace YPMars
 
         private void OrdersDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            {
-                OpenOrderDetails();
-            }
+            OpenOrderDetails();
         }
     }
 }

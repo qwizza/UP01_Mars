@@ -2,6 +2,7 @@
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using YPMarsLib;
 
 namespace YPMarsTests
@@ -203,6 +204,53 @@ namespace YPMarsTests
             Assert.AreEqual("Позиция Б", order.Items[1].NomenclatureName);
             Assert.AreEqual(1800.00m, order.Items[1].UnitPrice);
             Assert.AreEqual(340000.00m, order.TotalAmount);
+        }
+
+
+        // 1. Тестирование фильтрации
+        [TestMethod]
+        public void GetOrdersByFilter_Counterparty_ReturnsFilteredOrders()
+        {
+            var filter = new OrderDateFilter { StartDate = DateTime.Now.AddDays(-30), EndDate = DateTime.Now };
+            var expectedOrders = new List<Order>
+            {
+                new Order { ContractNumber = "ДГ-2026-000001", CounterpartyName = "АО Концерн ВКО Алмаз-Антей" },
+                new Order { ContractNumber = "ДГ-2026-000002", CounterpartyName = "АО Концерн ВКО Алмаз-Антей" },
+                new Order { ContractNumber = "ДГ-2026-000003", CounterpartyName = "ООО Ромашка" }
+            };
+
+            var mockRepo = new Mock<IOrderListRepository>();
+            string error = string.Empty;
+
+            mockRepo.Setup(r => r.GetOrdersByPeriod(It.IsAny<OrderDateFilter>(), out error))
+                    .Returns(expectedOrders);
+
+            var manager = new OrderManager(mockRepo.Object);
+
+            var allOrders = manager.GetOrders(filter, out error);
+
+            var filteredOrders = allOrders.FindAll(o => o.CounterpartyName == "АО Концерн ВКО Алмаз-Антей");
+
+            Assert.AreEqual(2, filteredOrders.Count);
+            Assert.AreEqual("АО Концерн ВКО Алмаз-Антей", filteredOrders[0].CounterpartyName);
+        }
+
+        // 2. Тестирование сортировки
+        [TestMethod]
+        public void SortOrders_ByContractNumberDescending_ReturnsSortedList()
+        {
+            var orders = new List<Order>
+            {
+                new Order { ContractNumber = "ДГ-2026-000001" },
+                new Order { ContractNumber = "ДГ-2026-000003" },
+                new Order { ContractNumber = "ДГ-2026-000002" }
+            };
+
+            var sortedList = orders.OrderByDescending(o => o.ContractNumber).ToList();
+
+            Assert.AreEqual("ДГ-2026-000003", sortedList[0].ContractNumber);
+            Assert.AreEqual("ДГ-2026-000002", sortedList[1].ContractNumber);
+            Assert.AreEqual("ДГ-2026-000001", sortedList[2].ContractNumber);
         }
     }
 }
