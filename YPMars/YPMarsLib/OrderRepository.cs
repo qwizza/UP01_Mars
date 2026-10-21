@@ -199,5 +199,169 @@ namespace YPMarsLib
 
             return orders;
         }
+
+        public List<Order> GetOrdersByFilter(OrderFilter filter)
+        {
+            var orders = new List<Order>();
+            var map = new Dictionary<int, Order>();
+
+            try
+            {
+                using (var connection = DBConnection.GetConnection())
+                {
+                    connection.Open();
+
+                    // Базовый запрос
+                    var sql = new StringBuilder(@"
+                        SELECT o.order_id, o.contract_number, o.order_date, c.name AS counterparty_name,
+                               o.order_status, o.planned_shipment_date,
+                               n.name AS nomenclature_name, oi.quantity, oi.unit_price
+                        FROM customer_orders o
+                        JOIN counterparties c ON o.counterparty_id = c.counterparty_id
+                        LEFT JOIN order_items oi ON o.order_id = oi.order_id
+                        LEFT JOIN nomenclature n ON oi.item_id = n.item_id
+                        WHERE 1=1");
+
+                    // Динамически добавляем условия
+                    if (!string.IsNullOrWhiteSpace(filter.CounterpartyName))
+                        sql.Append(" AND c.name = @counterparty_name");
+
+                    if (filter.Status.HasValue)
+                        sql.Append(" AND o.order_status = @status");
+
+                    if (filter.OrderDateFrom.HasValue)
+                        sql.Append(" AND o.order_date >= @date_from");
+
+                    if (filter.OrderDateTo.HasValue)
+                        sql.Append(" AND o.order_date <= @date_to");
+
+                    if (filter.PlannedShipmentFrom.HasValue)
+                        sql.Append(" AND o.planned_shipment_date >= @ship_from");
+
+                    if (filter.PlannedShipmentTo.HasValue)
+                        sql.Append(" AND o.planned_shipment_date <= @ship_to");
+
+                    sql.Append(" ORDER BY o.order_id;");
+
+                    using (var cmd = new NpgsqlCommand(sql.ToString(), connection))
+                    {
+                        // Добавляем параметры (только если они есть)
+                        if (!string.IsNullOrWhiteSpace(filter.CounterpartyName))
+                            cmd.Parameters.AddWithValue("counterparty_name", filter.CounterpartyName);
+                        if (filter.Status.HasValue)
+                            cmd.Parameters.AddWithValue("status", (int)filter.Status.Value);
+                        if (filter.OrderDateFrom.HasValue)
+                            cmd.Parameters.AddWithValue("date_from", filter.OrderDateFrom.Value);
+                        if (filter.OrderDateTo.HasValue)
+                            cmd.Parameters.AddWithValue("date_to", filter.OrderDateTo.Value);
+                        if (filter.PlannedShipmentFrom.HasValue)
+                            cmd.Parameters.AddWithValue("ship_from", filter.PlannedShipmentFrom.Value);
+                        if (filter.PlannedShipmentTo.HasValue)
+                            cmd.Parameters.AddWithValue("ship_to", filter.PlannedShipmentTo.Value);
+
+                        using (var reader = cmd.ExecuteReader())
+                        {
+                            MapOrders(reader, map, orders);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Ошибка в GetOrdersByFilter: " + ex.Message);
+            }
+            return orders;
+        }
+
+        public List<Order> GetOrdersSorted(string sortField, bool ascending)
+        {
+            var orders = new List<Order>();
+            var map = new Dictionary<int, Order>();
+
+            try
+            {
+                using (var connection = DBConnection.GetConnection())
+                {
+                    connection.Open();
+
+                    string column;
+                    switch (sortField)
+                    {
+                        case "ContractNumber":
+                            column = "o.contract_number";
+                            break;
+                        case "OrderDate":
+                            column = "o.order_date";
+                            break;
+                        case "Status":
+                            column = "o.order_status";
+                            break;
+                        case "PlannedShipmentDate":
+                            column = "o.planned_shipment_date";
+                            break;
+                        default:
+                            column = "o.order_id";
+                            break;
+                    }
+
+                    string direction = ascending ? "ASC" : "DESC";
+
+                    string sql = $@"
+                SELECT o.order_id, o.contract_number, o.order_date, c.name AS counterparty_name,
+                       o.order_status, o.planned_shipment_date,
+                       n.name AS nomenclature_name, oi.quantity, oi.unit_price
+                FROM customer_orders o
+                JOIN counterparties c ON o.counterparty_id = c.counterparty_id
+                LEFT JOIN order_items oi ON o.order_id = oi.order_id
+                LEFT JOIN nomenclature n ON oi.item_id = n.item_id
+                ORDER BY {column} {direction};";
+
+                    using (var cmd = new NpgsqlCommand(sql, connection))
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        MapOrders(reader, map, orders);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Ошибка в GetOrdersSorted: " + ex.Message);
+            }
+            return orders;
+        }
+
+        private void MapOrders(NpgsqlDataReader reader, Dictionary<int, Order> map, List<Order> orders)
+        {
+            while (reader.Read())
+            {
+                int orderId = Convert.ToInt32(reader["order_id"]);
+                if (!map.TryGetValue(orderId, out var order))
+                {
+                    order = new Order
+                    {
+                        ContractNumber = reader["contract_number"].ToString(),
+                        OrderDate = Convert.ToDateTime(reader["order_date"]),
+                        CounterpartyName = reader["counterparty_name"].ToString(),
+                        Status = (OrderStatus)Convert.ToInt32(reader["order_status"]),
+                        PlannedShipmentDate = reader["planned_shipment_date"] == DBNull.Value
+                            ? (DateTime?)null
+                            : Convert.ToDateTime(reader["planned_shipment_date"]),
+                        Items = new List<OrderItem>()
+                    };
+                    map.Add(orderId, order);
+                    orders.Add(order);
+                }
+
+                if (reader["nomenclature_name"] != DBNull.Value)
+                {
+                    order.Items.Add(new OrderItem
+                    {
+                        NomenclatureName = reader["nomenclature_name"].ToString(),
+                        Quantity = Convert.ToInt32(reader["quantity"]),
+                        UnitPrice = Convert.ToDecimal(reader["unit_price"])
+                    });
+                }
+            }
+        }
     }
 }

@@ -11,5 +11,7 @@ namespace YPMarsLib
         string CreateOrder(Order order);
         int GetLastOrderNumberInYear(int year);
         List<Order> GetAllOrders();
+        List<Order> GetOrdersByFilter(OrderFilter filter);
+        List<Order> GetOrdersSorted(string sortField, bool ascending);
     }
 }

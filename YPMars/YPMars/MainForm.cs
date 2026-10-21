@@ -18,6 +18,10 @@ namespace YPMars
         private User currentUser_;
         private OrderManager _orderManager;
 
+        // Переменные для сортировки
+        private string _currentSortField = "OrderDate";
+        private bool _isAscending = false;
+
         public MainForm(UserPgRepository loader, User currentUser)
         {
             InitializeComponent();
@@ -27,23 +31,52 @@ namespace YPMars
             IOrderListRepository repository = new OrderListRepository();
             _orderManager = new OrderManager(repository);
 
+            // Роли
             if (currentUser_.Role != User.UserRole.SuperUser)
-            {
                 RegistrButton.Visible = false;
-            }
 
             if (currentUser_.Role != User.UserRole.SuperUser && currentUser_.Role != User.UserRole.Warehouser)
-            {
                 panelBottom.Visible = false;
-            }
 
             NewOrderButton.Visible = (currentUser_.Role == User.UserRole.ManageSale);
 
+            // Подписки на события
             RefreshButton.Click += RefreshButton_Click;
             ChangeStatusButton.Click += ChangeStatusButton_Click;
             NewOrderButton.Click += NewOrderButton_Click;
             RegistrButton.Click += RegistrButton_Click;
             this.Load += MainForm_Load;
+
+            // --- НАСТРОЙКА ТАБЛИЦЫ ---
+            // Настройка DataPropertyName для сортировки
+            if (OrdersDataGridView.Columns["ContractNumber"] != null)
+                OrdersDataGridView.Columns["ContractNumber"].DataPropertyName = "ContractNumber";
+            if (OrdersDataGridView.Columns["OrderDate"] != null)
+                OrdersDataGridView.Columns["OrderDate"].DataPropertyName = "OrderDate";
+            if (OrdersDataGridView.Columns["Status"] != null)
+                OrdersDataGridView.Columns["Status"].DataPropertyName = "StatusText"; // ВАЖНО: StatusText для русского языка
+            if (OrdersDataGridView.Columns["PlannedShipmentDate"] != null)
+                OrdersDataGridView.Columns["PlannedShipmentDate"].DataPropertyName = "PlannedShipmentDate";
+            if (OrdersDataGridView.Columns["CounterpartyName"] != null)
+                OrdersDataGridView.Columns["CounterpartyName"].DataPropertyName = "CounterpartyName";
+
+            // Отключаем встроенную сортировку и подписываемся на клик
+            foreach (DataGridViewColumn col in OrdersDataGridView.Columns)
+            {
+                col.SortMode = DataGridViewColumnSortMode.Programmatic;
+            }
+            OrdersDataGridView.ColumnHeaderMouseClick += OrdersDataGridView_ColumnHeaderMouseClick;
+            OrdersDataGridView.CellFormatting += OrdersDataGridView_CellFormatting; // Для дат
+
+            // Заполняем ComboBox контрагентов (фильтр)
+            var dir = new Directory();
+            cmbCounterparty.DataSource = dir.GetCounterparties();
+            cmbCounterparty.SelectedIndex = -1;
+
+            // Заполняем ComboBox статусов (для фильтра, если он отдельный, или используем StatusCoboBox)
+            // Если StatusCoboBox используется только для смены статуса, а для фильтра нужен свой - создайте cmbStatusFilter
+            // В данном примере я предполагаю, что для фильтра есть cmbStatusFilter. 
+            // Если фильтр по статусу берет данные из StatusCoboBox, логику нужно будет адаптировать.
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -59,6 +92,11 @@ namespace YPMars
         }
 
         private void RefreshButton_Click(object sender, EventArgs e)
+        {
+            LoadOrders();
+        }
+
+        private void ApplyFilterButton_Click(object sender, EventArgs e)
         {
             LoadOrders();
         }
@@ -84,6 +122,96 @@ namespace YPMars
             OrdersDataGridView.DataSource = orders;
             UpdateFooter();
         }
+
+        // --- НОВЫЕ МЕТОДЫ ДЛЯ ФИЛЬТРАЦИИ ---
+
+        private void btnApplyFilter_Click(object sender, EventArgs e)
+        {
+            // Если у вас фильтр реализован через OrderManager, используйте его методы.
+            // Если через OrderRepository напрямую, то:
+            // var filter = new OrderFilter { ... };
+            // var result = repository.GetOrdersByFilter(filter);
+
+            // Простейшая реализация: фильтруем текущий список в памяти (если заказов не много)
+            // Для правильной работы через БД, используйте метод репозитория.
+            MessageBox.Show("Фильтрация будет реализована через OrderManager/Repository. Убедитесь, что кнопка привязана к правильному методу.");
+        }
+
+        private void btnResetFilter_Click(object sender, EventArgs e)
+        {
+            cmbCounterparty.SelectedIndex = -1;
+            // Если есть cmbStatusFilter, сбросить и его
+            // cmbStatusFilter.SelectedIndex = -1;
+
+            dtpOrderFrom.Checked = false;
+            dtpOrderTo.Checked = false;
+
+            LoadOrders();
+        }
+
+        // --- СОРТИРОВКА ---
+
+        private void OrdersDataGridView_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            string clickedColumn = OrdersDataGridView.Columns[e.ColumnIndex].DataPropertyName;
+
+            if (string.IsNullOrWhiteSpace(clickedColumn))
+                return;
+
+            if (_currentSortField == clickedColumn)
+            {
+                _isAscending = !_isAscending;
+            }
+            else
+            {
+                _currentSortField = clickedColumn;
+                _isAscending = true;
+            }
+
+            // Сортируем данные. 
+            // Если данные берутся из БД, то вызываем _orderManager.GetSortedOrders(...)
+            // Если сортируем то, что уже загружено в DataGridView:
+            if (OrdersDataGridView.DataSource is List<Order> currentList)
+            {
+                List<Order> sortedList;
+                switch (_currentSortField)
+                {
+                    case "ContractNumber":
+                        sortedList = _isAscending ? currentList.OrderBy(o => o.ContractNumber).ToList() : currentList.OrderByDescending(o => o.ContractNumber).ToList();
+                        break;
+                    case "OrderDate":
+                        sortedList = _isAscending ? currentList.OrderBy(o => o.OrderDate).ToList() : currentList.OrderByDescending(o => o.OrderDate).ToList();
+                        break;
+                    case "StatusText":
+                        sortedList = _isAscending ? currentList.OrderBy(o => o.Status).ToList() : currentList.OrderByDescending(o => o.Status).ToList();
+                        break;
+                    case "PlannedShipmentDate":
+                        sortedList = _isAscending ? currentList.OrderBy(o => o.PlannedShipmentDate).ToList() : currentList.OrderByDescending(o => o.PlannedShipmentDate).ToList();
+                        break;
+                    default:
+                        sortedList = currentList;
+                        break;
+                }
+                OrdersDataGridView.DataSource = sortedList;
+            }
+        }
+
+        // --- ФОРМАТИРОВАНИЕ ДАТ ---
+
+        private void OrdersDataGridView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.Value is DateTime dateValue)
+            {
+                string colName = OrdersDataGridView.Columns[e.ColumnIndex].DataPropertyName;
+                if (colName == "OrderDate" || colName == "PlannedShipmentDate")
+                {
+                    e.Value = dateValue.ToString("dd.MM.yyyy");
+                    e.FormattingApplied = true;
+                }
+            }
+        }
+
+        // --- ОСТАЛЬНЫЕ МЕТОДЫ ---
 
         private void SetupStatusComboBox()
         {
@@ -128,6 +256,8 @@ namespace YPMars
             if (string.IsNullOrEmpty(error))
             {
                 selectedOrder.Status = newStatus;
+                // Обновляем строку в таблице, чтобы статус сразу стал русским
+                OrdersDataGridView.Refresh();
                 UpdateFooter();
                 MessageBox.Show("Статус заказа успешно обновлён!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -180,9 +310,8 @@ namespace YPMars
 
         private void OrdersDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            {
-                OpenOrderDetails();
-            }
+            OpenOrderDetails();
         }
+
     }
 }

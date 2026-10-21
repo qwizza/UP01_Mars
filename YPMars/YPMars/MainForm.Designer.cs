@@ -6,14 +6,18 @@
 
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Button RegistrButton;
+
         private System.Windows.Forms.Panel panelTop;
+        private System.Windows.Forms.Label CounterpartyLabel;
+        private System.Windows.Forms.ComboBox cmbCounterparty;
+        private System.Windows.Forms.Button ApplyFilterButton;
         private System.Windows.Forms.Label StartDateLabel;
         private System.Windows.Forms.DateTimePicker StartDateDatetimePick;
         private System.Windows.Forms.Label EndDateLabel;
         private System.Windows.Forms.DateTimePicker EndDateDatetimePick;
         private System.Windows.Forms.Button RefreshButton;
         private System.Windows.Forms.Button NewOrderButton;
-        private System.Windows.Forms.Button OrderDetailsButton; // Новая кнопка состава заказа
+        private System.Windows.Forms.Button OrderDetailsButton;
 
         private System.Windows.Forms.Panel panelSummary;
         private System.Windows.Forms.Label TotalCountLabel;
@@ -43,6 +47,9 @@
             this.panelHeader = new System.Windows.Forms.Panel();
             this.RegistrButton = new System.Windows.Forms.Button();
             this.panelTop = new System.Windows.Forms.Panel();
+            this.CounterpartyLabel = new System.Windows.Forms.Label();
+            this.cmbCounterparty = new System.Windows.Forms.ComboBox();
+            this.ApplyFilterButton = new System.Windows.Forms.Button();
             this.StartDateLabel = new System.Windows.Forms.Label();
             this.StartDateDatetimePick = new System.Windows.Forms.DateTimePicker();
             this.EndDateLabel = new System.Windows.Forms.Label();
@@ -73,7 +80,7 @@
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1100, 40);
+            this.panelHeader.Size = new System.Drawing.Size(1225, 40);
             this.panelHeader.TabIndex = 4;
             // 
             // RegistrButton
@@ -85,7 +92,7 @@
             this.RegistrButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.RegistrButton.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.RegistrButton.ForeColor = System.Drawing.Color.White;
-            this.RegistrButton.Location = new System.Drawing.Point(920, 5);
+            this.RegistrButton.Location = new System.Drawing.Point(1045, 5);
             this.RegistrButton.Name = "RegistrButton";
             this.RegistrButton.Size = new System.Drawing.Size(165, 28);
             this.RegistrButton.TabIndex = 0;
@@ -96,6 +103,9 @@
             // 
             this.panelTop.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.panelTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelTop.Controls.Add(this.CounterpartyLabel);
+            this.panelTop.Controls.Add(this.cmbCounterparty);
+            this.panelTop.Controls.Add(this.ApplyFilterButton);
             this.panelTop.Controls.Add(this.StartDateLabel);
             this.panelTop.Controls.Add(this.StartDateDatetimePick);
             this.panelTop.Controls.Add(this.EndDateLabel);
@@ -106,46 +116,82 @@
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 40);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(1100, 50);
+            this.panelTop.Size = new System.Drawing.Size(1225, 50);
             this.panelTop.TabIndex = 3;
+            // 
+            // CounterpartyLabel
+            // 
+            this.CounterpartyLabel.AutoSize = true;
+            this.CounterpartyLabel.Font = new System.Drawing.Font("Times New Roman", 13.25F);
+            this.CounterpartyLabel.Location = new System.Drawing.Point(10, 13);
+            this.CounterpartyLabel.Name = "CounterpartyLabel";
+            this.CounterpartyLabel.Size = new System.Drawing.Size(101, 20);
+            this.CounterpartyLabel.TabIndex = 0;
+            this.CounterpartyLabel.Text = "Контрагент:";
+            // 
+            // cmbCounterparty
+            // 
+            this.cmbCounterparty.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbCounterparty.Font = new System.Drawing.Font("Times New Roman", 13.25F);
+            this.cmbCounterparty.FormattingEnabled = true;
+            this.cmbCounterparty.Location = new System.Drawing.Point(112, 10);
+            this.cmbCounterparty.Name = "cmbCounterparty";
+            this.cmbCounterparty.Size = new System.Drawing.Size(180, 28);
+            this.cmbCounterparty.TabIndex = 1;
+            // 
+            // ApplyFilterButton
+            // 
+            this.ApplyFilterButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
+            this.ApplyFilterButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ApplyFilterButton.FlatAppearance.BorderSize = 0;
+            this.ApplyFilterButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ApplyFilterButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
+            this.ApplyFilterButton.ForeColor = System.Drawing.Color.White;
+            this.ApplyFilterButton.Location = new System.Drawing.Point(303, 10);
+            this.ApplyFilterButton.Name = "ApplyFilterButton";
+            this.ApplyFilterButton.Size = new System.Drawing.Size(90, 28);
+            this.ApplyFilterButton.TabIndex = 2;
+            this.ApplyFilterButton.Text = "Фильтр";
+            this.ApplyFilterButton.UseVisualStyleBackColor = false;
+            this.ApplyFilterButton.Click += new System.EventHandler(this.ApplyFilterButton_Click);
             // 
             // StartDateLabel
             // 
             this.StartDateLabel.AutoSize = true;
             this.StartDateLabel.Font = new System.Drawing.Font("Times New Roman", 13.25F);
-            this.StartDateLabel.Location = new System.Drawing.Point(12, 13);
+            this.StartDateLabel.Location = new System.Drawing.Point(400, 13);
             this.StartDateLabel.Name = "StartDateLabel";
             this.StartDateLabel.Size = new System.Drawing.Size(105, 20);
-            this.StartDateLabel.TabIndex = 0;
+            this.StartDateLabel.TabIndex = 3;
             this.StartDateLabel.Text = "Дата начала:";
             // 
             // StartDateDatetimePick
             // 
             this.StartDateDatetimePick.Font = new System.Drawing.Font("Times New Roman", 13.25F);
             this.StartDateDatetimePick.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.StartDateDatetimePick.Location = new System.Drawing.Point(120, 10);
+            this.StartDateDatetimePick.Location = new System.Drawing.Point(510, 10);
             this.StartDateDatetimePick.Name = "StartDateDatetimePick";
-            this.StartDateDatetimePick.Size = new System.Drawing.Size(130, 28);
-            this.StartDateDatetimePick.TabIndex = 1;
+            this.StartDateDatetimePick.Size = new System.Drawing.Size(110, 28);
+            this.StartDateDatetimePick.TabIndex = 4;
             // 
             // EndDateLabel
             // 
             this.EndDateLabel.AutoSize = true;
             this.EndDateLabel.Font = new System.Drawing.Font("Times New Roman", 13.25F);
-            this.EndDateLabel.Location = new System.Drawing.Point(265, 13);
+            this.EndDateLabel.Location = new System.Drawing.Point(630, 13);
             this.EndDateLabel.Name = "EndDateLabel";
             this.EndDateLabel.Size = new System.Drawing.Size(135, 20);
-            this.EndDateLabel.TabIndex = 2;
+            this.EndDateLabel.TabIndex = 5;
             this.EndDateLabel.Text = "Дата окончания:";
             // 
             // EndDateDatetimePick
             // 
             this.EndDateDatetimePick.Font = new System.Drawing.Font("Times New Roman", 13.25F);
             this.EndDateDatetimePick.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.EndDateDatetimePick.Location = new System.Drawing.Point(400, 10);
+            this.EndDateDatetimePick.Location = new System.Drawing.Point(765, 10);
             this.EndDateDatetimePick.Name = "EndDateDatetimePick";
-            this.EndDateDatetimePick.Size = new System.Drawing.Size(130, 28);
-            this.EndDateDatetimePick.TabIndex = 3;
+            this.EndDateDatetimePick.Size = new System.Drawing.Size(110, 28);
+            this.EndDateDatetimePick.TabIndex = 6;
             // 
             // RefreshButton
             // 
@@ -153,42 +199,44 @@
             this.RefreshButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.RefreshButton.FlatAppearance.BorderSize = 0;
             this.RefreshButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RefreshButton.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.RefreshButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
             this.RefreshButton.ForeColor = System.Drawing.Color.White;
-            this.RefreshButton.Location = new System.Drawing.Point(550, 10);
+            this.RefreshButton.Location = new System.Drawing.Point(890, 10);
             this.RefreshButton.Name = "RefreshButton";
             this.RefreshButton.Size = new System.Drawing.Size(110, 28);
-            this.RefreshButton.TabIndex = 4;
+            this.RefreshButton.TabIndex = 7;
             this.RefreshButton.Text = "Обновить";
             this.RefreshButton.UseVisualStyleBackColor = false;
             // 
             // NewOrderButton
             // 
+            this.NewOrderButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.NewOrderButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(150)))), ((int)(((byte)(90)))));
             this.NewOrderButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.NewOrderButton.FlatAppearance.BorderSize = 0;
             this.NewOrderButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.NewOrderButton.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.NewOrderButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
             this.NewOrderButton.ForeColor = System.Drawing.Color.White;
-            this.NewOrderButton.Location = new System.Drawing.Point(675, 10);
+            this.NewOrderButton.Location = new System.Drawing.Point(1019, 9);
             this.NewOrderButton.Name = "NewOrderButton";
             this.NewOrderButton.Size = new System.Drawing.Size(135, 28);
-            this.NewOrderButton.TabIndex = 5;
+            this.NewOrderButton.TabIndex = 8;
             this.NewOrderButton.Text = "Новый заказ";
             this.NewOrderButton.UseVisualStyleBackColor = false;
             // 
             // OrderDetailsButton
             // 
+            this.OrderDetailsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.OrderDetailsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
             this.OrderDetailsButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.OrderDetailsButton.FlatAppearance.BorderSize = 0;
             this.OrderDetailsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.OrderDetailsButton.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.OrderDetailsButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
             this.OrderDetailsButton.ForeColor = System.Drawing.Color.White;
-            this.OrderDetailsButton.Location = new System.Drawing.Point(825, 10);
+            this.OrderDetailsButton.Location = new System.Drawing.Point(1310, 10);
             this.OrderDetailsButton.Name = "OrderDetailsButton";
             this.OrderDetailsButton.Size = new System.Drawing.Size(145, 28);
-            this.OrderDetailsButton.TabIndex = 6;
+            this.OrderDetailsButton.TabIndex = 9;
             this.OrderDetailsButton.Text = "Состав заказа";
             this.OrderDetailsButton.UseVisualStyleBackColor = false;
             this.OrderDetailsButton.Click += new System.EventHandler(this.OrderDetailsButton_Click);
@@ -202,7 +250,7 @@
             this.panelSummary.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelSummary.Location = new System.Drawing.Point(0, 90);
             this.panelSummary.Name = "panelSummary";
-            this.panelSummary.Size = new System.Drawing.Size(1100, 35);
+            this.panelSummary.Size = new System.Drawing.Size(1225, 35);
             this.panelSummary.TabIndex = 2;
             // 
             // TotalCountLabel
@@ -253,7 +301,7 @@
             this.OrdersDataGridView.RowHeadersVisible = false;
             this.OrdersDataGridView.RowTemplate.Height = 28;
             this.OrdersDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.OrdersDataGridView.Size = new System.Drawing.Size(1100, 470);
+            this.OrdersDataGridView.Size = new System.Drawing.Size(1225, 470);
             this.OrdersDataGridView.TabIndex = 0;
             this.OrdersDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OrdersDataGridView_CellDoubleClick);
             // 
@@ -267,7 +315,7 @@
             this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelBottom.Location = new System.Drawing.Point(0, 595);
             this.panelBottom.Name = "panelBottom";
-            this.panelBottom.Size = new System.Drawing.Size(1100, 55);
+            this.panelBottom.Size = new System.Drawing.Size(1225, 55);
             this.panelBottom.TabIndex = 1;
             // 
             // StatusLabel
@@ -296,7 +344,7 @@
             this.ChangeStatusButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.ChangeStatusButton.FlatAppearance.BorderSize = 0;
             this.ChangeStatusButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ChangeStatusButton.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.ChangeStatusButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
             this.ChangeStatusButton.ForeColor = System.Drawing.Color.White;
             this.ChangeStatusButton.Location = new System.Drawing.Point(340, 13);
             this.ChangeStatusButton.Name = "ChangeStatusButton";
@@ -310,13 +358,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1100, 650);
+            this.ClientSize = new System.Drawing.Size(1225, 650);
             this.Controls.Add(this.OrdersDataGridView);
             this.Controls.Add(this.panelBottom);
             this.Controls.Add(this.panelSummary);
             this.Controls.Add(this.panelTop);
             this.Controls.Add(this.panelHeader);
             this.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(900, 500);
             this.Name = "MainForm";
