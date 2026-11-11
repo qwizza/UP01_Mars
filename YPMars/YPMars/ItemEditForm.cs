@@ -15,17 +15,12 @@ namespace YPMars
     {
         public OrderItem Item { get; private set; }
 
-        private readonly IOrderListRepository repository_;
-        private Dictionary<string, decimal> nomenclaturePrices_ = new Dictionary<string, decimal>();
+        private readonly Dictionary<string, decimal> nomenclaturePrices_;
 
-        public ItemEditForm() : this(new OrderListRepository())
-        {
-        }
-
-        public ItemEditForm(IOrderListRepository repository)
+        public ItemEditForm(Dictionary<string, decimal> nomenclaturePrices)
         {
             InitializeComponent();
-            repository_ = repository;
+            nomenclaturePrices_ = nomenclaturePrices ?? new Dictionary<string, decimal>();
 
             UnitPriceTextBox.ReadOnly = true;
             NomenclatureComboBox.Enabled = true;
@@ -33,11 +28,8 @@ namespace YPMars
             LoadNomenclature();
         }
 
-        public ItemEditForm(OrderItem existingItem) : this(new OrderListRepository(), existingItem)
-        {
-        }
-
-        public ItemEditForm(IOrderListRepository repository, OrderItem existingItem) : this(repository)
+        public ItemEditForm(Dictionary<string, decimal> nomenclaturePrices, OrderItem existingItem)
+            : this(nomenclaturePrices)
         {
             if (existingItem != null)
             {
@@ -55,15 +47,6 @@ namespace YPMars
 
         private void LoadNomenclature()
         {
-            string error;
-            nomenclaturePrices_ = repository_.GetNomenclaturePrices(out error);
-
-            if (!string.IsNullOrEmpty(error))
-            {
-                MessageBox.Show(error, "Ошибка загрузки", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
             NomenclatureComboBox.Items.Clear();
             foreach (var kvp in nomenclaturePrices_)
             {

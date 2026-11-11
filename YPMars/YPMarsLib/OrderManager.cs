@@ -76,5 +76,10 @@ namespace YPMarsLib
         {
             return _repository.DeleteOrderItem(contractNumber, item, out error);
         }
+
+        public Dictionary<string, decimal> GetNomenclaturePrices(out string error)
+        {
+            return _repository.GetNomenclaturePrices(out error);
+        }
     }
 }

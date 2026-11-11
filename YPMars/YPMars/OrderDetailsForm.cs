@@ -59,10 +59,15 @@ namespace YPMars
 
         private void AddItemButton_Click(object sender, EventArgs e)
         {
-            var editForm = new ItemEditForm();
+            var prices = orderManager_.GetNomenclaturePrices(out string error);
+            if (!string.IsNullOrEmpty(error))
+            {
+                MessageBox.Show(error, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            var editForm = new ItemEditForm(prices);
             if (editForm.ShowDialog() == DialogResult.OK)
             {
-                string error;
                 bool success = orderManager_.AddItemToOrder(order_.ContractNumber, editForm.Item, out error);
 
                 if (success)
@@ -87,10 +92,16 @@ namespace YPMars
             var selectedItem = ItemsDataGridView.SelectedRows[0].DataBoundItem as OrderItem;
             if (selectedItem == null) return;
 
-            var editForm = new ItemEditForm(new OrderListRepository(), selectedItem);
+            var prices = orderManager_.GetNomenclaturePrices(out string error);
+            if (!string.IsNullOrEmpty(error))
+            {
+                MessageBox.Show(error, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var editForm = new ItemEditForm(prices, selectedItem);
             if (editForm.ShowDialog() == DialogResult.OK)
             {
-                string error;
                 selectedItem.Quantity = editForm.Item.Quantity;
                 bool success = orderManager_.UpdateItemInOrder(order_.ContractNumber, selectedItem, out error);
 
