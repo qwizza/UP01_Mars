@@ -13,6 +13,7 @@
         private System.Windows.Forms.DateTimePicker EndDateDatetimePick;
         private System.Windows.Forms.Button RefreshButton;
         private System.Windows.Forms.Button NewOrderButton;
+        private System.Windows.Forms.Button OrderDetailsButton; // Новая кнопка состава заказа
 
         private System.Windows.Forms.Panel panelSummary;
         private System.Windows.Forms.Label TotalCountLabel;
@@ -48,6 +49,7 @@
             this.EndDateDatetimePick = new System.Windows.Forms.DateTimePicker();
             this.RefreshButton = new System.Windows.Forms.Button();
             this.NewOrderButton = new System.Windows.Forms.Button();
+            this.OrderDetailsButton = new System.Windows.Forms.Button();
             this.panelSummary = new System.Windows.Forms.Panel();
             this.TotalCountLabel = new System.Windows.Forms.Label();
             this.TotalSumLabel = new System.Windows.Forms.Label();
@@ -100,6 +102,7 @@
             this.panelTop.Controls.Add(this.EndDateDatetimePick);
             this.panelTop.Controls.Add(this.RefreshButton);
             this.panelTop.Controls.Add(this.NewOrderButton);
+            this.panelTop.Controls.Add(this.OrderDetailsButton);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 40);
             this.panelTop.Name = "panelTop";
@@ -174,6 +177,22 @@
             this.NewOrderButton.Text = "Новый заказ";
             this.NewOrderButton.UseVisualStyleBackColor = false;
             // 
+            // OrderDetailsButton
+            // 
+            this.OrderDetailsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.OrderDetailsButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.OrderDetailsButton.FlatAppearance.BorderSize = 0;
+            this.OrderDetailsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OrderDetailsButton.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.OrderDetailsButton.ForeColor = System.Drawing.Color.White;
+            this.OrderDetailsButton.Location = new System.Drawing.Point(825, 10);
+            this.OrderDetailsButton.Name = "OrderDetailsButton";
+            this.OrderDetailsButton.Size = new System.Drawing.Size(145, 28);
+            this.OrderDetailsButton.TabIndex = 6;
+            this.OrderDetailsButton.Text = "Состав заказа";
+            this.OrderDetailsButton.UseVisualStyleBackColor = false;
+            this.OrderDetailsButton.Click += new System.EventHandler(this.OrderDetailsButton_Click);
+            // 
             // panelSummary
             // 
             this.panelSummary.BackColor = System.Drawing.SystemColors.ActiveCaption;
@@ -214,6 +233,7 @@
             this.OrdersDataGridView.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
             this.OrdersDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.OrdersDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.OrdersDataGridView.BackgroundColor = System.Drawing.SystemColors.InactiveBorder;
             this.OrdersDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -235,6 +255,7 @@
             this.OrdersDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.OrdersDataGridView.Size = new System.Drawing.Size(1100, 470);
             this.OrdersDataGridView.TabIndex = 0;
+            this.OrdersDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OrdersDataGridView_CellDoubleClick);
             // 
             // panelBottom
             // 
