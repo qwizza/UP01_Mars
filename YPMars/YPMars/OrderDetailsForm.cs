@@ -65,7 +65,6 @@ namespace YPMars
                 MessageBox.Show(error, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-
             var editForm = new ItemEditForm(prices);
             if (editForm.ShowDialog() == DialogResult.OK)
             {

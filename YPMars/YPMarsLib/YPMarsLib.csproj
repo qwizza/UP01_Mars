@@ -103,6 +103,7 @@
     <Compile Include="IOrderListRepository.cs" />
     <Compile Include="IOrderRepository.cs" />
     <Compile Include="OrderDateFilter.cs" />
+    <Compile Include="OrderFilter.cs" />
     <Compile Include="OrderItem.cs" />
     <Compile Include="OrderListRepository.cs" />
     <Compile Include="OrderManager.cs" />

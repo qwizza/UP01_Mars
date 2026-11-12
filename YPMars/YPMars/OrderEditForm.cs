@@ -37,13 +37,7 @@ namespace YPMars
             if (DesignMode || LicenseManager.UsageMode == LicenseUsageMode.Designtime)
                 return;
 
-            // Заполняем справочники
-            CounterpartyComboBox.Items.Clear();
-            CounterpartyComboBox.Items.AddRange(directory_.GetCounterparties().ToArray());
-
-            NomenclatureComboBox.Items.Clear();
-            NomenclatureComboBox.Items.AddRange(directory_.GetNomenclature().ToArray());
-
+            // Задаем начальные значения
             PlannedShipmentDatePicker.Value = DateTime.Now.AddDays(7);
 
             QuantityNumeric.Minimum = 1;
@@ -92,9 +86,98 @@ namespace YPMars
             });
         }
 
+        // =========================================================
+        // ЛОГИКА ПОИСКА КОНТРАГЕНТА
+        // =========================================================
+
+        private void CounterpartyTextBox_TextChanged(object sender, EventArgs e)
+        {
+            string query = CounterpartyTextBox.Text.Trim();
+
+            // Если поле пустое — показываем ВСЕ элементы
+            if (string.IsNullOrEmpty(query))
+            {
+                var allItems = directory_.GetCounterparties(); // Ваш метод получения всех
+                CounterpartyListBox.DataSource = allItems;
+                CounterpartyListBox.Visible = allItems.Count > 0;
+                return;
+            }
+
+            // Если что-то введено — ищем совпадения
+            var suggestions = directory_.SearchCounterparties(query);
+            CounterpartyListBox.DataSource = suggestions;
+            CounterpartyListBox.Visible = suggestions.Count > 0;
+        }
+
+        // Добавьте это событие, чтобы при клике на пустое поле список открывался
+        private void CounterpartyTextBox_Enter(object sender, EventArgs e)
+        {
+            CounterpartyTextBox_TextChanged(sender, e); // Вызываем логику отображения
+        }
+
+        private void CounterpartyListBox_DoubleClick(object sender, EventArgs e)
+        {
+            if (CounterpartyListBox.SelectedItem != null)
+            {
+                CounterpartyTextBox.Text = CounterpartyListBox.SelectedItem.ToString();
+                CounterpartyListBox.Visible = false;
+            }
+        }
+
+        // =========================================================
+        // ЛОГИКА ПОИСКА НОМЕНКЛАТУРЫ
+        // =========================================================
+
+        private void NomenclatureTextBox_TextChanged(object sender, EventArgs e)
+        {
+            string query = NomenclatureTextBox.Text.Trim();
+
+            // Если поле пустое — показываем ВСЕ элементы
+            if (string.IsNullOrEmpty(query))
+            {
+                var allItems = directory_.GetNomenclature(); // Ваш метод получения всех
+                NomenclatureListBox.DataSource = allItems;
+                NomenclatureListBox.Visible = allItems.Count > 0;
+                return;
+            }
+
+            // Если что-то введено — ищем совпадения
+            var suggestions = directory_.SearchNomenclature(query);
+            NomenclatureListBox.DataSource = suggestions;
+            NomenclatureListBox.Visible = suggestions.Count > 0;
+        }
+
+        // Добавьте это событие, чтобы при клике на пустое поле список открывался
+        private void NomenclatureTextBox_Enter(object sender, EventArgs e)
+        {
+            NomenclatureTextBox_TextChanged(sender, e);
+        }
+
+        private void NomenclatureListBox_DoubleClick(object sender, EventArgs e)
+        {
+            if (NomenclatureListBox.SelectedItem != null)
+            {
+                NomenclatureTextBox.Text = NomenclatureListBox.SelectedItem.ToString();
+                NomenclatureListBox.Visible = false;
+            }
+        }
+
+        // =========================================================
+        // ДОБАВЛЕНИЕ ПОЗИЦИИ
+        // =========================================================
+
         private void AddItemButton_Click(object sender, EventArgs e)
         {
-            string nomenclature = NomenclatureComboBox.Text?.Trim();
+            // Проверка контрагента
+            if (string.IsNullOrWhiteSpace(CounterpartyTextBox.Text))
+            {
+                MessageBox.Show("Выберите контрагента", "Предупреждение",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Проверка номенклатуры (берем текст из TextBox)
+            string nomenclature = NomenclatureTextBox.Text?.Trim();
 
             if (string.IsNullOrWhiteSpace(nomenclature))
             {
@@ -128,6 +211,10 @@ namespace YPMars
             });
 
             RefreshItemsGrid();
+
+            // Очищаем поле номенклатуры и количество для добавления следующей позиции
+            NomenclatureTextBox.Clear();
+            QuantityNumeric.Value = 1;
         }
 
         private void RefreshItemsGrid()
@@ -147,13 +234,17 @@ namespace YPMars
             TotalSumLabel.Text = $"Итоговая сумма: {total:N2} руб.";
         }
 
+        // =========================================================
+        // СОХРАНЕНИЕ ЗАКАЗА
+        // =========================================================
+
         private void SaveButton_Click(object sender, EventArgs e)
         {
             // 1. Формируем объект Order из полей формы
             var order = new Order
             {
                 OrderDate = DateTime.Now,
-                CounterpartyName = CounterpartyComboBox.Text?.Trim(),
+                CounterpartyName = CounterpartyTextBox.Text?.Trim(), // Берем из TextBox
                 PlannedShipmentDate = PlannedShipmentDatePicker.Value.Date,
                 Status = OrderStatus.New,
                 Items = new List<OrderItem>(items_)
@@ -185,13 +276,14 @@ namespace YPMars
             MessageBox.Show(
                 $"Заказ №{order.ContractNumber} успешно создан. Сумма: {order.TotalAmount:N2} руб.",
                 "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            this.DialogResult = DialogResult.OK; // Важно для обновления главной формы
             this.Close();
         }
 
         private void CancelButton_Click(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
-
     }
 }
