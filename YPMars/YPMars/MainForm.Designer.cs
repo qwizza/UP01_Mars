@@ -65,6 +65,7 @@
             this.StatusLabel = new System.Windows.Forms.Label();
             this.StatusCoboBox = new System.Windows.Forms.ComboBox();
             this.ChangeStatusButton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.panelHeader.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelSummary.SuspendLayout();
@@ -80,7 +81,7 @@
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1225, 40);
+            this.panelHeader.Size = new System.Drawing.Size(1339, 40);
             this.panelHeader.TabIndex = 4;
             // 
             // RegistrButton
@@ -92,7 +93,7 @@
             this.RegistrButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.RegistrButton.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.RegistrButton.ForeColor = System.Drawing.Color.White;
-            this.RegistrButton.Location = new System.Drawing.Point(1045, 5);
+            this.RegistrButton.Location = new System.Drawing.Point(1159, 5);
             this.RegistrButton.Name = "RegistrButton";
             this.RegistrButton.Size = new System.Drawing.Size(165, 28);
             this.RegistrButton.TabIndex = 0;
@@ -103,6 +104,7 @@
             // 
             this.panelTop.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.panelTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelTop.Controls.Add(this.button1);
             this.panelTop.Controls.Add(this.CounterpartyLabel);
             this.panelTop.Controls.Add(this.cmbCounterparty);
             this.panelTop.Controls.Add(this.ApplyFilterButton);
@@ -116,7 +118,7 @@
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 40);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(1225, 50);
+            this.panelTop.Size = new System.Drawing.Size(1339, 50);
             this.panelTop.TabIndex = 3;
             // 
             // CounterpartyLabel
@@ -217,7 +219,7 @@
             this.NewOrderButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.NewOrderButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
             this.NewOrderButton.ForeColor = System.Drawing.Color.White;
-            this.NewOrderButton.Location = new System.Drawing.Point(1019, 9);
+            this.NewOrderButton.Location = new System.Drawing.Point(1183, 11);
             this.NewOrderButton.Name = "NewOrderButton";
             this.NewOrderButton.Size = new System.Drawing.Size(135, 28);
             this.NewOrderButton.TabIndex = 8;
@@ -233,7 +235,7 @@
             this.OrderDetailsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.OrderDetailsButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
             this.OrderDetailsButton.ForeColor = System.Drawing.Color.White;
-            this.OrderDetailsButton.Location = new System.Drawing.Point(1310, 10);
+            this.OrderDetailsButton.Location = new System.Drawing.Point(1424, 10);
             this.OrderDetailsButton.Name = "OrderDetailsButton";
             this.OrderDetailsButton.Size = new System.Drawing.Size(145, 28);
             this.OrderDetailsButton.TabIndex = 9;
@@ -250,7 +252,7 @@
             this.panelSummary.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelSummary.Location = new System.Drawing.Point(0, 90);
             this.panelSummary.Name = "panelSummary";
-            this.panelSummary.Size = new System.Drawing.Size(1225, 35);
+            this.panelSummary.Size = new System.Drawing.Size(1339, 35);
             this.panelSummary.TabIndex = 2;
             // 
             // TotalCountLabel
@@ -301,7 +303,7 @@
             this.OrdersDataGridView.RowHeadersVisible = false;
             this.OrdersDataGridView.RowTemplate.Height = 28;
             this.OrdersDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.OrdersDataGridView.Size = new System.Drawing.Size(1225, 470);
+            this.OrdersDataGridView.Size = new System.Drawing.Size(1339, 470);
             this.OrdersDataGridView.TabIndex = 0;
             this.OrdersDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OrdersDataGridView_CellDoubleClick);
             // 
@@ -315,7 +317,7 @@
             this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelBottom.Location = new System.Drawing.Point(0, 595);
             this.panelBottom.Name = "panelBottom";
-            this.panelBottom.Size = new System.Drawing.Size(1225, 55);
+            this.panelBottom.Size = new System.Drawing.Size(1339, 55);
             this.panelBottom.TabIndex = 1;
             // 
             // StatusLabel
@@ -353,12 +355,28 @@
             this.ChangeStatusButton.Text = "Изменить статус";
             this.ChangeStatusButton.UseVisualStyleBackColor = false;
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Location = new System.Drawing.Point(1017, 10);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(145, 28);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "Состав заказа";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.OrderDetailsButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1225, 650);
+            this.ClientSize = new System.Drawing.Size(1339, 650);
             this.Controls.Add(this.OrdersDataGridView);
             this.Controls.Add(this.panelBottom);
             this.Controls.Add(this.panelSummary);
@@ -383,5 +401,7 @@
             this.ResumeLayout(false);
 
         }
+
+        private System.Windows.Forms.Button button1;
     }
 }
