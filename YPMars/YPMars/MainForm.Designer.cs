@@ -18,6 +18,10 @@
         private System.Windows.Forms.Button RefreshButton;
         private System.Windows.Forms.Button NewOrderButton;
         private System.Windows.Forms.Button OrderDetailsButton;
+        private System.Windows.Forms.Button button1;
+
+        // Добавили кнопку переключения режимов «Заказы / Склад»
+        private System.Windows.Forms.Button btnToggleMode;
 
         private System.Windows.Forms.Panel panelSummary;
         private System.Windows.Forms.Label TotalCountLabel;
@@ -47,6 +51,8 @@
             this.panelHeader = new System.Windows.Forms.Panel();
             this.RegistrButton = new System.Windows.Forms.Button();
             this.panelTop = new System.Windows.Forms.Panel();
+            this.btnToggleMode = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.CounterpartyLabel = new System.Windows.Forms.Label();
             this.cmbCounterparty = new System.Windows.Forms.ComboBox();
             this.ApplyFilterButton = new System.Windows.Forms.Button();
@@ -65,7 +71,6 @@
             this.StatusLabel = new System.Windows.Forms.Label();
             this.StatusCoboBox = new System.Windows.Forms.ComboBox();
             this.ChangeStatusButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
             this.panelHeader.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelSummary.SuspendLayout();
@@ -104,6 +109,7 @@
             // 
             this.panelTop.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.panelTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelTop.Controls.Add(this.btnToggleMode);
             this.panelTop.Controls.Add(this.button1);
             this.panelTop.Controls.Add(this.CounterpartyLabel);
             this.panelTop.Controls.Add(this.cmbCounterparty);
@@ -120,6 +126,38 @@
             this.panelTop.Name = "panelTop";
             this.panelTop.Size = new System.Drawing.Size(1339, 50);
             this.panelTop.TabIndex = 3;
+            // 
+            // btnToggleMode
+            // 
+            this.btnToggleMode.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(126)))), ((int)(((byte)(34)))));
+            this.btnToggleMode.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnToggleMode.FlatAppearance.BorderSize = 0;
+            this.btnToggleMode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnToggleMode.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnToggleMode.ForeColor = System.Drawing.Color.White;
+            this.btnToggleMode.Location = new System.Drawing.Point(890, 10);
+            this.btnToggleMode.Name = "btnToggleMode";
+            this.btnToggleMode.Size = new System.Drawing.Size(120, 28);
+            this.btnToggleMode.TabIndex = 11;
+            this.btnToggleMode.Text = "Склад";
+            this.btnToggleMode.UseVisualStyleBackColor = false;
+            this.btnToggleMode.Click += new System.EventHandler(this.btnToggleMode_Click);
+            // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
+            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.button1.ForeColor = System.Drawing.Color.White;
+            this.button1.Location = new System.Drawing.Point(1017, 10);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(145, 28);
+            this.button1.TabIndex = 10;
+            this.button1.Text = "Состав заказа";
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.OrderDetailsButton_Click);
             // 
             // CounterpartyLabel
             // 
@@ -203,7 +241,7 @@
             this.RefreshButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.RefreshButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
             this.RefreshButton.ForeColor = System.Drawing.Color.White;
-            this.RefreshButton.Location = new System.Drawing.Point(890, 10);
+            this.RefreshButton.Location = new System.Drawing.Point(1170, 10);
             this.RefreshButton.Name = "RefreshButton";
             this.RefreshButton.Size = new System.Drawing.Size(110, 28);
             this.RefreshButton.TabIndex = 7;
@@ -238,10 +276,8 @@
             this.OrderDetailsButton.Location = new System.Drawing.Point(1424, 10);
             this.OrderDetailsButton.Name = "OrderDetailsButton";
             this.OrderDetailsButton.Size = new System.Drawing.Size(145, 28);
-            this.OrderDetailsButton.TabIndex = 9;
-            this.OrderDetailsButton.Text = "Состав заказа";
+            this.OrderDetailsButton.TabIndex = 12;
             this.OrderDetailsButton.UseVisualStyleBackColor = false;
-            this.OrderDetailsButton.Click += new System.EventHandler(this.OrderDetailsButton_Click);
             // 
             // panelSummary
             // 
@@ -355,22 +391,6 @@
             this.ChangeStatusButton.Text = "Изменить статус";
             this.ChangeStatusButton.UseVisualStyleBackColor = false;
             // 
-            // button1
-            // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(1017, 10);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(145, 28);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "Состав заказа";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.OrderDetailsButton_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -401,7 +421,5 @@
             this.ResumeLayout(false);
 
         }
-
-        private System.Windows.Forms.Button button1;
     }
 }

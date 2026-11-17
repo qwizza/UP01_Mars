@@ -122,7 +122,8 @@ namespace YPMars
         private void LoadWarehouseStock()
         {
             string error;
-            var stock = loader_.GetWarehouseItems(out error);
+            IOrderListRepository repository = new OrderListRepository();
+            var stock = repository.GetWarehouseStock(out error); 
 
             if (!string.IsNullOrEmpty(error))
             {
@@ -319,6 +320,11 @@ namespace YPMars
         private void OrdersDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             OpenOrderDetails();
+        }
+
+        private void btnToggleMode_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
