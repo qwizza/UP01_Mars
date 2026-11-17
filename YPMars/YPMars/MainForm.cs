@@ -21,6 +21,8 @@ namespace YPMars
         private string _currentSortField = "OrderDate";
         private bool _isAscending = false;
 
+        private bool _isWarehouseMode = false;
+
         public MainForm(UserPgRepository loader, User currentUser)
         {
             InitializeComponent();
@@ -77,7 +79,17 @@ namespace YPMars
             EndDateDatetimePick.Value = DateTime.Now;
 
             SetupStatusComboBox();
-            LoadOrders();
+
+            if (currentUser_.Role == User.UserRole.Warehouser)
+            {
+                _isWarehouseMode = true;
+                LoadWarehouseStock();
+            }
+            else
+            {
+                _isWarehouseMode = false;
+                LoadOrders();
+            }
         }
 
         private void LoadOrders()
