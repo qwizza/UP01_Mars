@@ -118,7 +118,45 @@ namespace YPMars
             OrdersDataGridView.DataSource = orders;
             UpdateFooter();
         }
+        
+        private void LoadWarehouseStock()
+        {
+            string error;
+            var stock = loader_.GetWarehouseItems(out error);
 
+            if (!string.IsNullOrEmpty(error))
+            {
+                MessageBox.Show(error, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                OrdersDataGridView.DataSource = null;
+                UpdateFooterForWarehouse(0, 0);
+                return;
+            }
+
+            OrdersDataGridView.DataSource = stock;
+
+            if (OrdersDataGridView.Columns["NomenclatureName"] != null)
+            {
+                OrdersDataGridView.Columns["NomenclatureName"].HeaderText = "Наименование номенклатуры";
+                OrdersDataGridView.Columns["StorageZone"].HeaderText = "Зона хранения";
+                OrdersDataGridView.Columns["TotalQuantity"].HeaderText = "Общий остаток";
+                OrdersDataGridView.Columns["ReservedQuantity"].HeaderText = "В резерве";
+                OrdersDataGridView.Columns["AvailableQuantity"].HeaderText = "Доступно";
+                OrdersDataGridView.Columns["UnitPrice"].HeaderText = "Цена за ед.";
+                OrdersDataGridView.Columns["TotalCost"].HeaderText = "Общая стоимость";
+
+                OrdersDataGridView.Columns["UnitPrice"].DefaultCellStyle.Format = "N2";
+                OrdersDataGridView.Columns["TotalCost"].DefaultCellStyle.Format = "N2";
+            }
+
+            int totalPositions = stock.Count;
+            decimal totalSum = stock.Sum(x => x.TotalCost);
+            UpdateFooterForWarehouse(totalPositions, totalSum);
+        }
+        private void UpdateFooterForWarehouse(int totalPositions, decimal totalSum)
+        {
+            TotalCountLabel.Text = $"Всего позиций на складе: {totalPositions}";
+            TotalSumLabel.Text = $"Общая стоимость: {totalSum.ToString("N2")} руб.";
+        }
         private void RefreshButton_Click(object sender, EventArgs e)
         {
             LoadOrders();
