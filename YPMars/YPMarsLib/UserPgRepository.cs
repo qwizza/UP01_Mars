@@ -44,7 +44,6 @@ namespace YPMarsLib
                         {
                             user = new User
                             {
-                                // Читаем значения по именам колонок из PostgreSQL
                                 Login = reader["login"].ToString(),
                                 PasswordHash = reader["password_hash"].ToString(),
                                 Role = (User.UserRole)Enum.Parse(typeof(User.UserRole), reader["role"].ToString())
@@ -112,6 +111,54 @@ namespace YPMarsLib
                 }
                 return sb.ToString();
             }
+        }
+
+        public List<WarehouseItem> GetWarehouseItems(out string error)
+        {
+            error = string.Empty;
+            var stockList = new List<WarehouseItem>();
+
+            string query = @"
+                SELECT 
+                    n.name AS nomenclature_name,
+                    COALESCE(w.storage_zone, 'Основной склад') AS storage_zone,
+                    COALESCE(w.total_quantity, 0) AS total_quantity,
+                    COALESCE(w.reserved_quantity, 0) AS reserved_quantity,
+                    COALESCE(n.unit_price, 0) AS unit_price
+                FROM warehouse_stock w
+                JOIN nomenclature n ON w.nomenclature_id = n.id";
+
+            try
+            {
+                using (var connection = DBConnection.GetConnection())
+                {
+                    connection.Open();
+                    using (var command = new NpgsqlCommand(query, connection))
+                    {
+                        using (var reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var item = new WarehouseItem
+                                {
+                                    NomenclatureName = reader["nomenclature_name"].ToString(),
+                                    StorageZone = reader["storage_zone"].ToString(),
+                                    TotalQuantity = Convert.ToInt32(reader["total_quantity"]),
+                                    ReservedQuantity = Convert.ToInt32(reader["reserved_quantity"]),
+                                    UnitPrice = Convert.ToDecimal(reader["unit_price"])
+                                };
+                                stockList.Add(item);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                error = "Ошибка получения складских остатков: " + ex.Message;
+            }
+
+            return stockList;
         }
     }
 }
