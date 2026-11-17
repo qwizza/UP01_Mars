@@ -16,7 +16,9 @@ namespace YPMars
         private const int DefaultPeriodDays = 30;
         private UserPgRepository loader_;
         private User currentUser_;
+
         private OrderManager _orderManager;
+        private WarehouseManager _warehouseManager;
 
         private string _currentSortField = "OrderDate";
         private bool _isAscending = false;
@@ -32,13 +34,14 @@ namespace YPMars
             IOrderListRepository repository = new OrderListRepository();
             _orderManager = new OrderManager(repository);
 
+            IWarehouseRepository warehouseRepository = new WarehouseRepository();
+            _warehouseManager = new WarehouseManager(warehouseRepository);
+
             if (currentUser_.Role != User.UserRole.SuperUser)
                 RegistrButton.Visible = false;
 
-            if (currentUser_.Role != User.UserRole.SuperUser && currentUser_.Role != User.UserRole.Warehouser)
-                panelBottom.Visible = false;
-
-            NewOrderButton.Visible = (currentUser_.Role == User.UserRole.ManageSale);
+            NewOrderButton.Visible = (currentUser_.Role == User.UserRole.ManageSale
+                                    || currentUser_.Role == User.UserRole.SuperUser);
 
             RefreshButton.Click += RefreshButton_Click;
             ChangeStatusButton.Click += ChangeStatusButton_Click;
@@ -82,14 +85,42 @@ namespace YPMars
 
             if (currentUser_.Role == User.UserRole.Warehouser)
             {
-                _isWarehouseMode = true;
-                LoadWarehouseStock();
+                SetInterfaceMode(true);
             }
             else
             {
-                _isWarehouseMode = false;
-                LoadOrders();
+                SetInterfaceMode(false);
             }
+        }
+
+        private void SetInterfaceMode(bool isWarehouse)
+        {
+            _isWarehouseMode = isWarehouse;
+
+            CounterpartyLabel.Visible = !isWarehouse;
+            cmbCounterparty.Visible = !isWarehouse;
+            ApplyFilterButton.Visible = !isWarehouse;
+            StartDateLabel.Visible = !isWarehouse;
+            StartDateDatetimePick.Visible = !isWarehouse;
+            EndDateLabel.Visible = !isWarehouse;
+            EndDateDatetimePick.Visible = !isWarehouse;
+            OrderDetailsButton.Visible = !isWarehouse;
+
+            StatusLabel.Visible = !isWarehouse;
+            StatusCoboBox.Visible = !isWarehouse;
+            ChangeStatusButton.Visible = !isWarehouse;
+
+            WarehouseModeButton.Visible = !isWarehouse;
+            OrdersModeButton.Visible = isWarehouse;
+
+            this.Text = isWarehouse
+                ? "Главная форма - Склад (Завод МАРС)"
+                : "Главная форма - Управление заказами (Завод МАРС)";
+
+            if (isWarehouse)
+                LoadWarehouseStock();
+            else
+                LoadOrders();
         }
 
         private void LoadOrders()
@@ -121,9 +152,7 @@ namespace YPMars
         
         private void LoadWarehouseStock()
         {
-            string error;
-            IOrderListRepository repository = new OrderListRepository();
-            var stock = repository.GetWarehouseStock(out error); 
+            var stock = _warehouseManager.GetStock(out string error);
 
             if (!string.IsNullOrEmpty(error))
             {
@@ -160,7 +189,10 @@ namespace YPMars
         }
         private void RefreshButton_Click(object sender, EventArgs e)
         {
-            LoadOrders();
+            if (_isWarehouseMode)
+                LoadWarehouseStock();
+            else
+                LoadOrders();
         }
 
         private void ApplyFilterButton_Click(object sender, EventArgs e)
@@ -170,6 +202,8 @@ namespace YPMars
 
         private void OrdersDataGridView_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
+            if (_isWarehouseMode) return;
+
             string clickedColumn = OrdersDataGridView.Columns[e.ColumnIndex].DataPropertyName;
 
             if (string.IsNullOrWhiteSpace(clickedColumn))
@@ -322,9 +356,13 @@ namespace YPMars
             OpenOrderDetails();
         }
 
-        private void btnToggleMode_Click(object sender, EventArgs e)
+        private void WarehouseButton_Click(object sender, EventArgs e)
         {
-
+            SetInterfaceMode(true);
+        }
+        private void OrdersModeButton_Click(object sender, EventArgs e)
+        {
+            SetInterfaceMode(false);
         }
     }
 }
