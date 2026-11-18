@@ -109,6 +109,7 @@
     <Compile Include="OrderListRepository.cs" />
     <Compile Include="OrderManager.cs" />
     <Compile Include="Order.cs" />
+    <Compile Include="OrderReport.cs" />
     <Compile Include="OrderRepository.cs" />
     <Compile Include="OrderStatus.cs" />
     <Compile Include="OrderValidator.cs" />
