@@ -16,7 +16,7 @@ namespace YPMarsLib
             if (report == null) return "Отчет не сформирован";
             if (string.IsNullOrWhiteSpace(report.ContractNumber)) return "Не заполнен номер договора";
             if (string.IsNullOrWhiteSpace(report.CounterpartyName)) return "Не заполнены реквизиты контрагента";
-            if (report.Items == null || report.Items.Count == 0) return "Невозможно сформировать отчет: в заказе нет позиций";
+            if (report.Items == null || report.Items.Count == 0) return "Невозможно сформировать отчёт: в заказе нет позиций";
             return string.Empty;
         }
 
