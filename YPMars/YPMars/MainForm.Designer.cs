@@ -49,7 +49,6 @@
             this.panelHeader = new System.Windows.Forms.Panel();
             this.RegistrButton = new System.Windows.Forms.Button();
             this.panelTop = new System.Windows.Forms.Panel();
-            this.WarehouseModeButton = new System.Windows.Forms.Button();
             this.OrderDetailsButton = new System.Windows.Forms.Button();
             this.CounterpartyLabel = new System.Windows.Forms.Label();
             this.cmbCounterparty = new System.Windows.Forms.ComboBox();
@@ -60,6 +59,7 @@
             this.EndDateDatetimePick = new System.Windows.Forms.DateTimePicker();
             this.RefreshButton = new System.Windows.Forms.Button();
             this.NewOrderButton = new System.Windows.Forms.Button();
+            this.WarehouseModeButton = new System.Windows.Forms.Button();
             this.panelSummary = new System.Windows.Forms.Panel();
             this.TotalCountLabel = new System.Windows.Forms.Label();
             this.TotalSumLabel = new System.Windows.Forms.Label();
@@ -69,6 +69,7 @@
             this.StatusCoboBox = new System.Windows.Forms.ComboBox();
             this.ChangeStatusButton = new System.Windows.Forms.Button();
             this.OrdersModeButton = new System.Windows.Forms.Button();
+            this.GenerateReportButton = new System.Windows.Forms.Button();
             this.panelHeader.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelSummary.SuspendLayout();
@@ -122,23 +123,6 @@
             this.panelTop.Name = "panelTop";
             this.panelTop.Size = new System.Drawing.Size(1340, 50);
             this.panelTop.TabIndex = 3;
-            // 
-            // WarehouseModeButton
-            // 
-            this.WarehouseModeButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.WarehouseModeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
-            this.WarehouseModeButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.WarehouseModeButton.FlatAppearance.BorderSize = 0;
-            this.WarehouseModeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.WarehouseModeButton.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.WarehouseModeButton.ForeColor = System.Drawing.Color.White;
-            this.WarehouseModeButton.Location = new System.Drawing.Point(1205, 13);
-            this.WarehouseModeButton.Name = "WarehouseModeButton";
-            this.WarehouseModeButton.Size = new System.Drawing.Size(120, 28);
-            this.WarehouseModeButton.TabIndex = 11;
-            this.WarehouseModeButton.Text = "К складу";
-            this.WarehouseModeButton.UseVisualStyleBackColor = false;
-            this.WarehouseModeButton.Click += new System.EventHandler(this.WarehouseButton_Click);
             // 
             // OrderDetailsButton
             // 
@@ -262,6 +246,23 @@
             this.NewOrderButton.Text = "Новый заказ";
             this.NewOrderButton.UseVisualStyleBackColor = false;
             // 
+            // WarehouseModeButton
+            // 
+            this.WarehouseModeButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.WarehouseModeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
+            this.WarehouseModeButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.WarehouseModeButton.FlatAppearance.BorderSize = 0;
+            this.WarehouseModeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.WarehouseModeButton.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.WarehouseModeButton.ForeColor = System.Drawing.Color.White;
+            this.WarehouseModeButton.Location = new System.Drawing.Point(1205, 13);
+            this.WarehouseModeButton.Name = "WarehouseModeButton";
+            this.WarehouseModeButton.Size = new System.Drawing.Size(120, 28);
+            this.WarehouseModeButton.TabIndex = 11;
+            this.WarehouseModeButton.Text = "К складу";
+            this.WarehouseModeButton.UseVisualStyleBackColor = false;
+            this.WarehouseModeButton.Click += new System.EventHandler(this.WarehouseButton_Click);
+            // 
             // panelSummary
             // 
             this.panelSummary.BackColor = System.Drawing.SystemColors.ActiveCaption;
@@ -330,6 +331,7 @@
             // 
             this.panelBottom.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.panelBottom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelBottom.Controls.Add(this.GenerateReportButton);
             this.panelBottom.Controls.Add(this.WarehouseModeButton);
             this.panelBottom.Controls.Add(this.StatusLabel);
             this.panelBottom.Controls.Add(this.StatusCoboBox);
@@ -394,6 +396,23 @@
             this.OrdersModeButton.Visible = false;
             this.OrdersModeButton.Click += new System.EventHandler(this.OrdersModeButton_Click);
             // 
+            // GenerateReportButton
+            // 
+            this.GenerateReportButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.GenerateReportButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
+            this.GenerateReportButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.GenerateReportButton.FlatAppearance.BorderSize = 0;
+            this.GenerateReportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.GenerateReportButton.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.GenerateReportButton.ForeColor = System.Drawing.Color.White;
+            this.GenerateReportButton.Location = new System.Drawing.Point(979, 13);
+            this.GenerateReportButton.Name = "GenerateReportButton";
+            this.GenerateReportButton.Size = new System.Drawing.Size(205, 28);
+            this.GenerateReportButton.TabIndex = 12;
+            this.GenerateReportButton.Text = "Сформировать отчет";
+            this.GenerateReportButton.UseVisualStyleBackColor = false;
+            this.GenerateReportButton.Click += new System.EventHandler(this.GenerateReportButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -424,5 +443,7 @@
             this.ResumeLayout(false);
 
         }
+
+        private System.Windows.Forms.Button GenerateReportButton;
     }
 }
