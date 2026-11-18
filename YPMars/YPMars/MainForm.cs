@@ -95,6 +95,9 @@ namespace YPMars
 
         private void SetInterfaceMode(bool isWarehouse)
         {
+            if (currentUser_.Role == User.UserRole.Warehouser)
+                isWarehouse = true;
+
             _isWarehouseMode = isWarehouse;
 
             CounterpartyLabel.Visible = !isWarehouse;
@@ -106,12 +109,17 @@ namespace YPMars
             EndDateDatetimePick.Visible = !isWarehouse;
             OrderDetailsButton.Visible = !isWarehouse;
 
+            bool canCreateOrder = currentUser_.Role == User.UserRole.ManageSale
+                       || currentUser_.Role == User.UserRole.SuperUser;
+            NewOrderButton.Visible = canCreateOrder && !isWarehouse;
+
             StatusLabel.Visible = !isWarehouse;
             StatusCoboBox.Visible = !isWarehouse;
             ChangeStatusButton.Visible = !isWarehouse;
 
-            WarehouseModeButton.Visible = !isWarehouse;
-            OrdersModeButton.Visible = isWarehouse;
+            bool canSwitchModes = currentUser_.Role == User.UserRole.SuperUser;
+            WarehouseModeButton.Visible = canSwitchModes && !isWarehouse;
+            OrdersModeButton.Visible = canSwitchModes && isWarehouse;
 
             this.Text = isWarehouse
                 ? "Главная форма - Склад (Завод МАРС)"
@@ -189,6 +197,13 @@ namespace YPMars
         }
         private void RefreshButton_Click(object sender, EventArgs e)
         {
+            if (currentUser_.Role == User.UserRole.Warehouser)
+            {
+                LoadWarehouseStock();
+
+                return;
+            }
+
             if (_isWarehouseMode)
                 LoadWarehouseStock();
             else
