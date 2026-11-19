@@ -17,8 +17,9 @@ namespace YPMars
         private UserPgRepository loader_;
         private User currentUser_;
 
-        private OrderManager _orderManager;
-        private WarehouseManager _warehouseManager;
+        private OrderManager orderManager_;
+        private WarehouseModel warehouseModel_;
+        private List<WarehouseItem> currentStock_ = new List<WarehouseItem>();
 
         private string _currentSortField = "OrderDate";
         private bool _isAscending = false;
@@ -32,10 +33,10 @@ namespace YPMars
             currentUser_ = currentUser;
 
             IOrderListRepository repository = new OrderListRepository();
-            _orderManager = new OrderManager(repository);
+            orderManager_ = new OrderManager(repository);
 
             IWarehouseRepository warehouseRepository = new WarehouseRepository();
-            _warehouseManager = new WarehouseManager(warehouseRepository);
+            warehouseModel_ = new WarehouseModel(warehouseRepository);
 
             if (currentUser_.Role != User.UserRole.SuperUser)
                 RegistrButton.Visible = false;
@@ -139,7 +140,7 @@ namespace YPMars
                 EndDate = EndDateDatetimePick.Value.Date.AddDays(1).AddTicks(-1)
             };
 
-            List<Order> orders = _orderManager.GetOrders(filterDate, out string error);
+            List<Order> orders = orderManager_.GetOrders(filterDate, out string error);
 
             if (!string.IsNullOrEmpty(error))
             {
@@ -160,13 +161,13 @@ namespace YPMars
         
         private void LoadWarehouseStock()
         {
-            var stock = _warehouseManager.GetStock(out string error);
+            var stock = warehouseModel_.GetStock(out string error);
 
             if (!string.IsNullOrEmpty(error))
             {
                 MessageBox.Show(error, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 OrdersDataGridView.DataSource = null;
-                UpdateFooterForWarehouse(0, 0);
+                UpdateFooterForWarehouse(currentStock_);
                 return;
             }
 
@@ -188,12 +189,17 @@ namespace YPMars
 
             int totalPositions = stock.Count;
             decimal totalSum = stock.Sum(x => x.TotalCost);
-            UpdateFooterForWarehouse(totalPositions, totalSum);
+            UpdateFooterForWarehouse(currentStock_);
         }
-        private void UpdateFooterForWarehouse(int totalPositions, decimal totalSum)
+        private void UpdateFooterForWarehouse(List<WarehouseItem> items)
         {
-            TotalCountLabel.Text = $"Всего позиций на складе: {totalPositions}";
-            TotalSumLabel.Text = $"Общая стоимость: {totalSum.ToString("N2")} руб.";
+            decimal totalCost = warehouseModel_.CalculateTotalStockCost(items);
+            decimal totalAvailable = warehouseModel_.CalculateTotalAvailableQuantity(items);
+            int postitionCount = items?.Count ?? 0;
+
+            TotalCountLabel.Text = $"Всего позиций на складе: {postitionCount}";
+            TotalAvailableLabel.Text = $"Доступно к отгрузке: {totalAvailable}";
+            TotalSumLabel.Text = $"Общая стоимость: {totalAvailable.ToString("N2")} руб.";
         }
         private void RefreshButton_Click(object sender, EventArgs e)
         {
@@ -291,8 +297,8 @@ namespace YPMars
 
         private void UpdateFooter()
         {
-            int totalCount = _orderManager.GetTotalCount();
-            decimal totalSum = _orderManager.GetTotalSum();
+            int totalCount = orderManager_.GetTotalCount();
+            decimal totalSum = orderManager_.GetTotalSum();
 
             TotalCountLabel.Text = $"Всего заказов: {totalCount}";
             TotalSumLabel.Text = $"Итоговая сумма: {totalSum.ToString("N2")} руб.";
@@ -310,7 +316,7 @@ namespace YPMars
             var selectedPair = (KeyValuePair<OrderStatus, string>)StatusCoboBox.SelectedItem;
             OrderStatus newStatus = selectedPair.Key;
 
-            string error = _orderManager.UpdateStatus(selectedOrder.ContractNumber, newStatus);
+            string error = orderManager_.UpdateStatus(selectedOrder.ContractNumber, newStatus);
 
             if (string.IsNullOrEmpty(error))
             {

@@ -49,7 +49,6 @@
             this.panelHeader = new System.Windows.Forms.Panel();
             this.RegistrButton = new System.Windows.Forms.Button();
             this.panelTop = new System.Windows.Forms.Panel();
-            this.WarehouseModeButton = new System.Windows.Forms.Button();
             this.OrderDetailsButton = new System.Windows.Forms.Button();
             this.CounterpartyLabel = new System.Windows.Forms.Label();
             this.cmbCounterparty = new System.Windows.Forms.ComboBox();
@@ -60,6 +59,7 @@
             this.EndDateDatetimePick = new System.Windows.Forms.DateTimePicker();
             this.RefreshButton = new System.Windows.Forms.Button();
             this.NewOrderButton = new System.Windows.Forms.Button();
+            this.WarehouseModeButton = new System.Windows.Forms.Button();
             this.panelSummary = new System.Windows.Forms.Panel();
             this.TotalCountLabel = new System.Windows.Forms.Label();
             this.TotalSumLabel = new System.Windows.Forms.Label();
@@ -69,6 +69,7 @@
             this.StatusCoboBox = new System.Windows.Forms.ComboBox();
             this.ChangeStatusButton = new System.Windows.Forms.Button();
             this.OrdersModeButton = new System.Windows.Forms.Button();
+            this.TotalAvailableLabel = new System.Windows.Forms.Label();
             this.panelHeader.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelSummary.SuspendLayout();
@@ -122,23 +123,6 @@
             this.panelTop.Name = "panelTop";
             this.panelTop.Size = new System.Drawing.Size(1340, 50);
             this.panelTop.TabIndex = 3;
-            // 
-            // WarehouseModeButton
-            // 
-            this.WarehouseModeButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.WarehouseModeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
-            this.WarehouseModeButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.WarehouseModeButton.FlatAppearance.BorderSize = 0;
-            this.WarehouseModeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.WarehouseModeButton.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.WarehouseModeButton.ForeColor = System.Drawing.Color.White;
-            this.WarehouseModeButton.Location = new System.Drawing.Point(1205, 13);
-            this.WarehouseModeButton.Name = "WarehouseModeButton";
-            this.WarehouseModeButton.Size = new System.Drawing.Size(120, 28);
-            this.WarehouseModeButton.TabIndex = 11;
-            this.WarehouseModeButton.Text = "К складу";
-            this.WarehouseModeButton.UseVisualStyleBackColor = false;
-            this.WarehouseModeButton.Click += new System.EventHandler(this.WarehouseButton_Click);
             // 
             // OrderDetailsButton
             // 
@@ -262,10 +246,28 @@
             this.NewOrderButton.Text = "Новый заказ";
             this.NewOrderButton.UseVisualStyleBackColor = false;
             // 
+            // WarehouseModeButton
+            // 
+            this.WarehouseModeButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.WarehouseModeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
+            this.WarehouseModeButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.WarehouseModeButton.FlatAppearance.BorderSize = 0;
+            this.WarehouseModeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.WarehouseModeButton.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.WarehouseModeButton.ForeColor = System.Drawing.Color.White;
+            this.WarehouseModeButton.Location = new System.Drawing.Point(1205, 13);
+            this.WarehouseModeButton.Name = "WarehouseModeButton";
+            this.WarehouseModeButton.Size = new System.Drawing.Size(120, 28);
+            this.WarehouseModeButton.TabIndex = 11;
+            this.WarehouseModeButton.Text = "К складу";
+            this.WarehouseModeButton.UseVisualStyleBackColor = false;
+            this.WarehouseModeButton.Click += new System.EventHandler(this.WarehouseButton_Click);
+            // 
             // panelSummary
             // 
             this.panelSummary.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.panelSummary.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelSummary.Controls.Add(this.TotalAvailableLabel);
             this.panelSummary.Controls.Add(this.TotalCountLabel);
             this.panelSummary.Controls.Add(this.TotalSumLabel);
             this.panelSummary.Dock = System.Windows.Forms.DockStyle.Top;
@@ -394,6 +396,17 @@
             this.OrdersModeButton.Visible = false;
             this.OrdersModeButton.Click += new System.EventHandler(this.OrdersModeButton_Click);
             // 
+            // TotalAvailableLabel
+            // 
+            this.TotalAvailableLabel.AutoSize = true;
+            this.TotalAvailableLabel.Font = new System.Drawing.Font("Times New Roman", 13F, System.Drawing.FontStyle.Bold);
+            this.TotalAvailableLabel.ForeColor = System.Drawing.Color.Black;
+            this.TotalAvailableLabel.Location = new System.Drawing.Point(599, 6);
+            this.TotalAvailableLabel.Name = "TotalAvailableLabel";
+            this.TotalAvailableLabel.Size = new System.Drawing.Size(197, 20);
+            this.TotalAvailableLabel.TabIndex = 2;
+            this.TotalAvailableLabel.Text = "Доступно к отгрузке: 0";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -424,5 +437,7 @@
             this.ResumeLayout(false);
 
         }
+
+        private System.Windows.Forms.Label TotalAvailableLabel;
     }
 }
