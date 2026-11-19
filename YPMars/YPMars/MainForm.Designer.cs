@@ -401,7 +401,7 @@
             this.TotalAvailableLabel.AutoSize = true;
             this.TotalAvailableLabel.Font = new System.Drawing.Font("Times New Roman", 13F, System.Drawing.FontStyle.Bold);
             this.TotalAvailableLabel.ForeColor = System.Drawing.Color.Black;
-            this.TotalAvailableLabel.Location = new System.Drawing.Point(599, 6);
+            this.TotalAvailableLabel.Location = new System.Drawing.Point(548, 7);
             this.TotalAvailableLabel.Name = "TotalAvailableLabel";
             this.TotalAvailableLabel.Size = new System.Drawing.Size(197, 20);
             this.TotalAvailableLabel.TabIndex = 2;

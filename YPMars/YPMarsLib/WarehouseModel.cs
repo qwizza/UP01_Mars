@@ -20,14 +20,12 @@ namespace YPMarsLib
         {
             error = string.Empty;
 
-            var item = repository_.GetWarehouseStock(out string repoError);
-            if (!string.IsNullOrEmpty(repoError))
+            var stock = repository_.GetWarehouseStock(out error);
+            if (!string.IsNullOrEmpty(error))
             {
-                error = repoError;
                 return new List<WarehouseItem>();
             }
-
-            return repository_.GetWarehouseStock(out error);
+            return stock;
         }
 
         public decimal CalculateTotalStockCost(IEnumerable<WarehouseItem> items)
@@ -40,13 +38,9 @@ namespace YPMarsLib
             return items.Sum(item => item.TotalCost);
         }
 
-        public decimal CalculateTotalAvailableQuantity(IEnumerable<WarehouseItem> items)
+        public int CalculateTotalAvailableQuantity(IEnumerable<WarehouseItem> items)
         {
-            if (items == null)
-            {
-                return 0.00m;
-            }
-
+            if (items == null) return 0;
             return items.Sum(item => item.AvailableQuantity);
         }
     }

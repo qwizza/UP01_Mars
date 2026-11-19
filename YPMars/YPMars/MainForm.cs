@@ -19,7 +19,6 @@ namespace YPMars
 
         private OrderManager orderManager_;
         private WarehouseModel warehouseModel_;
-        private List<WarehouseItem> currentStock_ = new List<WarehouseItem>();
 
         private string _currentSortField = "OrderDate";
         private bool _isAscending = false;
@@ -121,6 +120,7 @@ namespace YPMars
             bool canSwitchModes = currentUser_.Role == User.UserRole.SuperUser;
             WarehouseModeButton.Visible = canSwitchModes && !isWarehouse;
             OrdersModeButton.Visible = canSwitchModes && isWarehouse;
+            TotalAvailableLabel.Visible = isWarehouse;
 
             this.Text = isWarehouse
                 ? "Главная форма - Склад (Завод МАРС)"
@@ -166,8 +166,8 @@ namespace YPMars
             if (!string.IsNullOrEmpty(error))
             {
                 MessageBox.Show(error, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                OrdersDataGridView.DataSource = null;
-                UpdateFooterForWarehouse(currentStock_);
+                OrdersDataGridView.DataSource = stock;
+                UpdateFooterForWarehouse(stock);
                 return;
             }
 
@@ -189,17 +189,17 @@ namespace YPMars
 
             int totalPositions = stock.Count;
             decimal totalSum = stock.Sum(x => x.TotalCost);
-            UpdateFooterForWarehouse(currentStock_);
+            UpdateFooterForWarehouse(stock);
         }
         private void UpdateFooterForWarehouse(List<WarehouseItem> items)
         {
             decimal totalCost = warehouseModel_.CalculateTotalStockCost(items);
-            decimal totalAvailable = warehouseModel_.CalculateTotalAvailableQuantity(items);
-            int postitionCount = items?.Count ?? 0;
+            int totalAvailable = warehouseModel_.CalculateTotalAvailableQuantity(items);
+            int positionCount = items?.Count ?? 0;
 
-            TotalCountLabel.Text = $"Всего позиций на складе: {postitionCount}";
-            TotalAvailableLabel.Text = $"Доступно к отгрузке: {totalAvailable}";
-            TotalSumLabel.Text = $"Общая стоимость: {totalAvailable.ToString("N2")} руб.";
+            TotalCountLabel.Text = $"Всего позиций на складе: {positionCount}";
+            TotalAvailableLabel.Text = $"Доступно к отгрузке: {totalAvailable} шт.";
+            TotalSumLabel.Text = $"Общая стоимость: {totalCost.ToString("N2")} руб."; 
         }
         private void RefreshButton_Click(object sender, EventArgs e)
         {
