@@ -11,9 +11,15 @@ namespace YPMarsLib
     {
         private readonly IWarehouseRepository repository_;
 
+        public List<WarehouseItem> Items { get; private set; } = new List<WarehouseItem>();
+
+        public int PositionCount => Items?.Count ?? 0;
+        public int TotalAvailableQuantity => CalculateTotalAvailableQuantity(Items);
+        public decimal TotalStockCost => CalculateTotalStockCost(Items);
+
         public WarehouseModel(IWarehouseRepository repository)
         {
-            repository_ = repository;
+            repository_ = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
         public List<WarehouseItem> GetStock(out string error)
@@ -21,26 +27,29 @@ namespace YPMarsLib
             error = string.Empty;
 
             var stock = repository_.GetWarehouseStock(out error);
-            if (!string.IsNullOrEmpty(error))
+            if (!string.IsNullOrEmpty(error) || stock == null)
             {
-                return new List<WarehouseItem>();
+                Items = new List<WarehouseItem>();
+                return Items;
             }
-            return stock;
+
+            Items = stock;
+            return Items;
         }
 
         public decimal CalculateTotalStockCost(IEnumerable<WarehouseItem> items)
         {
-            if (items == null) 
-            {
+            if (items == null)
                 return 0.00m;
-            }
 
             return items.Sum(item => item.TotalCost);
         }
 
         public int CalculateTotalAvailableQuantity(IEnumerable<WarehouseItem> items)
         {
-            if (items == null) return 0;
+            if (items == null)
+                return 0;
+
             return items.Sum(item => item.AvailableQuantity);
         }
     }

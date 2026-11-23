@@ -17,20 +17,21 @@
         private System.Windows.Forms.DateTimePicker EndDateDatetimePick;
         private System.Windows.Forms.Button RefreshButton;
         private System.Windows.Forms.Button NewOrderButton;
-        private System.Windows.Forms.Button OrderDetailsButton; // Кнопка "Состав заказа"
-        private System.Windows.Forms.Button WarehouseModeButton; // Кнопка перехода на склад
+        private System.Windows.Forms.Button OrderDetailsButton;
+        private System.Windows.Forms.Button WarehouseModeButton;
 
         private System.Windows.Forms.Panel panelSummary;
         private System.Windows.Forms.Label TotalCountLabel;
         private System.Windows.Forms.Label TotalSumLabel;
 
         private System.Windows.Forms.DataGridView OrdersDataGridView;
+        private WarehouseControl warehouseControl1;
 
         private System.Windows.Forms.Panel panelBottom;
         private System.Windows.Forms.Label StatusLabel;
         private System.Windows.Forms.ComboBox StatusCoboBox;
         private System.Windows.Forms.Button ChangeStatusButton;
-        private System.Windows.Forms.Button OrdersModeButton; // Новая кнопка возврата к заказам
+        private System.Windows.Forms.Button OrdersModeButton;
 
         protected override void Dispose(bool disposing)
         {
@@ -64,12 +65,12 @@
             this.TotalCountLabel = new System.Windows.Forms.Label();
             this.TotalSumLabel = new System.Windows.Forms.Label();
             this.OrdersDataGridView = new System.Windows.Forms.DataGridView();
+            this.warehouseControl1 = new YPMars.WarehouseControl();
             this.panelBottom = new System.Windows.Forms.Panel();
             this.StatusLabel = new System.Windows.Forms.Label();
             this.StatusCoboBox = new System.Windows.Forms.ComboBox();
             this.ChangeStatusButton = new System.Windows.Forms.Button();
             this.OrdersModeButton = new System.Windows.Forms.Button();
-            this.TotalAvailableLabel = new System.Windows.Forms.Label();
             this.panelHeader.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelSummary.SuspendLayout();
@@ -267,7 +268,6 @@
             // 
             this.panelSummary.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.panelSummary.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelSummary.Controls.Add(this.TotalAvailableLabel);
             this.panelSummary.Controls.Add(this.TotalCountLabel);
             this.panelSummary.Controls.Add(this.TotalSumLabel);
             this.panelSummary.Dock = System.Windows.Forms.DockStyle.Top;
@@ -327,6 +327,16 @@
             this.OrdersDataGridView.Size = new System.Drawing.Size(1340, 470);
             this.OrdersDataGridView.TabIndex = 0;
             this.OrdersDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OrdersDataGridView_CellDoubleClick);
+            // 
+            // warehouseControl1
+            // 
+            this.warehouseControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.warehouseControl1.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.warehouseControl1.Location = new System.Drawing.Point(0, 40);
+            this.warehouseControl1.Name = "warehouseControl1";
+            this.warehouseControl1.Size = new System.Drawing.Size(1340, 555);
+            this.warehouseControl1.TabIndex = 5;
+            this.warehouseControl1.Visible = false;
             // 
             // panelBottom
             // 
@@ -396,23 +406,13 @@
             this.OrdersModeButton.Visible = false;
             this.OrdersModeButton.Click += new System.EventHandler(this.OrdersModeButton_Click);
             // 
-            // TotalAvailableLabel
-            // 
-            this.TotalAvailableLabel.AutoSize = true;
-            this.TotalAvailableLabel.Font = new System.Drawing.Font("Times New Roman", 13F, System.Drawing.FontStyle.Bold);
-            this.TotalAvailableLabel.ForeColor = System.Drawing.Color.Black;
-            this.TotalAvailableLabel.Location = new System.Drawing.Point(548, 7);
-            this.TotalAvailableLabel.Name = "TotalAvailableLabel";
-            this.TotalAvailableLabel.Size = new System.Drawing.Size(197, 20);
-            this.TotalAvailableLabel.TabIndex = 2;
-            this.TotalAvailableLabel.Text = "Доступно к отгрузке: 0";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1340, 650);
+            this.Controls.Add(this.warehouseControl1);
             this.Controls.Add(this.OrdersDataGridView);
             this.Controls.Add(this.panelBottom);
             this.Controls.Add(this.panelSummary);
@@ -435,9 +435,6 @@
             this.panelBottom.ResumeLayout(false);
             this.panelBottom.PerformLayout();
             this.ResumeLayout(false);
-
         }
-
-        private System.Windows.Forms.Label TotalAvailableLabel;
     }
 }

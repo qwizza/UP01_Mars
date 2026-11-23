@@ -140,6 +140,12 @@
     <Compile Include="RegistrForm.Designer.cs">
       <DependentUpon>RegistrForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="WarehouseControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WarehouseControl.Designer.cs">
+      <DependentUpon>WarehouseControl.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AuthForm.resx">
       <DependentUpon>AuthForm.cs</DependentUpon>
       <Generator>ResXFileCodeGenerator</Generator>

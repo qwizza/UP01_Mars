@@ -23,8 +23,6 @@ namespace YPMars
         private string _currentSortField = "OrderDate";
         private bool _isAscending = false;
 
-        private bool _isWarehouseMode = false;
-
         public MainForm(UserPgRepository loader, User currentUser)
         {
             InitializeComponent();
@@ -98,16 +96,9 @@ namespace YPMars
             if (currentUser_.Role == User.UserRole.Warehouser)
                 isWarehouse = true;
 
-            _isWarehouseMode = isWarehouse;
-
-            CounterpartyLabel.Visible = !isWarehouse;
-            cmbCounterparty.Visible = !isWarehouse;
-            ApplyFilterButton.Visible = !isWarehouse;
-            StartDateLabel.Visible = !isWarehouse;
-            StartDateDatetimePick.Visible = !isWarehouse;
-            EndDateLabel.Visible = !isWarehouse;
-            EndDateDatetimePick.Visible = !isWarehouse;
-            OrderDetailsButton.Visible = !isWarehouse;
+            panelTop.Visible = !isWarehouse;
+            panelSummary.Visible = !isWarehouse;
+            OrdersDataGridView.Visible = !isWarehouse;
 
             bool canCreateOrder = currentUser_.Role == User.UserRole.ManageSale
                        || currentUser_.Role == User.UserRole.SuperUser;
@@ -120,14 +111,15 @@ namespace YPMars
             bool canSwitchModes = currentUser_.Role == User.UserRole.SuperUser;
             WarehouseModeButton.Visible = canSwitchModes && !isWarehouse;
             OrdersModeButton.Visible = canSwitchModes && isWarehouse;
-            TotalAvailableLabel.Visible = isWarehouse;
+
+            warehouseControl1.Visible = isWarehouse;
 
             this.Text = isWarehouse
                 ? "Главная форма - Склад (Завод МАРС)"
                 : "Главная форма - Управление заказами (Завод МАРС)";
 
             if (isWarehouse)
-                LoadWarehouseStock();
+                warehouseControl1.Initialize(warehouseModel_);
             else
                 LoadOrders();
         }
@@ -159,50 +151,9 @@ namespace YPMars
             UpdateFooter();
         }
 
-        private void LoadWarehouseStock()
-        {
-            var stock = warehouseModel_.GetStock(out string error);
-
-            if (!string.IsNullOrEmpty(error))
-            {
-                MessageBox.Show(error, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                OrdersDataGridView.DataSource = stock;
-                UpdateFooterForWarehouse(stock);
-                return;
-            }
-
-            OrdersDataGridView.DataSource = stock;
-
-            if (OrdersDataGridView.Columns["UnitPrice"] != null)
-                OrdersDataGridView.Columns["UnitPrice"].DefaultCellStyle.Format = "N2";
-            if (OrdersDataGridView.Columns["TotalCost"] != null)
-                OrdersDataGridView.Columns["TotalCost"].DefaultCellStyle.Format = "N2";
-
-            UpdateFooterForWarehouse(stock);
-        }
-        private void UpdateFooterForWarehouse(List<WarehouseItem> items)
-        {
-            decimal totalCost = warehouseModel_.CalculateTotalStockCost(items);
-            int totalAvailable = warehouseModel_.CalculateTotalAvailableQuantity(items);
-            int positionCount = items?.Count ?? 0;
-
-            TotalCountLabel.Text = $"Всего позиций на складе: {positionCount}";
-            TotalAvailableLabel.Text = $"Доступно к отгрузке: {totalAvailable} шт.";
-            TotalSumLabel.Text = $"Общая стоимость: {totalCost.ToString("N2")} руб."; 
-        }
         private void RefreshButton_Click(object sender, EventArgs e)
         {
-            if (currentUser_.Role == User.UserRole.Warehouser)
-            {
-                LoadWarehouseStock();
-
-                return;
-            }
-
-            if (_isWarehouseMode)
-                LoadWarehouseStock();
-            else
-                LoadOrders();
+            LoadOrders();
         }
 
         private void ApplyFilterButton_Click(object sender, EventArgs e)
@@ -212,8 +163,6 @@ namespace YPMars
 
         private void OrdersDataGridView_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (_isWarehouseMode) return;
-
             string clickedColumn = OrdersDataGridView.Columns[e.ColumnIndex].DataPropertyName;
 
             if (string.IsNullOrWhiteSpace(clickedColumn))

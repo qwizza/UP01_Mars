@@ -2,6 +2,7 @@
 {
     partial class ItemEditForm
     {
+        private WarehouseControl warehouseControl1;
         private System.ComponentModel.IContainer components = null;
 
         protected override void Dispose(bool disposing)
@@ -15,6 +16,7 @@
 
         private void InitializeComponent()
         {
+            this.warehouseControl1 = new YPMars.WarehouseControl();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ItemEditForm));
             this.panelTop = new System.Windows.Forms.Panel();
             this.NomLabel = new System.Windows.Forms.Label();
