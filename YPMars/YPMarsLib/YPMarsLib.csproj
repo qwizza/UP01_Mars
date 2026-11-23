@@ -97,29 +97,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContractNumberGenerator.cs" />
-    <Compile Include="DBConnection.cs" />
-    <Compile Include="Directory.cs" />
-    <Compile Include="IOrderListRepository.cs" />
-    <Compile Include="IOrderRepository.cs" />
-    <Compile Include="IWarehouseRepository.cs" />
-    <Compile Include="OrderDateFilter.cs" />
-    <Compile Include="OrderFilter.cs" />
-    <Compile Include="OrderItem.cs" />
-    <Compile Include="OrderListRepository.cs" />
-    <Compile Include="OrderManager.cs" />
-    <Compile Include="Order.cs" />
-    <Compile Include="OrderRepository.cs" />
-    <Compile Include="OrderStatus.cs" />
-    <Compile Include="OrderValidator.cs" />
-    <Compile Include="Validator.cs" />
-    <Compile Include="IUserRepository.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="Services\ContractNumberGenerator.cs" />
+    <Compile Include="Repositories\DBConnection.cs" />
+    <Compile Include="Repositories\Directory.cs" />
+    <Compile Include="Interfaces\IOrderListRepository.cs" />
+    <Compile Include="Interfaces\IOrderRepository.cs" />
+    <Compile Include="Interfaces\IWarehouseRepository.cs" />
+    <Compile Include="Models\OrderDateFilter.cs" />
+    <Compile Include="Models\OrderFilter.cs" />
+    <Compile Include="Models\OrderItem.cs" />
+    <Compile Include="Repositories\OrderListRepository.cs" />
+    <Compile Include="Models\OrderManager.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Repositories\OrderRepository.cs" />
+    <Compile Include="Models\OrderStatus.cs" />
+    <Compile Include="Validation\OrderValidator.cs" />
+    <Compile Include="Validation\Validator.cs" />
+    <Compile Include="Interfaces\IUserRepository.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserPgRepository.cs" />
-    <Compile Include="WarehouseItem.cs" />
-    <Compile Include="WarehouseModel.cs" />
-    <Compile Include="WarehouseRepository.cs" />
+    <Compile Include="Repositories\UserPgRepository.cs" />
+    <Compile Include="Models\WarehouseItem.cs" />
+    <Compile Include="Models\WarehouseModel.cs" />
+    <Compile Include="Repositories\WarehouseRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
