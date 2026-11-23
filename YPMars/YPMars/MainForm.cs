@@ -96,6 +96,7 @@ namespace YPMars
             if (currentUser_.Role == User.UserRole.Warehouser)
                 isWarehouse = true;
 
+            GenerateReportButton.Visible = !isWarehouse;
             panelTop.Visible = !isWarehouse;
             panelSummary.Visible = !isWarehouse;
             OrdersDataGridView.Visible = !isWarehouse;
