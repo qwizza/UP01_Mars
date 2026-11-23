@@ -27,8 +27,8 @@ namespace YPMarsTests
             mockRepo.Setup(repo => repo.GetWarehouseStock(out error))
                     .Returns(expectedStock);
 
-            IWarehouseRepository repository = mockRepo.Object;
-            var result = repository.GetWarehouseStock(out error);
+            var model = new WarehouseModel(mockRepo.Object);
+            var result = model.GetStock(out error);
 
             Assert.IsNotNull(result);
             Assert.AreEqual(2, result.Count);
@@ -46,8 +46,8 @@ namespace YPMarsTests
             mockRepo.Setup(repo => repo.GetWarehouseStock(out error))
                     .Returns(new List<WarehouseItem>());
 
-            IWarehouseRepository repository = mockRepo.Object;
-            var result = repository.GetWarehouseStock(out error);
+            var model = new WarehouseModel(mockRepo.Object);
+            var result = model.GetStock(out error);
 
             Assert.IsNotNull(result);
             Assert.AreEqual(0, result.Count);
@@ -65,8 +65,8 @@ namespace YPMarsTests
             mockRepo.Setup(repo => repo.GetWarehouseStock(out expectedError))
                     .Returns(new List<WarehouseItem>());
 
-            IWarehouseRepository repository = mockRepo.Object;
-            var result = repository.GetWarehouseStock(out error);
+            var model = new WarehouseModel(mockRepo.Object);
+            var result = model.GetStock(out error);
 
             Assert.IsNotNull(result);
             Assert.AreEqual(0, result.Count);
@@ -77,16 +77,47 @@ namespace YPMarsTests
         [TestMethod]
         public void Warehouse_CalculateTotalWarehouseValue_ReturnsCorrectSum()
         {
+            var mockRepo = new Mock<IWarehouseRepository>();
             var stock = new List<WarehouseItem>
             {
-                new WarehouseItem { TotalQuantity = 10, UnitPrice = 890.00m },
-                new WarehouseItem { TotalQuantity = 2, UnitPrice = 1250.50m },
-                new WarehouseItem { TotalQuantity = 1, UnitPrice = 3400.00m }
+                new WarehouseItem { NomenclatureName = "Позиция 1", StorageZone = "Склад 1", TotalQuantity = 10, ReservedQuantity = 0, UnitPrice = 890.00m },
+                new WarehouseItem { NomenclatureName = "Позиция 2", StorageZone = "Склад 1", TotalQuantity = 2, ReservedQuantity = 0, UnitPrice = 1250.50m },
+                new WarehouseItem { NomenclatureName = "Позиция 3", StorageZone = "Склад 2", TotalQuantity = 1, ReservedQuantity = 0, UnitPrice = 3400.00m }
             };
 
-            decimal totalSum = stock.Sum(x => x.TotalCost);
+            string repoError = string.Empty;
+            mockRepo.Setup(repo => repo.GetWarehouseStock(out repoError))
+                    .Returns(stock);
 
+            var model = new WarehouseModel(mockRepo.Object);
+            var loadedStock = model.GetStock(out string error);
+            decimal totalSum = model.CalculateTotalStockCost(loadedStock);
+
+            Assert.AreEqual(string.Empty, error);
             Assert.AreEqual(14801.00m, totalSum);
+        }
+
+        // Сценарий 5: Подсчёт общего свободного остатка через CalculateTotalAvailableQuantity
+        [TestMethod]
+        public void Warehouse_CalculateTotalAvailableQuantity_ReturnsSumOfAvailable()
+        {
+            var mockRepo = new Mock<IWarehouseRepository>();
+            var stock = new List<WarehouseItem>
+            {
+                new WarehouseItem { NomenclatureName = "Позиция 1", StorageZone = "Склад 1", TotalQuantity = 500, ReservedQuantity = 100, UnitPrice = 100.00m }, 
+                new WarehouseItem { NomenclatureName = "Позиция 2", StorageZone = "Склад 2", TotalQuantity = 200, ReservedQuantity = 50, UnitPrice = 200.00m }   
+            };
+
+            string repoError = string.Empty;
+            mockRepo.Setup(repo => repo.GetWarehouseStock(out repoError))
+                    .Returns(stock);
+
+            var model = new WarehouseModel(mockRepo.Object);
+            var loadedStock = model.GetStock(out string error);
+            decimal totalAvailable = model.CalculateTotalAvailableQuantity(loadedStock);
+
+            Assert.AreEqual(string.Empty, error);
+            Assert.AreEqual(550, totalAvailable);
         }
 
         // 2. Тестирование расчетов складской модели (WarehouseItem)
@@ -97,8 +128,11 @@ namespace YPMarsTests
         {
             var item = new WarehouseItem
             {
+                NomenclatureName = "Деталь А",
+                StorageZone = "Склад 1",
                 TotalQuantity = 300,
-                ReservedQuantity = 120
+                ReservedQuantity = 120,
+                UnitPrice = 1000.00m
             };
 
             Assert.AreEqual(180, item.AvailableQuantity);

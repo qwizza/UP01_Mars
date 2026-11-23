@@ -34,12 +34,6 @@
     <Reference Include="Castle.Core, Version=5.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Core.5.1.1\lib\net462\Castle.Core.dll</HintPath>
     </Reference>
-    <Reference Include="DocumentFormat.OpenXml, Version=3.5.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
-      <HintPath>..\packages\DocumentFormat.OpenXml.3.5.1\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
-    </Reference>
-    <Reference Include="DocumentFormat.OpenXml.Framework, Version=3.5.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
-      <HintPath>..\packages\DocumentFormat.OpenXml.Framework.3.5.1\lib\net46\DocumentFormat.OpenXml.Framework.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -101,36 +95,31 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ContractNumberGenerator.cs" />
-    <Compile Include="DBConnection.cs" />
-    <Compile Include="Directory.cs" />
-    <Compile Include="IOrderListRepository.cs" />
-    <Compile Include="IOrderReportRepository.cs" />
-    <Compile Include="IOrderRepository.cs" />
-    <Compile Include="IWarehouseRepository.cs" />
-    <Compile Include="OrderDateFilter.cs" />
-    <Compile Include="OrderFilter.cs" />
-    <Compile Include="OrderItem.cs" />
-    <Compile Include="OrderListRepository.cs" />
-    <Compile Include="OrderManager.cs" />
-    <Compile Include="Order.cs" />
-    <Compile Include="OrderReport.cs" />
-    <Compile Include="OrderReportGenerator.cs" />
-    <Compile Include="OrderReportRepository.cs" />
-    <Compile Include="OrderRepository.cs" />
-    <Compile Include="OrderStatus.cs" />
-    <Compile Include="OrderValidator.cs" />
-    <Compile Include="Validator.cs" />
-    <Compile Include="IUserRepository.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="Services\ContractNumberGenerator.cs" />
+    <Compile Include="Repositories\DBConnection.cs" />
+    <Compile Include="Repositories\Directory.cs" />
+    <Compile Include="Interfaces\IOrderListRepository.cs" />
+    <Compile Include="Interfaces\IOrderRepository.cs" />
+    <Compile Include="Interfaces\IWarehouseRepository.cs" />
+    <Compile Include="Models\OrderDateFilter.cs" />
+    <Compile Include="Models\OrderFilter.cs" />
+    <Compile Include="Models\OrderItem.cs" />
+    <Compile Include="Repositories\OrderListRepository.cs" />
+    <Compile Include="Models\OrderManager.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Repositories\OrderRepository.cs" />
+    <Compile Include="Models\OrderStatus.cs" />
+    <Compile Include="Validation\OrderValidator.cs" />
+    <Compile Include="Validation\Validator.cs" />
+    <Compile Include="Interfaces\IUserRepository.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UserPgRepository.cs" />
-    <Compile Include="WarehouseItem.cs" />
-    <Compile Include="WarehouseManager.cs" />
-    <Compile Include="WarehouseRepository.cs" />
+    <Compile Include="Repositories\UserPgRepository.cs" />
+    <Compile Include="Models\WarehouseItem.cs" />
+    <Compile Include="Models\WarehouseModel.cs" />
+    <Compile Include="Repositories\WarehouseRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

@@ -17,13 +17,11 @@ namespace YPMars
         private UserPgRepository loader_;
         private User currentUser_;
 
-        private OrderManager _orderManager;
-        private WarehouseManager _warehouseManager;
+        private OrderManager orderManager_;
+        private WarehouseModel warehouseModel_;
 
         private string _currentSortField = "OrderDate";
         private bool _isAscending = false;
-
-        private bool _isWarehouseMode = false;
 
         public MainForm(UserPgRepository loader, User currentUser)
         {
@@ -32,10 +30,10 @@ namespace YPMars
             currentUser_ = currentUser;
 
             IOrderListRepository repository = new OrderListRepository();
-            _orderManager = new OrderManager(repository);
+            orderManager_ = new OrderManager(repository);
 
             IWarehouseRepository warehouseRepository = new WarehouseRepository();
-            _warehouseManager = new WarehouseManager(warehouseRepository);
+            warehouseModel_ = new WarehouseModel(warehouseRepository);
 
             if (currentUser_.Role != User.UserRole.SuperUser)
                 RegistrButton.Visible = false;
@@ -98,16 +96,9 @@ namespace YPMars
             if (currentUser_.Role == User.UserRole.Warehouser)
                 isWarehouse = true;
 
-            _isWarehouseMode = isWarehouse;
-
-            CounterpartyLabel.Visible = !isWarehouse;
-            cmbCounterparty.Visible = !isWarehouse;
-            ApplyFilterButton.Visible = !isWarehouse;
-            StartDateLabel.Visible = !isWarehouse;
-            StartDateDatetimePick.Visible = !isWarehouse;
-            EndDateLabel.Visible = !isWarehouse;
-            EndDateDatetimePick.Visible = !isWarehouse;
-            OrderDetailsButton.Visible = !isWarehouse;
+            panelTop.Visible = !isWarehouse;
+            panelSummary.Visible = !isWarehouse;
+            OrdersDataGridView.Visible = !isWarehouse;
 
             bool canCreateOrder = currentUser_.Role == User.UserRole.ManageSale
                        || currentUser_.Role == User.UserRole.SuperUser;
@@ -121,12 +112,14 @@ namespace YPMars
             WarehouseModeButton.Visible = canSwitchModes && !isWarehouse;
             OrdersModeButton.Visible = canSwitchModes && isWarehouse;
 
+            warehouseControl1.Visible = isWarehouse;
+
             this.Text = isWarehouse
                 ? "Главная форма - Склад (Завод МАРС)"
                 : "Главная форма - Управление заказами (Завод МАРС)";
 
             if (isWarehouse)
-                LoadWarehouseStock();
+                warehouseControl1.Initialize(warehouseModel_);
             else
                 LoadOrders();
         }
@@ -139,7 +132,7 @@ namespace YPMars
                 EndDate = EndDateDatetimePick.Value.Date.AddDays(1).AddTicks(-1)
             };
 
-            List<Order> orders = _orderManager.GetOrders(filterDate, out string error);
+            List<Order> orders = orderManager_.GetOrders(filterDate, out string error);
 
             if (!string.IsNullOrEmpty(error))
             {
@@ -157,57 +150,10 @@ namespace YPMars
             OrdersDataGridView.DataSource = orders;
             UpdateFooter();
         }
-        
-        private void LoadWarehouseStock()
-        {
-            var stock = _warehouseManager.GetStock(out string error);
 
-            if (!string.IsNullOrEmpty(error))
-            {
-                MessageBox.Show(error, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                OrdersDataGridView.DataSource = null;
-                UpdateFooterForWarehouse(0, 0);
-                return;
-            }
-
-            OrdersDataGridView.DataSource = stock;
-
-            if (OrdersDataGridView.Columns["NomenclatureName"] != null)
-            {
-                OrdersDataGridView.Columns["NomenclatureName"].HeaderText = "Наименование номенклатуры";
-                OrdersDataGridView.Columns["StorageZone"].HeaderText = "Зона хранения";
-                OrdersDataGridView.Columns["TotalQuantity"].HeaderText = "Общий остаток";
-                OrdersDataGridView.Columns["ReservedQuantity"].HeaderText = "В резерве";
-                OrdersDataGridView.Columns["AvailableQuantity"].HeaderText = "Доступно";
-                OrdersDataGridView.Columns["UnitPrice"].HeaderText = "Цена за ед.";
-                OrdersDataGridView.Columns["TotalCost"].HeaderText = "Общая стоимость";
-
-                OrdersDataGridView.Columns["UnitPrice"].DefaultCellStyle.Format = "N2";
-                OrdersDataGridView.Columns["TotalCost"].DefaultCellStyle.Format = "N2";
-            }
-
-            int totalPositions = stock.Count;
-            decimal totalSum = stock.Sum(x => x.TotalCost);
-            UpdateFooterForWarehouse(totalPositions, totalSum);
-        }
-        private void UpdateFooterForWarehouse(int totalPositions, decimal totalSum)
-        {
-            TotalCountLabel.Text = $"Всего позиций на складе: {totalPositions}";
-            TotalSumLabel.Text = $"Общая стоимость: {totalSum.ToString("N2")} руб.";
-        }
         private void RefreshButton_Click(object sender, EventArgs e)
         {
-            if (currentUser_.Role == User.UserRole.Warehouser)
-            {
-                LoadWarehouseStock();
-
-                return;
-            }
-
-            if (_isWarehouseMode)
-                LoadWarehouseStock();
-            else
-                LoadOrders();
+            LoadOrders();
         }
 
         private void ApplyFilterButton_Click(object sender, EventArgs e)
@@ -217,8 +163,6 @@ namespace YPMars
 
         private void OrdersDataGridView_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (_isWarehouseMode) return;
-
             string clickedColumn = OrdersDataGridView.Columns[e.ColumnIndex].DataPropertyName;
 
             if (string.IsNullOrWhiteSpace(clickedColumn))
@@ -291,8 +235,8 @@ namespace YPMars
 
         private void UpdateFooter()
         {
-            int totalCount = _orderManager.GetTotalCount();
-            decimal totalSum = _orderManager.GetTotalSum();
+            int totalCount = orderManager_.GetTotalCount();
+            decimal totalSum = orderManager_.GetTotalSum();
 
             TotalCountLabel.Text = $"Всего заказов: {totalCount}";
             TotalSumLabel.Text = $"Итоговая сумма: {totalSum.ToString("N2")} руб.";
@@ -310,7 +254,7 @@ namespace YPMars
             var selectedPair = (KeyValuePair<OrderStatus, string>)StatusCoboBox.SelectedItem;
             OrderStatus newStatus = selectedPair.Key;
 
-            string error = _orderManager.UpdateStatus(selectedOrder.ContractNumber, newStatus);
+            string error = orderManager_.UpdateStatus(selectedOrder.ContractNumber, newStatus);
 
             if (string.IsNullOrEmpty(error))
             {

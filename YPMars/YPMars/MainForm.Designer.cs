@@ -17,20 +17,21 @@
         private System.Windows.Forms.DateTimePicker EndDateDatetimePick;
         private System.Windows.Forms.Button RefreshButton;
         private System.Windows.Forms.Button NewOrderButton;
-        private System.Windows.Forms.Button OrderDetailsButton; // Кнопка "Состав заказа"
-        private System.Windows.Forms.Button WarehouseModeButton; // Кнопка перехода на склад
+        private System.Windows.Forms.Button OrderDetailsButton;
+        private System.Windows.Forms.Button WarehouseModeButton;
 
         private System.Windows.Forms.Panel panelSummary;
         private System.Windows.Forms.Label TotalCountLabel;
         private System.Windows.Forms.Label TotalSumLabel;
 
         private System.Windows.Forms.DataGridView OrdersDataGridView;
+        private WarehouseControl warehouseControl1;
 
         private System.Windows.Forms.Panel panelBottom;
         private System.Windows.Forms.Label StatusLabel;
         private System.Windows.Forms.ComboBox StatusCoboBox;
         private System.Windows.Forms.Button ChangeStatusButton;
-        private System.Windows.Forms.Button OrdersModeButton; // Новая кнопка возврата к заказам
+        private System.Windows.Forms.Button OrdersModeButton;
 
         protected override void Dispose(bool disposing)
         {
@@ -64,6 +65,7 @@
             this.TotalCountLabel = new System.Windows.Forms.Label();
             this.TotalSumLabel = new System.Windows.Forms.Label();
             this.OrdersDataGridView = new System.Windows.Forms.DataGridView();
+            this.warehouseControl1 = new YPMars.WarehouseControl();
             this.panelBottom = new System.Windows.Forms.Panel();
             this.StatusLabel = new System.Windows.Forms.Label();
             this.StatusCoboBox = new System.Windows.Forms.ComboBox();
@@ -327,6 +329,16 @@
             this.OrdersDataGridView.TabIndex = 0;
             this.OrdersDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OrdersDataGridView_CellDoubleClick);
             // 
+            // warehouseControl1
+            // 
+            this.warehouseControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.warehouseControl1.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.warehouseControl1.Location = new System.Drawing.Point(0, 40);
+            this.warehouseControl1.Name = "warehouseControl1";
+            this.warehouseControl1.Size = new System.Drawing.Size(1340, 555);
+            this.warehouseControl1.TabIndex = 5;
+            this.warehouseControl1.Visible = false;
+            // 
             // panelBottom
             // 
             this.panelBottom.BackColor = System.Drawing.SystemColors.InactiveCaption;
@@ -419,6 +431,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1340, 650);
+            this.Controls.Add(this.warehouseControl1);
             this.Controls.Add(this.OrdersDataGridView);
             this.Controls.Add(this.panelBottom);
             this.Controls.Add(this.panelSummary);
@@ -441,7 +454,6 @@
             this.panelBottom.ResumeLayout(false);
             this.panelBottom.PerformLayout();
             this.ResumeLayout(false);
-
         }
 
         private System.Windows.Forms.Button GenerateReportButton;
