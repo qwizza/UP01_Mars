@@ -158,7 +158,7 @@ namespace YPMars
             OrdersDataGridView.DataSource = orders;
             UpdateFooter();
         }
-        
+
         private void LoadWarehouseStock()
         {
             var stock = warehouseModel_.GetStock(out string error);
@@ -173,22 +173,11 @@ namespace YPMars
 
             OrdersDataGridView.DataSource = stock;
 
-            if (OrdersDataGridView.Columns["NomenclatureName"] != null)
-            {
-                OrdersDataGridView.Columns["NomenclatureName"].HeaderText = "Наименование номенклатуры";
-                OrdersDataGridView.Columns["StorageZone"].HeaderText = "Зона хранения";
-                OrdersDataGridView.Columns["TotalQuantity"].HeaderText = "Общий остаток";
-                OrdersDataGridView.Columns["ReservedQuantity"].HeaderText = "В резерве";
-                OrdersDataGridView.Columns["AvailableQuantity"].HeaderText = "Доступно";
-                OrdersDataGridView.Columns["UnitPrice"].HeaderText = "Цена за ед.";
-                OrdersDataGridView.Columns["TotalCost"].HeaderText = "Общая стоимость";
-
+            if (OrdersDataGridView.Columns["UnitPrice"] != null)
                 OrdersDataGridView.Columns["UnitPrice"].DefaultCellStyle.Format = "N2";
+            if (OrdersDataGridView.Columns["TotalCost"] != null)
                 OrdersDataGridView.Columns["TotalCost"].DefaultCellStyle.Format = "N2";
-            }
 
-            int totalPositions = stock.Count;
-            decimal totalSum = stock.Sum(x => x.TotalCost);
             UpdateFooterForWarehouse(stock);
         }
         private void UpdateFooterForWarehouse(List<WarehouseItem> items)
