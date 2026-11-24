@@ -18,17 +18,20 @@
         private System.Windows.Forms.Button RefreshButton;
         private System.Windows.Forms.Button NewOrderButton;
         private System.Windows.Forms.Button OrderDetailsButton;
+        private System.Windows.Forms.Button WarehouseModeButton;
 
         private System.Windows.Forms.Panel panelSummary;
         private System.Windows.Forms.Label TotalCountLabel;
         private System.Windows.Forms.Label TotalSumLabel;
 
         private System.Windows.Forms.DataGridView OrdersDataGridView;
+        private WarehouseControl warehouseControl1;
 
         private System.Windows.Forms.Panel panelBottom;
         private System.Windows.Forms.Label StatusLabel;
         private System.Windows.Forms.ComboBox StatusCoboBox;
         private System.Windows.Forms.Button ChangeStatusButton;
+        private System.Windows.Forms.Button OrdersModeButton;
 
         protected override void Dispose(bool disposing)
         {
@@ -47,6 +50,7 @@
             this.panelHeader = new System.Windows.Forms.Panel();
             this.RegistrButton = new System.Windows.Forms.Button();
             this.panelTop = new System.Windows.Forms.Panel();
+            this.OrderDetailsButton = new System.Windows.Forms.Button();
             this.CounterpartyLabel = new System.Windows.Forms.Label();
             this.cmbCounterparty = new System.Windows.Forms.ComboBox();
             this.ApplyFilterButton = new System.Windows.Forms.Button();
@@ -56,16 +60,17 @@
             this.EndDateDatetimePick = new System.Windows.Forms.DateTimePicker();
             this.RefreshButton = new System.Windows.Forms.Button();
             this.NewOrderButton = new System.Windows.Forms.Button();
-            this.OrderDetailsButton = new System.Windows.Forms.Button();
+            this.WarehouseModeButton = new System.Windows.Forms.Button();
             this.panelSummary = new System.Windows.Forms.Panel();
             this.TotalCountLabel = new System.Windows.Forms.Label();
             this.TotalSumLabel = new System.Windows.Forms.Label();
             this.OrdersDataGridView = new System.Windows.Forms.DataGridView();
+            this.warehouseControl1 = new YPMars.WarehouseControl();
             this.panelBottom = new System.Windows.Forms.Panel();
             this.StatusLabel = new System.Windows.Forms.Label();
             this.StatusCoboBox = new System.Windows.Forms.ComboBox();
             this.ChangeStatusButton = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.OrdersModeButton = new System.Windows.Forms.Button();
             this.panelHeader.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelSummary.SuspendLayout();
@@ -81,7 +86,7 @@
             this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelHeader.Location = new System.Drawing.Point(0, 0);
             this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1339, 40);
+            this.panelHeader.Size = new System.Drawing.Size(1340, 40);
             this.panelHeader.TabIndex = 4;
             // 
             // RegistrButton
@@ -93,7 +98,7 @@
             this.RegistrButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.RegistrButton.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.RegistrButton.ForeColor = System.Drawing.Color.White;
-            this.RegistrButton.Location = new System.Drawing.Point(1159, 5);
+            this.RegistrButton.Location = new System.Drawing.Point(1160, 5);
             this.RegistrButton.Name = "RegistrButton";
             this.RegistrButton.Size = new System.Drawing.Size(165, 28);
             this.RegistrButton.TabIndex = 0;
@@ -104,7 +109,7 @@
             // 
             this.panelTop.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.panelTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelTop.Controls.Add(this.button1);
+            this.panelTop.Controls.Add(this.OrderDetailsButton);
             this.panelTop.Controls.Add(this.CounterpartyLabel);
             this.panelTop.Controls.Add(this.cmbCounterparty);
             this.panelTop.Controls.Add(this.ApplyFilterButton);
@@ -114,12 +119,27 @@
             this.panelTop.Controls.Add(this.EndDateDatetimePick);
             this.panelTop.Controls.Add(this.RefreshButton);
             this.panelTop.Controls.Add(this.NewOrderButton);
-            this.panelTop.Controls.Add(this.OrderDetailsButton);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 40);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(1339, 50);
+            this.panelTop.Size = new System.Drawing.Size(1340, 50);
             this.panelTop.TabIndex = 3;
+            // 
+            // OrderDetailsButton
+            // 
+            this.OrderDetailsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
+            this.OrderDetailsButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.OrderDetailsButton.FlatAppearance.BorderSize = 0;
+            this.OrderDetailsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OrderDetailsButton.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.OrderDetailsButton.ForeColor = System.Drawing.Color.White;
+            this.OrderDetailsButton.Location = new System.Drawing.Point(881, 9);
+            this.OrderDetailsButton.Name = "OrderDetailsButton";
+            this.OrderDetailsButton.Size = new System.Drawing.Size(145, 28);
+            this.OrderDetailsButton.TabIndex = 10;
+            this.OrderDetailsButton.Text = "Состав заказа";
+            this.OrderDetailsButton.UseVisualStyleBackColor = false;
+            this.OrderDetailsButton.Click += new System.EventHandler(this.OrderDetailsButton_Click);
             // 
             // CounterpartyLabel
             // 
@@ -197,13 +217,14 @@
             // 
             // RefreshButton
             // 
+            this.RefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.RefreshButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
             this.RefreshButton.Cursor = System.Windows.Forms.Cursors.Hand;
             this.RefreshButton.FlatAppearance.BorderSize = 0;
             this.RefreshButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.RefreshButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
             this.RefreshButton.ForeColor = System.Drawing.Color.White;
-            this.RefreshButton.Location = new System.Drawing.Point(890, 10);
+            this.RefreshButton.Location = new System.Drawing.Point(1074, 9);
             this.RefreshButton.Name = "RefreshButton";
             this.RefreshButton.Size = new System.Drawing.Size(110, 28);
             this.RefreshButton.TabIndex = 7;
@@ -219,29 +240,29 @@
             this.NewOrderButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.NewOrderButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
             this.NewOrderButton.ForeColor = System.Drawing.Color.White;
-            this.NewOrderButton.Location = new System.Drawing.Point(1183, 11);
+            this.NewOrderButton.Location = new System.Drawing.Point(1190, 9);
             this.NewOrderButton.Name = "NewOrderButton";
             this.NewOrderButton.Size = new System.Drawing.Size(135, 28);
             this.NewOrderButton.TabIndex = 8;
             this.NewOrderButton.Text = "Новый заказ";
             this.NewOrderButton.UseVisualStyleBackColor = false;
             // 
-            // OrderDetailsButton
+            // WarehouseModeButton
             // 
-            this.OrderDetailsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.OrderDetailsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.OrderDetailsButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.OrderDetailsButton.FlatAppearance.BorderSize = 0;
-            this.OrderDetailsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.OrderDetailsButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
-            this.OrderDetailsButton.ForeColor = System.Drawing.Color.White;
-            this.OrderDetailsButton.Location = new System.Drawing.Point(1424, 10);
-            this.OrderDetailsButton.Name = "OrderDetailsButton";
-            this.OrderDetailsButton.Size = new System.Drawing.Size(145, 28);
-            this.OrderDetailsButton.TabIndex = 9;
-            this.OrderDetailsButton.Text = "Состав заказа";
-            this.OrderDetailsButton.UseVisualStyleBackColor = false;
-            this.OrderDetailsButton.Click += new System.EventHandler(this.OrderDetailsButton_Click);
+            this.WarehouseModeButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.WarehouseModeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
+            this.WarehouseModeButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.WarehouseModeButton.FlatAppearance.BorderSize = 0;
+            this.WarehouseModeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.WarehouseModeButton.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.WarehouseModeButton.ForeColor = System.Drawing.Color.White;
+            this.WarehouseModeButton.Location = new System.Drawing.Point(1205, 13);
+            this.WarehouseModeButton.Name = "WarehouseModeButton";
+            this.WarehouseModeButton.Size = new System.Drawing.Size(120, 28);
+            this.WarehouseModeButton.TabIndex = 11;
+            this.WarehouseModeButton.Text = "К складу";
+            this.WarehouseModeButton.UseVisualStyleBackColor = false;
+            this.WarehouseModeButton.Click += new System.EventHandler(this.WarehouseButton_Click);
             // 
             // panelSummary
             // 
@@ -252,7 +273,7 @@
             this.panelSummary.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelSummary.Location = new System.Drawing.Point(0, 90);
             this.panelSummary.Name = "panelSummary";
-            this.panelSummary.Size = new System.Drawing.Size(1339, 35);
+            this.panelSummary.Size = new System.Drawing.Size(1340, 35);
             this.panelSummary.TabIndex = 2;
             // 
             // TotalCountLabel
@@ -303,21 +324,33 @@
             this.OrdersDataGridView.RowHeadersVisible = false;
             this.OrdersDataGridView.RowTemplate.Height = 28;
             this.OrdersDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.OrdersDataGridView.Size = new System.Drawing.Size(1339, 470);
+            this.OrdersDataGridView.Size = new System.Drawing.Size(1340, 470);
             this.OrdersDataGridView.TabIndex = 0;
             this.OrdersDataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OrdersDataGridView_CellDoubleClick);
+            // 
+            // warehouseControl1
+            // 
+            this.warehouseControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.warehouseControl1.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.warehouseControl1.Location = new System.Drawing.Point(0, 40);
+            this.warehouseControl1.Name = "warehouseControl1";
+            this.warehouseControl1.Size = new System.Drawing.Size(1340, 555);
+            this.warehouseControl1.TabIndex = 5;
+            this.warehouseControl1.Visible = false;
             // 
             // panelBottom
             // 
             this.panelBottom.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.panelBottom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelBottom.Controls.Add(this.WarehouseModeButton);
             this.panelBottom.Controls.Add(this.StatusLabel);
             this.panelBottom.Controls.Add(this.StatusCoboBox);
             this.panelBottom.Controls.Add(this.ChangeStatusButton);
+            this.panelBottom.Controls.Add(this.OrdersModeButton);
             this.panelBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelBottom.Location = new System.Drawing.Point(0, 595);
             this.panelBottom.Name = "panelBottom";
-            this.panelBottom.Size = new System.Drawing.Size(1339, 55);
+            this.panelBottom.Size = new System.Drawing.Size(1340, 55);
             this.panelBottom.TabIndex = 1;
             // 
             // StatusLabel
@@ -355,28 +388,31 @@
             this.ChangeStatusButton.Text = "Изменить статус";
             this.ChangeStatusButton.UseVisualStyleBackColor = false;
             // 
-            // button1
+            // OrdersModeButton
             // 
-            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(41)))), ((int)(((byte)(128)))), ((int)(((byte)(185)))));
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.FlatAppearance.BorderSize = 0;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.ForeColor = System.Drawing.Color.White;
-            this.button1.Location = new System.Drawing.Point(1017, 10);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(145, 28);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "Состав заказа";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.OrderDetailsButton_Click);
+            this.OrdersModeButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.OrdersModeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(150)))), ((int)(((byte)(90)))));
+            this.OrdersModeButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.OrdersModeButton.FlatAppearance.BorderSize = 0;
+            this.OrdersModeButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OrdersModeButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
+            this.OrdersModeButton.ForeColor = System.Drawing.Color.White;
+            this.OrdersModeButton.Location = new System.Drawing.Point(1205, 14);
+            this.OrdersModeButton.Name = "OrdersModeButton";
+            this.OrdersModeButton.Size = new System.Drawing.Size(120, 28);
+            this.OrdersModeButton.TabIndex = 3;
+            this.OrdersModeButton.Text = "К заказам";
+            this.OrdersModeButton.UseVisualStyleBackColor = false;
+            this.OrdersModeButton.Visible = false;
+            this.OrdersModeButton.Click += new System.EventHandler(this.OrdersModeButton_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1339, 650);
+            this.ClientSize = new System.Drawing.Size(1340, 650);
+            this.Controls.Add(this.warehouseControl1);
             this.Controls.Add(this.OrdersDataGridView);
             this.Controls.Add(this.panelBottom);
             this.Controls.Add(this.panelSummary);
@@ -399,9 +435,6 @@
             this.panelBottom.ResumeLayout(false);
             this.panelBottom.PerformLayout();
             this.ResumeLayout(false);
-
         }
-
-        private System.Windows.Forms.Button button1;
     }
 }
