@@ -14,7 +14,7 @@ namespace YPMarsTests
 
         // Сценарий 1: Успешное поступление позиции на склад
         [TestMethod]
-        public void RegisterReceipt_ValidItem_ReturnsTrueAndEmptyError()
+        public void RegisterReceipt_ValidItem_ReturnsTrueAndEmptyError() 
         {
             var mockRepo = new Mock<IWarehouseRepository>();
             var receipt = new WarehouseItem
