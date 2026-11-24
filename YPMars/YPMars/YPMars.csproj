@@ -181,6 +181,9 @@
     <EmbeddedResource Include="RegistrForm.resx">
       <DependentUpon>RegistrForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="WarehouseControl.resx">
+      <DependentUpon>WarehouseControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WarehouseReceiptForm.resx">
       <DependentUpon>WarehouseReceiptForm.cs</DependentUpon>
     </EmbeddedResource>

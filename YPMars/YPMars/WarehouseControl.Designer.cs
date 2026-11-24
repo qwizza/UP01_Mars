@@ -11,6 +11,7 @@
         private System.Windows.Forms.Label TotalCountLabel;
         private System.Windows.Forms.Label TotalSumLabel;
         private System.Windows.Forms.Label TotalAvailableLabel;
+        private System.Windows.Forms.Button ReceiptButton;
 
         private System.Windows.Forms.DataGridView WarehouseDataGridView;
 
@@ -25,10 +26,11 @@
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelTopWarehouse = new System.Windows.Forms.Panel();
             this.RefreshButton = new System.Windows.Forms.Button();
+            this.ReceiptButton = new System.Windows.Forms.Button();
             this.panelSummaryWarehouse = new System.Windows.Forms.Panel();
             this.TotalCountLabel = new System.Windows.Forms.Label();
             this.TotalSumLabel = new System.Windows.Forms.Label();
@@ -44,6 +46,7 @@
             this.panelTopWarehouse.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.panelTopWarehouse.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelTopWarehouse.Controls.Add(this.RefreshButton);
+            this.panelTopWarehouse.Controls.Add(this.ReceiptButton);
             this.panelTopWarehouse.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTopWarehouse.Location = new System.Drawing.Point(0, 0);
             this.panelTopWarehouse.Name = "panelTopWarehouse";
@@ -67,6 +70,22 @@
             this.RefreshButton.UseVisualStyleBackColor = false;
             this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
             // 
+            // ReceiptButton
+            // 
+            this.ReceiptButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ReceiptButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(150)))), ((int)(((byte)(90)))));
+            this.ReceiptButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ReceiptButton.FlatAppearance.BorderSize = 0;
+            this.ReceiptButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ReceiptButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
+            this.ReceiptButton.ForeColor = System.Drawing.Color.White;
+            this.ReceiptButton.Location = new System.Drawing.Point(1049, 10);
+            this.ReceiptButton.Name = "ReceiptButton";
+            this.ReceiptButton.Size = new System.Drawing.Size(150, 28);
+            this.ReceiptButton.TabIndex = 1;
+            this.ReceiptButton.Text = "Поступление";
+            this.ReceiptButton.UseVisualStyleBackColor = false;
+            // 
             // panelSummaryWarehouse
             // 
             this.panelSummaryWarehouse.BackColor = System.Drawing.SystemColors.ActiveCaption;
@@ -86,7 +105,7 @@
             this.TotalCountLabel.Font = new System.Drawing.Font("Times New Roman", 13F, System.Drawing.FontStyle.Bold);
             this.TotalCountLabel.Location = new System.Drawing.Point(12, 7);
             this.TotalCountLabel.Name = "TotalCountLabel";
-            this.TotalCountLabel.Size = new System.Drawing.Size(222, 20);
+            this.TotalCountLabel.Size = new System.Drawing.Size(229, 20);
             this.TotalCountLabel.TabIndex = 0;
             this.TotalCountLabel.Text = "Всего позиций на складе: 0";
             // 
@@ -97,7 +116,7 @@
             this.TotalSumLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(0)))));
             this.TotalSumLabel.Location = new System.Drawing.Point(270, 7);
             this.TotalSumLabel.Name = "TotalSumLabel";
-            this.TotalSumLabel.Size = new System.Drawing.Size(233, 20);
+            this.TotalSumLabel.Size = new System.Drawing.Size(238, 20);
             this.TotalSumLabel.TabIndex = 1;
             this.TotalSumLabel.Text = "Общая стоимость: 0,00 руб.";
             // 
@@ -107,7 +126,7 @@
             this.TotalAvailableLabel.Font = new System.Drawing.Font("Times New Roman", 13F, System.Drawing.FontStyle.Bold);
             this.TotalAvailableLabel.Location = new System.Drawing.Point(580, 7);
             this.TotalAvailableLabel.Name = "TotalAvailableLabel";
-            this.TotalAvailableLabel.Size = new System.Drawing.Size(225, 20);
+            this.TotalAvailableLabel.Size = new System.Drawing.Size(230, 20);
             this.TotalAvailableLabel.TabIndex = 2;
             this.TotalAvailableLabel.Text = "Доступно к отгрузке: 0 шт.";
             // 
@@ -115,19 +134,19 @@
             // 
             this.WarehouseDataGridView.AllowUserToAddRows = false;
             this.WarehouseDataGridView.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
-            this.WarehouseDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
+            this.WarehouseDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.WarehouseDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.WarehouseDataGridView.BackgroundColor = System.Drawing.SystemColors.InactiveBorder;
             this.WarehouseDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.WarehouseDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.WarehouseDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.WarehouseDataGridView.ColumnHeadersHeight = 32;
             this.WarehouseDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.WarehouseDataGridView.Location = new System.Drawing.Point(0, 85);
@@ -155,6 +174,7 @@
             this.panelSummaryWarehouse.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.WarehouseDataGridView)).EndInit();
             this.ResumeLayout(false);
+
         }
     }
 }
