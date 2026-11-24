@@ -26,7 +26,6 @@
 
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WarehouseReceiptForm));
             this.lblNomenclature = new System.Windows.Forms.Label();
             this.NomenclatureComboBox = new System.Windows.Forms.ComboBox();
             this.lblCurrentQty = new System.Windows.Forms.Label();
@@ -47,18 +46,21 @@
             this.lblNomenclature.Font = new System.Drawing.Font("Times New Roman", 12F);
             this.lblNomenclature.Location = new System.Drawing.Point(20, 22);
             this.lblNomenclature.Name = "lblNomenclature";
-            this.lblNomenclature.Size = new System.Drawing.Size(108, 19);
+            this.lblNomenclature.Size = new System.Drawing.Size(113, 19);
             this.lblNomenclature.TabIndex = 0;
             this.lblNomenclature.Text = "Номенклатура:";
             // 
             // NomenclatureComboBox
             // 
+            this.NomenclatureComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
             this.NomenclatureComboBox.Font = new System.Drawing.Font("Times New Roman", 12F);
             this.NomenclatureComboBox.FormattingEnabled = true;
             this.NomenclatureComboBox.Location = new System.Drawing.Point(175, 19);
             this.NomenclatureComboBox.Name = "NomenclatureComboBox";
             this.NomenclatureComboBox.Size = new System.Drawing.Size(250, 27);
             this.NomenclatureComboBox.TabIndex = 1;
+            this.NomenclatureComboBox.SelectedIndexChanged += new System.EventHandler(this.NomenclatureComboBox_SelectedIndexChanged);
+            this.NomenclatureComboBox.TextChanged += new System.EventHandler(this.NomenclatureComboBox_TextChanged);
             // 
             // lblCurrentQty
             // 
@@ -66,7 +68,7 @@
             this.lblCurrentQty.Font = new System.Drawing.Font("Times New Roman", 12F);
             this.lblCurrentQty.Location = new System.Drawing.Point(20, 62);
             this.lblCurrentQty.Name = "lblCurrentQty";
-            this.lblCurrentQty.Size = new System.Drawing.Size(125, 19);
+            this.lblCurrentQty.Size = new System.Drawing.Size(134, 19);
             this.lblCurrentQty.TabIndex = 2;
             this.lblCurrentQty.Text = "Текущий остаток:";
             // 
@@ -85,7 +87,7 @@
             this.lblQuantity.Font = new System.Drawing.Font("Times New Roman", 12F);
             this.lblQuantity.Location = new System.Drawing.Point(20, 102);
             this.lblQuantity.Name = "lblQuantity";
-            this.lblQuantity.Size = new System.Drawing.Size(101, 19);
+            this.lblQuantity.Size = new System.Drawing.Size(102, 19);
             this.lblQuantity.TabIndex = 4;
             this.lblQuantity.Text = "Поступление:";
             // 
@@ -93,19 +95,11 @@
             // 
             this.QuantityNumericUpDown.Font = new System.Drawing.Font("Times New Roman", 12F);
             this.QuantityNumericUpDown.Location = new System.Drawing.Point(175, 99);
-            this.QuantityNumericUpDown.Maximum = new decimal(new int[] {
-            1000000,
-            0,
-            0,
-            0});
+            this.QuantityNumericUpDown.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             this.QuantityNumericUpDown.Name = "QuantityNumericUpDown";
             this.QuantityNumericUpDown.Size = new System.Drawing.Size(250, 26);
             this.QuantityNumericUpDown.TabIndex = 5;
-            this.QuantityNumericUpDown.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.QuantityNumericUpDown.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // lblPrice
             // 
@@ -113,7 +107,7 @@
             this.lblPrice.Font = new System.Drawing.Font("Times New Roman", 12F);
             this.lblPrice.Location = new System.Drawing.Point(20, 142);
             this.lblPrice.Name = "lblPrice";
-            this.lblPrice.Size = new System.Drawing.Size(86, 19);
+            this.lblPrice.Size = new System.Drawing.Size(92, 19);
             this.lblPrice.TabIndex = 6;
             this.lblPrice.Text = "Цена за ед.:";
             // 
@@ -122,11 +116,7 @@
             this.UnitPriceNumericUpDown.DecimalPlaces = 2;
             this.UnitPriceNumericUpDown.Font = new System.Drawing.Font("Times New Roman", 12F);
             this.UnitPriceNumericUpDown.Location = new System.Drawing.Point(175, 139);
-            this.UnitPriceNumericUpDown.Maximum = new decimal(new int[] {
-            100000000,
-            0,
-            0,
-            0});
+            this.UnitPriceNumericUpDown.Maximum = new decimal(new int[] { 100000000, 0, 0, 0 });
             this.UnitPriceNumericUpDown.Name = "UnitPriceNumericUpDown";
             this.UnitPriceNumericUpDown.Size = new System.Drawing.Size(250, 26);
             this.UnitPriceNumericUpDown.TabIndex = 7;
@@ -145,6 +135,7 @@
             this.SaveButton.TabIndex = 8;
             this.SaveButton.Text = "Оприходовать";
             this.SaveButton.UseVisualStyleBackColor = false;
+            this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
             // 
             // CancelButton
             // 
@@ -160,6 +151,7 @@
             this.CancelButton.TabIndex = 9;
             this.CancelButton.Text = "Отмена";
             this.CancelButton.UseVisualStyleBackColor = false;
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
             // WarehouseReceiptForm
             // 
@@ -178,7 +170,6 @@
             this.Controls.Add(this.CancelButton);
             this.Font = new System.Drawing.Font("Segoe UI", 9.5F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "WarehouseReceiptForm";
@@ -188,7 +179,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.UnitPriceNumericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
     }
 }

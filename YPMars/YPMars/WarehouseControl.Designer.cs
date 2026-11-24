@@ -26,8 +26,8 @@
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelTopWarehouse = new System.Windows.Forms.Panel();
             this.RefreshButton = new System.Windows.Forms.Button();
             this.ReceiptButton = new System.Windows.Forms.Button();
@@ -85,6 +85,7 @@
             this.ReceiptButton.TabIndex = 1;
             this.ReceiptButton.Text = "Поступление";
             this.ReceiptButton.UseVisualStyleBackColor = false;
+            this.ReceiptButton.Click += new System.EventHandler(this.ReceiptButton_Click);
             // 
             // panelSummaryWarehouse
             // 
@@ -134,19 +135,19 @@
             // 
             this.WarehouseDataGridView.AllowUserToAddRows = false;
             this.WarehouseDataGridView.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
-            this.WarehouseDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
+            this.WarehouseDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
             this.WarehouseDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.WarehouseDataGridView.BackgroundColor = System.Drawing.SystemColors.InactiveBorder;
             this.WarehouseDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.WarehouseDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.WarehouseDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
             this.WarehouseDataGridView.ColumnHeadersHeight = 32;
             this.WarehouseDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.WarehouseDataGridView.Location = new System.Drawing.Point(0, 85);

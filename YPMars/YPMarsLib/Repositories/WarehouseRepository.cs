@@ -91,8 +91,8 @@ namespace YPMarsLib
                     unit_price = @unitPrice
                 WHERE LOWER(name) = LOWER(@name);";
             string insertQuery = @"
-                INSERT INTO nomenclature (name, total_quantity, reserved_quantity, unit_price)
-                VALUES (@name, @quantity, 0, @unitPrice);";
+                INSERT INTO nomenclature (article, name, item_type, unit, total_quantity, reserved_quantity, unit_price)
+                VALUES (@article, @name, @itemType, @unit, @quantity, 0, @unitPrice);";
 
             try
             {
@@ -113,6 +113,14 @@ namespace YPMarsLib
                         cmd.Parameters.AddWithValue("name", name);
                         cmd.Parameters.AddWithValue("quantity", receiptItem.TotalQuantity);
                         cmd.Parameters.AddWithValue("unitPrice", receiptItem.UnitPrice);
+
+                        if (exists == 0)
+                        {
+                            string generatedArticle = "PRD-" + Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();
+                            cmd.Parameters.AddWithValue("article", generatedArticle);
+                            cmd.Parameters.AddWithValue("itemType", "Готовое изделие");
+                            cmd.Parameters.AddWithValue("unit", "шт.");
+                        }
 
                         int rowsAffected = cmd.ExecuteNonQuery();
                         if (rowsAffected > 0)
