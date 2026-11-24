@@ -120,6 +120,7 @@
     <Compile Include="Models\WarehouseItem.cs" />
     <Compile Include="Models\WarehouseModel.cs" />
     <Compile Include="Repositories\WarehouseRepository.cs" />
+    <Compile Include="Validation\WarehouseValidate.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
