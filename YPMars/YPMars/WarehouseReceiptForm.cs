@@ -40,6 +40,32 @@ namespace YPMars
                 CurrentQuantityTextBox.Text = "0 (новая позиция)";
             }
         }
+        private void UpdateSelectedInfo()
+        {
+            string name = NomenclatureComboBox.Text.Trim();
+            var existing = _currentStock.FirstOrDefault(
+                x => string.Equals(x.NomenclatureName, name, StringComparison.OrdinalIgnoreCase));
+
+            if (existing != null)
+            {
+                CurrentQuantityTextBox.Text = $"{existing.TotalQuantity} шт. (в резерве: {existing.ReservedQuantity})";
+                UnitPriceNumericUpDown.Value = existing.UnitPrice >= 0 ? existing.UnitPrice : 0m;
+            }
+            else
+            {
+                CurrentQuantityTextBox.Text = "0 (новая позиция)";
+            }
+        }
+        private void NomenclatureComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateSelectedInfo();
+        }
+
+        private void NomenclatureComboBox_TextChanged(object sender, EventArgs e)
+        {
+            UpdateSelectedInfo();
+        }
+
         private void SaveButton_Click(object sender, EventArgs e)
         {
             string name = NomenclatureComboBox.Text.Trim();
