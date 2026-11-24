@@ -26,8 +26,8 @@
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelTopWarehouse = new System.Windows.Forms.Panel();
             this.RefreshButton = new System.Windows.Forms.Button();
             this.ReceiptButton = new System.Windows.Forms.Button();
@@ -62,7 +62,7 @@
             this.RefreshButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.RefreshButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
             this.RefreshButton.ForeColor = System.Drawing.Color.White;
-            this.RefreshButton.Location = new System.Drawing.Point(1205, 10);
+            this.RefreshButton.Location = new System.Drawing.Point(1054, 10);
             this.RefreshButton.Name = "RefreshButton";
             this.RefreshButton.Size = new System.Drawing.Size(115, 28);
             this.RefreshButton.TabIndex = 0;
@@ -79,7 +79,7 @@
             this.ReceiptButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ReceiptButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
             this.ReceiptButton.ForeColor = System.Drawing.Color.White;
-            this.ReceiptButton.Location = new System.Drawing.Point(1049, 10);
+            this.ReceiptButton.Location = new System.Drawing.Point(1175, 10);
             this.ReceiptButton.Name = "ReceiptButton";
             this.ReceiptButton.Size = new System.Drawing.Size(150, 28);
             this.ReceiptButton.TabIndex = 1;
@@ -135,19 +135,19 @@
             // 
             this.WarehouseDataGridView.AllowUserToAddRows = false;
             this.WarehouseDataGridView.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
-            this.WarehouseDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
+            this.WarehouseDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
             this.WarehouseDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.WarehouseDataGridView.BackgroundColor = System.Drawing.SystemColors.InactiveBorder;
             this.WarehouseDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.WarehouseDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            dataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.WarehouseDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.WarehouseDataGridView.ColumnHeadersHeight = 32;
             this.WarehouseDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.WarehouseDataGridView.Location = new System.Drawing.Point(0, 85);
