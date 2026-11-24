@@ -40,5 +40,38 @@ namespace YPMars
                 CurrentQuantityTextBox.Text = "0 (новая позиция)";
             }
         }
+        private void SaveButton_Click(object sender, EventArgs e)
+        {
+            string name = NomenclatureComboBox.Text.Trim();
+            int quantity = (int)QuantityNumericUpDown.Value;
+            decimal unitPrice = UnitPriceNumericUpDown.Value;
+
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                MessageBox.Show("Необходимо указать наименование номенклатуры.", "Ошибка валидации",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                DialogResult = DialogResult.None;
+                return;
+            }
+
+            if (quantity <= 0)
+            {
+                MessageBox.Show("Количество поступления должно быть больше нуля.", "Ошибка валидации",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                DialogResult = DialogResult.None;
+                return;
+            }
+
+            ReceiptItem = new WarehouseItem
+            {
+                NomenclatureName = name,
+                StorageZone = "Основной склад",
+                TotalQuantity = quantity,
+                UnitPrice = unitPrice
+            };
+
+            DialogResult = DialogResult.OK;
+            Close();
+        }
     }
 }
