@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using YPMarsLib.Models;
 using YPMarsLib.Validation;
 
 namespace YPMarsLib
@@ -59,6 +60,31 @@ namespace YPMarsLib
                 return false;
 
             return repository_.RegisterStockReceipt(receiptItem, out error);
+        }
+        public bool ValidateWriteOff(WarehouseItem writeOffItem, out string error)
+        {
+            if (!WarehouseValidate.ValidateWriteOff(writeOffItem, out error))
+                return false;
+
+            if (writeOffItem.TotalQuantity > writeOffItem.AvailableQuantity)
+            {
+                error = $"Недостаточно доступного остатка для списания. Доступно: {writeOffItem.AvailableQuantity} шт.";
+                return false;
+            }
+            return true;
+        }
+
+        public bool RegisterWriteOff(WarehouseItem writeOffItem, string userName, out string error)
+        {
+            if (!ValidateWriteOff(writeOffItem, out error))
+                return false;
+
+            return repository_.RegisterStockWriteOff(writeOffItem, userName, out error);
+        }
+
+        public List<WarehouseWriteOffRecord> GetWriteOffReport(WarehouseWriteOffFilter filter, out string error)
+        {
+            return repository_.GetWriteOffReport(filter, out error);
         }
     }
 }
