@@ -71,7 +71,6 @@
             this.StatusCoboBox = new System.Windows.Forms.ComboBox();
             this.ChangeStatusButton = new System.Windows.Forms.Button();
             this.OrdersModeButton = new System.Windows.Forms.Button();
-            this.GenerateReportButton = new System.Windows.Forms.Button();
             this.panelHeader.SuspendLayout();
             this.panelTop.SuspendLayout();
             this.panelSummary.SuspendLayout();
@@ -343,7 +342,6 @@
             // 
             this.panelBottom.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.panelBottom.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelBottom.Controls.Add(this.GenerateReportButton);
             this.panelBottom.Controls.Add(this.WarehouseModeButton);
             this.panelBottom.Controls.Add(this.StatusLabel);
             this.panelBottom.Controls.Add(this.StatusCoboBox);
@@ -408,23 +406,6 @@
             this.OrdersModeButton.Visible = false;
             this.OrdersModeButton.Click += new System.EventHandler(this.OrdersModeButton_Click);
             // 
-            // GenerateReportButton
-            // 
-            this.GenerateReportButton.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.GenerateReportButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
-            this.GenerateReportButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.GenerateReportButton.FlatAppearance.BorderSize = 0;
-            this.GenerateReportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.GenerateReportButton.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.GenerateReportButton.ForeColor = System.Drawing.Color.White;
-            this.GenerateReportButton.Location = new System.Drawing.Point(979, 13);
-            this.GenerateReportButton.Name = "GenerateReportButton";
-            this.GenerateReportButton.Size = new System.Drawing.Size(205, 28);
-            this.GenerateReportButton.TabIndex = 12;
-            this.GenerateReportButton.Text = "Сформировать отчет";
-            this.GenerateReportButton.UseVisualStyleBackColor = false;
-            this.GenerateReportButton.Click += new System.EventHandler(this.GenerateReportButton_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -455,7 +436,5 @@
             this.panelBottom.PerformLayout();
             this.ResumeLayout(false);
         }
-
-        private System.Windows.Forms.Button GenerateReportButton;
     }
 }

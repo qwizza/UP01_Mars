@@ -97,10 +97,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Interfaces\IOrderReportRepository.cs" />
-    <Compile Include="Models\OrderReport.cs" />
-    <Compile Include="Validation\OrderReportGenerator.cs" />
-    <Compile Include="Repositories\OrderReportRepository.cs" />
     <Compile Include="Services\ContractNumberGenerator.cs" />
     <Compile Include="Repositories\DBConnection.cs" />
     <Compile Include="Repositories\Directory.cs" />
