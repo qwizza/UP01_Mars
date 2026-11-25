@@ -22,7 +22,7 @@ namespace YPMarsLib
         public int ReservedQuantity { get; set; }
 
         [DisplayName("Доступно")]
-        public int AvailableQuantity => TotalQuantity - ReservedQuantity;
+        public int AvailableQuantity => Math.Max(0, TotalQuantity - ReservedQuantity);
 
         [DisplayName("Цена за ед.")]
         public decimal UnitPrice { get; set; }

@@ -65,12 +65,6 @@ namespace YPMarsLib
         {
             if (!WarehouseValidate.ValidateWriteOff(writeOffItem, out error))
                 return false;
-
-            if (writeOffItem.TotalQuantity > writeOffItem.AvailableQuantity)
-            {
-                error = $"Недостаточно доступного остатка для списания. Доступно: {writeOffItem.AvailableQuantity} шт.";
-                return false;
-            }
             return true;
         }
 

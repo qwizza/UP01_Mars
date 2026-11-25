@@ -28,17 +28,22 @@ namespace YPMars
             NomenclatureComboBox.SelectedIndexChanged += (s, e) => OnNomenclatureChanged();
             QuantityNumeric.ValueChanged += (s, e) => UpdateTotal();
             OnNomenclatureChanged();
+        }       
+
+        private void UpdateTotal()
+        {
+            decimal price = decimal.TryParse(UnitPriceTextBox.Text, out var p) ? p : 0m;
+            TotalSumLabel.Text = $"Сумма: {(price * QuantityNumeric.Value):N2} руб.";
         }
 
         private void OnNomenclatureChanged()
         {
             if (NomenclatureComboBox.SelectedItem is WarehouseItem item)
             {
-                int available = Math.Max(0, item.AvailableQuantity);
                 AvailableQuantityLabel.Text = $"Доступно: {item.AvailableQuantity} шт.";
                 UnitPriceTextBox.Text = item.UnitPrice.ToString("N2");
+
                 QuantityNumeric.Maximum = Math.Max(1, item.AvailableQuantity);
-                QuantityNumeric.Maximum = Math.Max(1, available);
                 if (QuantityNumeric.Value > QuantityNumeric.Maximum)
                     QuantityNumeric.Value = QuantityNumeric.Maximum;
             }
@@ -51,12 +56,6 @@ namespace YPMars
             UpdateTotal();
         }
 
-        private void UpdateTotal()
-        {
-            decimal price = decimal.TryParse(UnitPriceTextBox.Text, out var p) ? p : 0m;
-            TotalSumLabel.Text = $"Сумма: {(price * QuantityNumeric.Value):N2} руб.";
-        }
-
         private void SaveButton_Click(object sender, EventArgs e)
         {
             if (!(NomenclatureComboBox.SelectedItem is WarehouseItem selected))
@@ -65,22 +64,17 @@ namespace YPMars
                 DialogResult = DialogResult.None;
                 return;
             }
-            if (QuantityNumeric.Value > Math.Max(0, selected.AvailableQuantity))
-            {
-                MessageBox.Show($"Недостаточно доступного остатка для списания. Доступно: {Math.Max(0, selected.AvailableQuantity)} шт.",
-                    "Ошибка валидации", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                DialogResult = DialogResult.None;
-                return;
-            }
+
             if (QuantityNumeric.Value <= 0)
             {
                 MessageBox.Show("Количество списания должно быть больше нуля.", "Ошибка валидации", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 DialogResult = DialogResult.None;
                 return;
             }
-            if (QuantityNumeric.Value > Math.Max(0, selected.AvailableQuantity))
+
+            if (QuantityNumeric.Value > selected.AvailableQuantity)
             {
-                MessageBox.Show($"Недостаточно доступного остатка для списания. Доступно: {Math.Max(0, selected.AvailableQuantity)} шт.",
+                MessageBox.Show($"Недостаточно доступного остатка для списания. Доступно: {selected.AvailableQuantity} шт.",
                     "Ошибка валидации", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 DialogResult = DialogResult.None;
                 return;
@@ -91,13 +85,13 @@ namespace YPMars
                 NomenclatureName = selected.NomenclatureName,
                 StorageZone = selected.StorageZone,
                 TotalQuantity = (int)QuantityNumeric.Value,
-                ReservedQuantity = selected.ReservedQuantity,
+                ReservedQuantity = 0,
                 UnitPrice = selected.UnitPrice
             };
 
             DialogResult = DialogResult.OK;
             Close();
-        }
+        }       
 
         private void CancelButton_Click(object sender, EventArgs e)
         {

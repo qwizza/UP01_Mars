@@ -214,7 +214,7 @@ namespace YPMarsLib
                                 }
                             }
 
-                            int available = totalQuantity - reservedQuantity;
+                            int available = Math.Max(0, totalQuantity - reservedQuantity);
                             if (quantity > available)
                             {
                                 transaction.Rollback();
