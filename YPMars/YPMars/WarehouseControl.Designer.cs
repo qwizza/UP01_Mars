@@ -12,6 +12,8 @@
         private System.Windows.Forms.Label TotalSumLabel;
         private System.Windows.Forms.Label TotalAvailableLabel;
         private System.Windows.Forms.Button ReceiptButton;
+        private System.Windows.Forms.Button WriteOffButton;
+        private System.Windows.Forms.Button ReportButton;
 
         private System.Windows.Forms.DataGridView WarehouseDataGridView;
 
@@ -31,6 +33,8 @@
             this.panelTopWarehouse = new System.Windows.Forms.Panel();
             this.RefreshButton = new System.Windows.Forms.Button();
             this.ReceiptButton = new System.Windows.Forms.Button();
+            this.WriteOffButton = new System.Windows.Forms.Button(); 
+            this.ReportButton = new System.Windows.Forms.Button();
             this.panelSummaryWarehouse = new System.Windows.Forms.Panel();
             this.TotalCountLabel = new System.Windows.Forms.Label();
             this.TotalSumLabel = new System.Windows.Forms.Label();
@@ -62,7 +66,7 @@
             this.RefreshButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.RefreshButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
             this.RefreshButton.ForeColor = System.Drawing.Color.White;
-            this.RefreshButton.Location = new System.Drawing.Point(1054, 10);
+            this.RefreshButton.Location = new System.Drawing.Point(800, 10); // СДВИНУТО ЛЕВЕЕ
             this.RefreshButton.Name = "RefreshButton";
             this.RefreshButton.Size = new System.Drawing.Size(115, 28);
             this.RefreshButton.TabIndex = 0;
@@ -79,13 +83,47 @@
             this.ReceiptButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.ReceiptButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
             this.ReceiptButton.ForeColor = System.Drawing.Color.White;
-            this.ReceiptButton.Location = new System.Drawing.Point(1175, 10);
+            this.ReceiptButton.Location = new System.Drawing.Point(925, 10); // СДВИНУТО ЛЕВЕЕ
             this.ReceiptButton.Name = "ReceiptButton";
-            this.ReceiptButton.Size = new System.Drawing.Size(150, 28);
+            this.ReceiptButton.Size = new System.Drawing.Size(140, 28);
             this.ReceiptButton.TabIndex = 1;
             this.ReceiptButton.Text = "Поступление";
             this.ReceiptButton.UseVisualStyleBackColor = false;
             this.ReceiptButton.Click += new System.EventHandler(this.ReceiptButton_Click);
+            // 
+            // WriteOffButton 
+            // 
+            this.WriteOffButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.WriteOffButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
+            this.WriteOffButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.WriteOffButton.FlatAppearance.BorderSize = 0;
+            this.WriteOffButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.WriteOffButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
+            this.WriteOffButton.ForeColor = System.Drawing.Color.White;
+            this.WriteOffButton.Location = new System.Drawing.Point(1075, 10);
+            this.WriteOffButton.Name = "WriteOffButton";
+            this.WriteOffButton.Size = new System.Drawing.Size(120, 28);
+            this.WriteOffButton.TabIndex = 2;
+            this.WriteOffButton.Text = "Списание";
+            this.WriteOffButton.UseVisualStyleBackColor = false;
+            this.WriteOffButton.Click += new System.EventHandler(this.WriteOffButton_Click);
+            // 
+            // ReportButton
+            // 
+            this.ReportButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ReportButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
+            this.ReportButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ReportButton.FlatAppearance.BorderSize = 0;
+            this.ReportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ReportButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
+            this.ReportButton.ForeColor = System.Drawing.Color.White;
+            this.ReportButton.Location = new System.Drawing.Point(1205, 10);
+            this.ReportButton.Name = "ReportButton";
+            this.ReportButton.Size = new System.Drawing.Size(120, 28);
+            this.ReportButton.TabIndex = 3;
+            this.ReportButton.Text = "Отчет";
+            this.ReportButton.UseVisualStyleBackColor = false;
+            this.ReportButton.Click += new System.EventHandler(this.ReportButton_Click);
             // 
             // panelSummaryWarehouse
             // 
@@ -159,7 +197,6 @@
             this.WarehouseDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.WarehouseDataGridView.Size = new System.Drawing.Size(1340, 470);
             this.WarehouseDataGridView.TabIndex = 2;
-
             // 
             // WarehouseControl
             // 
@@ -176,6 +213,10 @@
             this.panelSummaryWarehouse.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.WarehouseDataGridView)).EndInit();
             this.ResumeLayout(false);
+            this.panelTopWarehouse.Controls.Add(this.ReportButton);
+            this.panelTopWarehouse.Controls.Add(this.WriteOffButton);
+            this.panelTopWarehouse.Controls.Add(this.ReceiptButton);
+            this.panelTopWarehouse.Controls.Add(this.RefreshButton);
 
         }
     }

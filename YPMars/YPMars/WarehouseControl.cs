@@ -14,6 +14,7 @@ namespace YPMars
     public partial class WarehouseControl : UserControl
     {
         private WarehouseModel _warehouseModel;
+        private User _currentUser; 
 
         public WarehouseControl()
         {
@@ -23,10 +24,16 @@ namespace YPMars
         public void Initialize(WarehouseModel warehouseModel, User currentUser = null)
         {
             _warehouseModel = warehouseModel;
+            _currentUser = currentUser; 
+
             if (currentUser != null)
             {
-                ReceiptButton.Visible = currentUser.Role == User.UserRole.Warehouser
-                                     || currentUser.Role == User.UserRole.SuperUser;
+                bool canManage = currentUser.Role == User.UserRole.Warehouser
+                              || currentUser.Role == User.UserRole.SuperUser;
+
+                ReceiptButton.Visible = canManage;
+                WriteOffButton.Visible = canManage; 
+                ReportButton.Visible = canManage;  
             }
             LoadStock();
         }
@@ -70,6 +77,7 @@ namespace YPMars
         {
             LoadStock();
         }
+
         private void ReceiptButton_Click(object sender, EventArgs e)
         {
             if (_warehouseModel == null) return;
@@ -89,5 +97,36 @@ namespace YPMars
                 }
             }
         }
+
+        private void WriteOffButton_Click(object sender, EventArgs e)
+        {
+            if (_warehouseModel == null) return;
+
+            using (var form = new WarehouseWriteOffForm(_warehouseModel.Items))
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    if (_warehouseModel.RegisterWriteOff(form.WriteOffItem, _currentUser?.Login ?? "", out string error))
+                    {
+                        LoadStock();
+                    }
+                    else
+                    {
+                        MessageBox.Show(error, "Ошибка списания", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+            }
+        }
+
+        private void ReportButton_Click(object sender, EventArgs e)
+        {
+            if (_warehouseModel == null) return;
+
+            using (var form = new WarehouseWriteOffReportForm(_warehouseModel))
+            {
+                form.ShowDialog(this);
+            }
+        }
+
     }
 }

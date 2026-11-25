@@ -164,6 +164,18 @@
     <Compile Include="WarehouseReceiptForm.Designer.cs">
       <DependentUpon>WarehouseReceiptForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="WarehouseWriteOffForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WarehouseWriteOffForm.Designer.cs">
+      <DependentUpon>WarehouseWriteOffForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WarehouseWriteOffReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WarehouseWriteOffReportForm.Designer.cs">
+      <DependentUpon>WarehouseWriteOffReportForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AuthForm.resx">
       <DependentUpon>AuthForm.cs</DependentUpon>
       <Generator>ResXFileCodeGenerator</Generator>
@@ -198,6 +210,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="WarehouseReceiptForm.resx">
       <DependentUpon>WarehouseReceiptForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WarehouseWriteOffForm.resx">
+      <DependentUpon>WarehouseWriteOffForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WarehouseWriteOffReportForm.resx">
+      <DependentUpon>WarehouseWriteOffReportForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
