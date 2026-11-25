@@ -69,23 +69,39 @@ namespace YPMarsLib.Services
 
         private static Paragraph CreateParagraph(string text, bool bold = false, int size = 24)
         {
-            var runProperties = new RunProperties(new FontSize { Val = size.ToString() });
+            var runProperties = new RunProperties(
+                new RunFonts { Ascii = "Times New Roman", HighAnsi = "Times New Roman", ComplexScript = "Times New Roman" },
+                new FontSize { Val = size.ToString() }
+            );
+
             if (bold) runProperties.Append(new Bold());
+
+            var paragraphProperties = new ParagraphProperties(
+                new Justification { Val = JustificationValues.Center },
+                new SpacingBetweenLines { After = "120" } 
+            );
+
             var run = new Run(runProperties, new Text(text) { Space = SpaceProcessingModeValues.Preserve });
-            return new Paragraph(run);
+            return new Paragraph(paragraphProperties, run);
         }
 
         private static Table CreateTable(List<WarehouseWriteOffRecord> records)
         {
             var table = new Table();
-            table.AppendChild(new TableProperties(
+
+            var tableProperties = new TableProperties(
+                new TableWidth { Width = "5000", Type = TableWidthUnitValues.Pct },
                 new TableBorders(
-                    new TopBorder { Val = BorderValues.Single, Size = 4 },
-                    new BottomBorder { Val = BorderValues.Single, Size = 4 },
-                    new LeftBorder { Val = BorderValues.Single, Size = 4 },
-                    new RightBorder { Val = BorderValues.Single, Size = 4 },
-                    new InsideHorizontalBorder { Val = BorderValues.Single, Size = 4 },
-                    new InsideVerticalBorder { Val = BorderValues.Single, Size = 4 })));
+                    new TopBorder { Val = BorderValues.Single, Size = 4, Color = "000000" },
+                    new BottomBorder { Val = BorderValues.Single, Size = 4, Color = "000000" },
+                    new LeftBorder { Val = BorderValues.Single, Size = 4, Color = "000000" },
+                    new RightBorder { Val = BorderValues.Single, Size = 4, Color = "000000" },
+                    new InsideHorizontalBorder { Val = BorderValues.Single, Size = 4, Color = "000000" },
+                    new InsideVerticalBorder { Val = BorderValues.Single, Size = 4, Color = "000000" }
+                )
+            );
+
+            table.AppendChild(tableProperties);
 
             table.AppendChild(CreateHeaderRow());
 
@@ -117,10 +133,20 @@ namespace YPMarsLib.Services
 
         private static TableCell CreateCell(string text, bool bold = false)
         {
-            var runProperties = new RunProperties();
+            var runProperties = new RunProperties(
+                new RunFonts { Ascii = "Times New Roman", HighAnsi = "Times New Roman", ComplexScript = "Times New Roman" },
+                new FontSize { Val = "24" } 
+            );
+
             if (bold) runProperties.Append(new Bold());
+
+            var paragraphProperties = new ParagraphProperties(
+                new Justification { Val = JustificationValues.Center } 
+            );
+
             var run = new Run(runProperties, new Text(text ?? string.Empty) { Space = SpaceProcessingModeValues.Preserve });
-            return new TableCell(new Paragraph(run));
+
+            return new TableCell(new Paragraph(paragraphProperties, run));
         }
     }
 }

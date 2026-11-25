@@ -121,6 +121,7 @@
     <Compile Include="RegistrTest.cs" />
     <Compile Include="AuthTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WarehouseWriteOffTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

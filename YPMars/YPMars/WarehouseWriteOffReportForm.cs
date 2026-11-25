@@ -86,7 +86,7 @@ namespace YPMars
 
         private void ExportDocxButton_Click(object sender, EventArgs e)
         {
-            if (_records.Count == 0 || _lastFilter == null)
+            if (_records == null || _records.Count == 0 || _lastFilter == null)
             {
                 MessageBox.Show("Нет данных для экспорта. Сформируйте отчёт.", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
