@@ -21,7 +21,14 @@ namespace YPMars
         public WarehouseWriteOffControl()
         {
             InitializeComponent();
+
+            // Настраиваем поиск
+            NomenclatureComboBox.DropDownStyle = ComboBoxStyle.DropDown;
+            NomenclatureComboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            NomenclatureComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
+
             QuantityNumeric.ValueChanged += (s, e) => UpdateTotal();
+            NomenclatureComboBox.TextChanged += (s, e) => OnNomenclatureChanged();
             NomenclatureComboBox.SelectedIndexChanged += (s, e) => OnNomenclatureChanged();
         }
 
@@ -32,10 +39,18 @@ namespace YPMars
             _onSuccess = onSuccess;
 
             _items = _model.Items ?? new List<WarehouseItem>();
-            NomenclatureComboBox.DataSource = _items;
-            NomenclatureComboBox.DisplayMember = nameof(WarehouseItem.NomenclatureName);
-            NomenclatureComboBox.SelectedIndex = _items.Count > 0 ? 0 : -1;
-            OnNomenclatureChanged();
+
+            // Заполняем ComboBox только именами (строками)
+            NomenclatureComboBox.Items.Clear();
+            foreach (var item in _items)
+            {
+                NomenclatureComboBox.Items.Add(item.NomenclatureName);
+            }
+
+            if (NomenclatureComboBox.Items.Count > 0)
+                NomenclatureComboBox.SelectedIndex = 0;
+            else
+                OnNomenclatureChanged();
         }
 
         private void UpdateTotal()
@@ -46,7 +61,12 @@ namespace YPMars
 
         private void OnNomenclatureChanged()
         {
-            if (NomenclatureComboBox.SelectedItem is WarehouseItem item)
+            string name = NomenclatureComboBox.Text.Trim();
+
+            // Ищем объект по имени (с учетом регистра)
+            var item = _items.FirstOrDefault(x => string.Equals(x.NomenclatureName, name, StringComparison.OrdinalIgnoreCase));
+
+            if (item != null)
             {
                 AvailableQuantityLabel.Text = $"Доступно: {item.AvailableQuantity} шт.";
                 UnitPriceTextBox.Text = item.UnitPrice.ToString("N2");
@@ -66,9 +86,12 @@ namespace YPMars
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
-            if (!(NomenclatureComboBox.SelectedItem is WarehouseItem selected))
+            string name = NomenclatureComboBox.Text.Trim();
+            var selected = _items.FirstOrDefault(x => string.Equals(x.NomenclatureName, name, StringComparison.OrdinalIgnoreCase));
+
+            if (selected == null)
             {
-                MessageBox.Show("Необходимо выбрать номенклатуру.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Необходимо выбрать номенклатуру из списка.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -96,14 +119,15 @@ namespace YPMars
             if (_model.RegisterWriteOff(writeOffItem, _currentUser?.Login ?? "", out string error))
             {
                 MessageBox.Show("Списание успешно оформлено!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                _onSuccess?.Invoke(); 
-                Initialize(_model, _currentUser, _onSuccess); 
+                _onSuccess?.Invoke();
+                Initialize(_model, _currentUser, _onSuccess);
             }
             else
             {
                 MessageBox.Show(error, "Ошибка БД", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void ReportButton_Click(object sender, EventArgs e)
         {
             if (_model == null) return;
@@ -113,6 +137,5 @@ namespace YPMars
                 form.ShowDialog(this);
             }
         }
-
     }
 }

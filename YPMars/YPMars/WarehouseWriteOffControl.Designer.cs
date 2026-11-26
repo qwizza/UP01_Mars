@@ -48,7 +48,7 @@
             // 
             // NomenclatureComboBox
             // 
-            this.NomenclatureComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.NomenclatureComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
             this.NomenclatureComboBox.Font = new System.Drawing.Font("Times New Roman", 14F);
             this.NomenclatureComboBox.Location = new System.Drawing.Point(200, 37);
             this.NomenclatureComboBox.Name = "NomenclatureComboBox";

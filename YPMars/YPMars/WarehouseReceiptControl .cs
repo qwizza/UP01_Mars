@@ -20,7 +20,13 @@ namespace YPMars
         public WarehouseReceiptControl()
         {
             InitializeComponent();
+
+            // Включаем поиск по первым буквам
+            NomenclatureComboBox.DropDownStyle = ComboBoxStyle.DropDown;
+            NomenclatureComboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            NomenclatureComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
         }
+
         public void Initialize(WarehouseModel model, Action onSuccess)
         {
             _model = model;
