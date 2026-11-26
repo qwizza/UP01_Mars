@@ -37,6 +37,8 @@
             this.Cancel = new System.Windows.Forms.Button();
             this.ToggleButton = new System.Windows.Forms.Button();
             this.Imput = new System.Windows.Forms.Button();
+            this.LogoPictureBox = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // tbLogin
@@ -123,12 +125,23 @@
             this.Imput.UseVisualStyleBackColor = false;
             this.Imput.Click += new System.EventHandler(this.Imput_Click);
             // 
+            // LogoPictureBox
+            // 
+            this.LogoPictureBox.Image = global::YPMars.Properties.Resources.MarsIco__2__Photoroom;
+            this.LogoPictureBox.Location = new System.Drawing.Point(27, 12);
+            this.LogoPictureBox.Name = "LogoPictureBox";
+            this.LogoPictureBox.Size = new System.Drawing.Size(51, 47);
+            this.LogoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.LogoPictureBox.TabIndex = 8;
+            this.LogoPictureBox.TabStop = false;
+            // 
             // AuthForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(329, 237);
+            this.Controls.Add(this.LogoPictureBox);
             this.Controls.Add(this.ToggleButton);
             this.Controls.Add(this.Cancel);
             this.Controls.Add(this.Imput);
@@ -143,6 +156,7 @@
             this.MinimizeBox = false;
             this.Name = "AuthForm";
             this.Text = "Авторизация";
+            ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -158,5 +172,6 @@
         private System.Windows.Forms.Button Cancel;
         private System.Windows.Forms.Button ToggleButton;
         private System.Windows.Forms.Button Imput;
+        private System.Windows.Forms.PictureBox LogoPictureBox;
     }
 }

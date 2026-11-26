@@ -207,6 +207,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="ReceiptItemEditForm.resx">
       <DependentUpon>ReceiptItemEditForm.cs</DependentUpon>
@@ -245,6 +246,9 @@
       <Project>{e94142bd-873e-40c9-852b-e59537aa30ba}</Project>
       <Name>YPMarsLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MarsIco-_2_-Photoroom.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

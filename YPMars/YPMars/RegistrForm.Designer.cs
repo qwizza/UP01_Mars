@@ -45,6 +45,8 @@
             this.RegPasswordTb = new System.Windows.Forms.TextBox();
             this.HeadName = new System.Windows.Forms.Label();
             this.RegLoginTb = new System.Windows.Forms.TextBox();
+            this.LogoPictureBox = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // RegConfirmPasswordTb
@@ -186,7 +188,7 @@
             // 
             this.HeadName.AutoSize = true;
             this.HeadName.Font = new System.Drawing.Font("Times New Roman", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.HeadName.Location = new System.Drawing.Point(141, 9);
+            this.HeadName.Location = new System.Drawing.Point(141, 17);
             this.HeadName.Name = "HeadName";
             this.HeadName.Size = new System.Drawing.Size(156, 31);
             this.HeadName.TabIndex = 36;
@@ -200,12 +202,23 @@
             this.RegLoginTb.Size = new System.Drawing.Size(191, 29);
             this.RegLoginTb.TabIndex = 35;
             // 
+            // LogoPictureBox
+            // 
+            this.LogoPictureBox.Image = global::YPMars.Properties.Resources.MarsIco__2__Photoroom;
+            this.LogoPictureBox.Location = new System.Drawing.Point(84, 9);
+            this.LogoPictureBox.Name = "LogoPictureBox";
+            this.LogoPictureBox.Size = new System.Drawing.Size(51, 47);
+            this.LogoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.LogoPictureBox.TabIndex = 51;
+            this.LogoPictureBox.TabStop = false;
+            // 
             // RegistrForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(425, 388);
+            this.Controls.Add(this.LogoPictureBox);
             this.Controls.Add(this.RegConfirmPasswordTb);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.ToggleButton);
@@ -228,6 +241,7 @@
             this.MinimizeBox = false;
             this.Name = "RegistrForm";
             this.Text = "RegistrForm";
+            ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -251,5 +265,6 @@
         private System.Windows.Forms.TextBox RegPasswordTb;
         private System.Windows.Forms.Label HeadName;
         private System.Windows.Forms.TextBox RegLoginTb;
+        private System.Windows.Forms.PictureBox LogoPictureBox;
     }
 }
