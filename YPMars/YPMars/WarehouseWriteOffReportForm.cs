@@ -19,11 +19,13 @@ namespace YPMars
         private readonly WarehouseWriteOffReportGenerator _generator = new WarehouseWriteOffReportGenerator();
         private List<WarehouseWriteOffRecord> _records = new List<WarehouseWriteOffRecord>();
         private WarehouseWriteOffFilter _lastFilter;
+        private string _currentUserName;
 
-        public WarehouseWriteOffReportForm(WarehouseModel model)
+        public WarehouseWriteOffReportForm(WarehouseModel model, string userName = "")
         {
             InitializeComponent();
             _model = model ?? throw new ArgumentNullException(nameof(model));
+            _currentUserName = userName;
 
             StartDatePicker.Value = DateTime.Now.AddDays(-30);
             EndDatePicker.Value = DateTime.Now;
@@ -86,7 +88,7 @@ namespace YPMars
 
         private void ExportDocxButton_Click(object sender, EventArgs e)
         {
-            if (_records == null || _records.Count == 0 || _lastFilter == null)
+            if (_records.Count == 0 || _lastFilter == null)
             {
                 MessageBox.Show("Нет данных для экспорта. Сформируйте отчёт.", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -98,7 +100,7 @@ namespace YPMars
                 dialog.FileName = $"Списания_{DateTime.Now:yyyyMMdd_HHmm}.docx";
                 if (dialog.ShowDialog() != DialogResult.OK) return;
 
-                string error = _generator.GenerateWord(_records, _lastFilter, dialog.FileName);
+                string error = _generator.GenerateWord(_records, _lastFilter, dialog.FileName, _currentUserName);
                 if (!string.IsNullOrEmpty(error))
                 {
                     MessageBox.Show(error, "Ошибка экспорта", MessageBoxButtons.OK, MessageBoxIcon.Error);

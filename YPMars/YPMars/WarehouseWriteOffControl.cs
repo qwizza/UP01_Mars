@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using YPMarsLib;
+using YPMarsLib.Models;
+using YPMarsLib.Services;
 
 namespace YPMars
 {
@@ -116,7 +118,9 @@ namespace YPMars
                 UnitPrice = selected.UnitPrice
             };
 
-            if (_model.RegisterWriteOff(writeOffItem, _currentUser?.Login ?? "", out string error))
+            string userName = _currentUser?.FullName ?? _currentUser?.Login ?? "Неизвестно";
+
+            if (_model.RegisterWriteOff(writeOffItem, userName, out string error))
             {
                 MessageBox.Show("Списание успешно оформлено!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 _onSuccess?.Invoke();
@@ -132,9 +136,46 @@ namespace YPMars
         {
             if (_model == null) return;
 
-            using (var form = new WarehouseWriteOffReportForm(_model))
+            var filter = new WarehouseWriteOffFilter
             {
-                form.ShowDialog(this);
+                StartDate = DateTime.Now.AddDays(-30).Date,
+                EndDate = DateTime.Now.Date.AddDays(1).AddTicks(-1)
+            };
+
+            var records = _model.GetWriteOffReport(filter, out string dbError);
+            if (!string.IsNullOrEmpty(dbError))
+            {
+                MessageBox.Show(dbError, "Ошибка БД", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (records.Count == 0)
+            {
+                MessageBox.Show("За последние 30 дней списаний не найдено.", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            using (var dialog = new SaveFileDialog())
+            {
+                dialog.Filter = "Документ Word (*.docx)|*.docx";
+                dialog.FileName = $"Списания_{DateTime.Now:yyyyMMdd_HHmm}.docx";
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    var generator = new WarehouseWriteOffReportGenerator();
+
+                    string userName = _currentUser?.FullName ?? _currentUser?.Login ?? "";
+                    string error = generator.GenerateWord(records, filter, dialog.FileName, userName);
+
+                    if (string.IsNullOrEmpty(error))
+                    {
+                        MessageBox.Show("Отчёт успешно сохранён.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show(error, "Ошибка экспорта", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
         }
     }
