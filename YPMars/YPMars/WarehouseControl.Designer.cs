@@ -5,6 +5,7 @@
         private System.ComponentModel.IContainer components = null;
 
         private System.Windows.Forms.Panel panelTopWarehouse;
+        private System.Windows.Forms.TextBox SearchTextBox; // ДОБАВЛЕНО
         private System.Windows.Forms.Button RefreshButton;
 
         private System.Windows.Forms.Panel panelSummaryWarehouse;
@@ -26,9 +27,10 @@
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelTopWarehouse = new System.Windows.Forms.Panel();
+            this.SearchTextBox = new System.Windows.Forms.TextBox();
             this.ReportButton = new System.Windows.Forms.Button();
             this.RefreshButton = new System.Windows.Forms.Button();
             this.panelSummaryWarehouse = new System.Windows.Forms.Panel();
@@ -36,6 +38,7 @@
             this.TotalSumLabel = new System.Windows.Forms.Label();
             this.TotalAvailableLabel = new System.Windows.Forms.Label();
             this.WarehouseDataGridView = new System.Windows.Forms.DataGridView();
+            this.SearchLabel = new System.Windows.Forms.Label();
             this.panelTopWarehouse.SuspendLayout();
             this.panelSummaryWarehouse.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.WarehouseDataGridView)).BeginInit();
@@ -45,6 +48,8 @@
             // 
             this.panelTopWarehouse.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.panelTopWarehouse.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelTopWarehouse.Controls.Add(this.SearchLabel);
+            this.panelTopWarehouse.Controls.Add(this.SearchTextBox);
             this.panelTopWarehouse.Controls.Add(this.ReportButton);
             this.panelTopWarehouse.Controls.Add(this.RefreshButton);
             this.panelTopWarehouse.Dock = System.Windows.Forms.DockStyle.Top;
@@ -52,6 +57,15 @@
             this.panelTopWarehouse.Name = "panelTopWarehouse";
             this.panelTopWarehouse.Size = new System.Drawing.Size(1340, 50);
             this.panelTopWarehouse.TabIndex = 0;
+            // 
+            // SearchTextBox
+            // 
+            this.SearchTextBox.Font = new System.Drawing.Font("Times New Roman", 13F);
+            this.SearchTextBox.Location = new System.Drawing.Point(184, 11);
+            this.SearchTextBox.Name = "SearchTextBox";
+            this.SearchTextBox.Size = new System.Drawing.Size(300, 27);
+            this.SearchTextBox.TabIndex = 4;
+            this.SearchTextBox.TextChanged += new System.EventHandler(this.SearchTextBox_TextChanged);
             // 
             // ReportButton
             // 
@@ -79,7 +93,7 @@
             this.RefreshButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.RefreshButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
             this.RefreshButton.ForeColor = System.Drawing.Color.White;
-            this.RefreshButton.Location = new System.Drawing.Point(1074, 10);
+            this.RefreshButton.Location = new System.Drawing.Point(1079, 10);
             this.RefreshButton.Name = "RefreshButton";
             this.RefreshButton.Size = new System.Drawing.Size(115, 28);
             this.RefreshButton.TabIndex = 0;
@@ -135,19 +149,19 @@
             // 
             this.WarehouseDataGridView.AllowUserToAddRows = false;
             this.WarehouseDataGridView.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
-            this.WarehouseDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
+            this.WarehouseDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.WarehouseDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.WarehouseDataGridView.BackgroundColor = System.Drawing.SystemColors.InactiveBorder;
             this.WarehouseDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.WarehouseDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.WarehouseDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.WarehouseDataGridView.ColumnHeadersHeight = 32;
             this.WarehouseDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.WarehouseDataGridView.Location = new System.Drawing.Point(0, 85);
@@ -160,6 +174,16 @@
             this.WarehouseDataGridView.Size = new System.Drawing.Size(1340, 470);
             this.WarehouseDataGridView.TabIndex = 2;
             // 
+            // SearchLabel
+            // 
+            this.SearchLabel.AutoSize = true;
+            this.SearchLabel.Font = new System.Drawing.Font("Times New Roman", 13F);
+            this.SearchLabel.Location = new System.Drawing.Point(12, 15);
+            this.SearchLabel.Name = "SearchLabel";
+            this.SearchLabel.Size = new System.Drawing.Size(166, 20);
+            this.SearchLabel.TabIndex = 5;
+            this.SearchLabel.Text = "Поиск по названию:";
+            // 
             // WarehouseControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
@@ -171,11 +195,14 @@
             this.Name = "WarehouseControl";
             this.Size = new System.Drawing.Size(1340, 555);
             this.panelTopWarehouse.ResumeLayout(false);
+            this.panelTopWarehouse.PerformLayout();
             this.panelSummaryWarehouse.ResumeLayout(false);
             this.panelSummaryWarehouse.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.WarehouseDataGridView)).EndInit();
             this.ResumeLayout(false);
 
         }
+
+        private System.Windows.Forms.Label SearchLabel;
     }
 }

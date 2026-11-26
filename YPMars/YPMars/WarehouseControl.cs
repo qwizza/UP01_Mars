@@ -85,5 +85,34 @@ namespace YPMars
                 form.ShowDialog(this);
             }
         }
+
+        private void SearchTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (_warehouseModel == null) return;
+
+            var allItems = _warehouseModel.Items;
+            if (allItems == null) return;
+
+            string searchText = SearchTextBox.Text.Trim().ToLower();
+
+            if (string.IsNullOrEmpty(searchText))
+            {
+                WarehouseDataGridView.DataSource = allItems;
+            }
+            else
+            {
+                var filtered = allItems.Where(x =>
+                    x.NomenclatureName != null &&
+                    x.NomenclatureName.ToLower().Contains(searchText)
+                ).ToList();
+
+                WarehouseDataGridView.DataSource = filtered;
+            }
+
+            if (WarehouseDataGridView.Columns["UnitPrice"] != null)
+                WarehouseDataGridView.Columns["UnitPrice"].DefaultCellStyle.Format = "N2";
+            if (WarehouseDataGridView.Columns["TotalCost"] != null)
+                WarehouseDataGridView.Columns["TotalCost"].DefaultCellStyle.Format = "N2";
+        }
     }
 }
