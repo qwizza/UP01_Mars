@@ -74,7 +74,7 @@ namespace YPMars
             // Обновление склада после операций
             Action updateWarehouse = () => warehouseControl1.LoadStock();
 
-            warehouseReceiptControl1.Initialize(warehouseModel_, updateWarehouse);
+            warehouseReceiptControl1.Initialize(warehouseModel_, currentUser_, updateWarehouse);
             warehouseWriteOffControl1.Initialize(warehouseModel_, currentUser_, updateWarehouse);
 
             LoadOrders();

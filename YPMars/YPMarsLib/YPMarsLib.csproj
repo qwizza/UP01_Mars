@@ -120,6 +120,7 @@
     <Compile Include="Models\Order.cs" />
     <Compile Include="Repositories\OrderRepository.cs" />
     <Compile Include="Models\OrderStatus.cs" />
+    <Compile Include="Services\WarehouseReceiptReportGenerator.cs" />
     <Compile Include="Services\WarehouseWriteOffReportGenerator.cs" />
     <Compile Include="Validation\OrderValidator.cs" />
     <Compile Include="Validation\Validator.cs" />

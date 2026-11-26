@@ -8,101 +8,220 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using YPMarsLib;
+using YPMarsLib.Models;
+using YPMarsLib.Services;
 
 namespace YPMars
 {
     public partial class WarehouseReceiptControl : UserControl
     {
         private List<WarehouseItem> _currentStock;
+        private List<WarehouseItem> _itemsToReceipt = new List<WarehouseItem>();
+
         private WarehouseModel _model;
+        private User _currentUser;
         private Action _onSuccess;
 
         public WarehouseReceiptControl()
         {
             InitializeComponent();
-
-            // Включаем поиск по первым буквам
-            NomenclatureComboBox.DropDownStyle = ComboBoxStyle.DropDown;
-            NomenclatureComboBox.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
-            NomenclatureComboBox.AutoCompleteSource = AutoCompleteSource.ListItems;
         }
 
-        public void Initialize(WarehouseModel model, Action onSuccess)
+        public void Initialize(WarehouseModel model, User currentUser, Action onSuccess)
         {
             _model = model;
+            _currentUser = currentUser;
             _onSuccess = onSuccess;
             LoadNomenclatureList();
+            RefreshGrid();
         }
 
         private void LoadNomenclatureList()
         {
-            NomenclatureComboBox.Items.Clear();
             _currentStock = _model.Items ?? new List<WarehouseItem>();
-
-            foreach (var item in _currentStock)
-            {
-                NomenclatureComboBox.Items.Add(item.NomenclatureName);
-            }
-
-            if (NomenclatureComboBox.Items.Count > 0)
-                NomenclatureComboBox.SelectedIndex = 0;
-            else
-                CurrentQuantityTextBox.Text = "0 (новая позиция)";
         }
 
-        private void NomenclatureComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void AddButton_Click(object sender, EventArgs e)
         {
-            string name = NomenclatureComboBox.Text.Trim();
-            var existing = _currentStock.FirstOrDefault(
-                x => string.Equals(x.NomenclatureName, name, StringComparison.OrdinalIgnoreCase));
+            using (var form = new ReceiptItemEditForm(new WarehouseItem(), _currentStock))
+            {
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    var newItem = form.EditedItem;
 
-            if (existing != null)
-            {
-                CurrentQuantityTextBox.Text = $"{existing.TotalQuantity} шт. (в резерве: {existing.ReservedQuantity})";
-                UnitPriceNumericUpDown.Value = existing.UnitPrice >= 0 ? existing.UnitPrice : 0m;
-            }
-            else
-            {
-                CurrentQuantityTextBox.Text = "0 (новая позиция)";
+                    var existingItem = _itemsToReceipt.FirstOrDefault(x =>
+                        x.NomenclatureName.Equals(newItem.NomenclatureName, StringComparison.OrdinalIgnoreCase));
+
+                    if (existingItem != null)
+                    {
+                        existingItem.TotalQuantity += newItem.TotalQuantity;
+
+                        existingItem.UnitPrice = newItem.UnitPrice;
+                    }
+                    else
+                    {
+                        _itemsToReceipt.Add(newItem);
+                    }
+
+                    RefreshGrid();
+                }
             }
         }
 
-        private void SaveButton_Click(object sender, EventArgs e)
+        private void EditButton_Click(object sender, EventArgs e)
         {
-            string name = NomenclatureComboBox.Text.Trim();
-            int quantity = (int)QuantityNumericUpDown.Value;
-            decimal unitPrice = UnitPriceNumericUpDown.Value;
-
-            if (string.IsNullOrWhiteSpace(name))
+            if (ReceiptDataGridView.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Необходимо указать наименование номенклатуры.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (quantity <= 0)
-            {
-                MessageBox.Show("Количество поступления должно быть больше нуля.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Выделите строку для редактирования.", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            var receiptItem = new WarehouseItem
+            int index = ReceiptDataGridView.SelectedRows[0].Index;
+            if (index >= 0 && index < _itemsToReceipt.Count)
             {
-                NomenclatureName = name,
-                StorageZone = "Основной склад",
-                TotalQuantity = quantity,
-                UnitPrice = unitPrice
-            };
+                var item = _itemsToReceipt[index];
+                using (var form = new ReceiptItemEditForm(item, _currentStock))
+                {
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        var duplicate = _itemsToReceipt.FirstOrDefault(x =>
+                            x != item &&
+                            x.NomenclatureName.Equals(item.NomenclatureName, StringComparison.OrdinalIgnoreCase));
 
-            if (_model.RegisterReceipt(receiptItem, out string error))
+                        if (duplicate != null)
+                        {
+                            duplicate.TotalQuantity += item.TotalQuantity;
+                            _itemsToReceipt.Remove(item); 
+                        }
+
+                        RefreshGrid();
+                    }
+                }
+            }
+        }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            if (ReceiptDataGridView.SelectedRows.Count == 0)
             {
-                MessageBox.Show("Поступление успешно оформлено!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                NomenclatureComboBox.Text = "";
-                QuantityNumericUpDown.Value = 1;
+                MessageBox.Show("Выделите строку для удаления.", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            int index = ReceiptDataGridView.SelectedRows[0].Index;
+            if (index >= 0 && index < _itemsToReceipt.Count)
+            {
+                var itemToDelete = _itemsToReceipt[index];
+
+                var result = MessageBox.Show(
+                    $"Вы уверены, что хотите удалить позицию \"{itemToDelete.NomenclatureName}\" из списка?",
+                    "Подтверждение удаления",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    _itemsToReceipt.RemoveAt(index);
+                    RefreshGrid();
+                }
+            }
+        }
+
+        private void RefreshGrid()
+        {
+            ReceiptDataGridView.Rows.Clear();
+            ReceiptDataGridView.Columns.Clear();
+
+            ReceiptDataGridView.Columns.Add("NomenclatureName", "Номенклатура");
+            ReceiptDataGridView.Columns.Add("TotalQuantity", "Количество");
+            ReceiptDataGridView.Columns.Add("UnitPrice", "Цена за ед.");
+            ReceiptDataGridView.Columns.Add("TotalCost", "Сумма");
+
+            ReceiptDataGridView.Columns["NomenclatureName"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            ReceiptDataGridView.Columns["TotalQuantity"].Width = 100;
+            ReceiptDataGridView.Columns["UnitPrice"].Width = 120;
+            ReceiptDataGridView.Columns["UnitPrice"].DefaultCellStyle.Format = "N2";
+            ReceiptDataGridView.Columns["TotalCost"].Width = 120;
+            ReceiptDataGridView.Columns["TotalCost"].DefaultCellStyle.Format = "N2";
+
+            foreach (var item in _itemsToReceipt)
+            {
+                ReceiptDataGridView.Rows.Add(item.NomenclatureName, item.TotalQuantity, item.UnitPrice, item.TotalCost);
+            }
+            ReceiptDataGridView.ClearSelection();
+        }
+
+        private void SaveAllButton_Click(object sender, EventArgs e)
+        {
+            if (_itemsToReceipt.Count == 0) { MessageBox.Show("Список пуст."); return; }
+            int successCount = 0;
+
+            foreach (var item in _itemsToReceipt)
+            {
+                if (_model.RegisterReceipt(item, out string error)) successCount++;
+                else MessageBox.Show($"Ошибка для {item.NomenclatureName}: {error}");
+            }
+
+            if (successCount > 0)
+            {
+                MessageBox.Show($"Успешно оприходовано {successCount} позиций!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _itemsToReceipt.Clear();
+                RefreshGrid();
                 _onSuccess?.Invoke();
                 LoadNomenclatureList();
             }
-            else
+        }
+
+        private void ClearListButton_Click(object sender, EventArgs e)
+        {
+            if (_itemsToReceipt.Count == 0)
             {
-                MessageBox.Show(error, "Ошибка БД", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Список уже пуст.", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            var result = MessageBox.Show(
+                "Вы уверены, что хотите полностью очистить список добавленных товаров?",
+                "Подтверждение очистки",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                _itemsToReceipt.Clear();
+                RefreshGrid();
+            }
+        }
+
+        private void ReportButton_Click(object sender, EventArgs e)
+        {
+            if (_itemsToReceipt.Count == 0)
+            {
+                MessageBox.Show("Список товаров пуст. Добавьте товары перед формированием акта.", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+
+            using (var dialog = new SaveFileDialog())
+            {
+                dialog.Filter = "Документ Word (*.docx)|*.docx";
+                dialog.FileName = $"Акт_приемки_{DateTime.Now:yyyyMMdd_HHmm}.docx";
+
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    var generator = new WarehouseReceiptReportGenerator();
+                    string userName = _currentUser?.FullName ?? _currentUser?.Login ?? "";
+
+                    string error = generator.GenerateWord(_itemsToReceipt, dialog.FileName, userName);
+
+                    if (string.IsNullOrEmpty(error))
+                    {
+                        MessageBox.Show("Акт приемки успешно сохранён!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show(error, "Ошибка экспорта", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
         }
     }
