@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using YPMarsLib;
+using YPMarsLib.Repositories;
+using YPMarsLib.Validation;
 
 namespace YPMars
 {
@@ -230,5 +232,59 @@ namespace YPMars
 
         private void OrderDetailsButton_Click(object sender, EventArgs e) => OpenOrderDetails();
         private void OrdersDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e) => OpenOrderDetails();
+        private void GenerateReportButton_Click(object sender, EventArgs e)
+        {
+            if (OrdersDataGridView.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Выберите заказ в таблице для формирования отчёта.", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var selectedOrder = (Order)OrdersDataGridView.SelectedRows[0].DataBoundItem;
+            var repo = new OrderReportRepository();
+
+            var reportData = repo.GetOrderReportData(selectedOrder.ContractNumber, out string error);
+            if (!string.IsNullOrEmpty(error))
+            {
+                MessageBox.Show(error, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            reportData.ResponsibleEmployee = currentUser_.FullName;
+            reportData.GeneratedDate = DateTime.Now;
+
+            using (var sfd = new SaveFileDialog())
+            {
+                sfd.Filter = "Документ Word (*.docx)|*.docx";
+
+                string baseFileName = $"Отчет_Заказ_{selectedOrder.ContractNumber}";
+                string defaultFileName = $"{baseFileName}.docx";
+
+                int counter = 1;
+                while (System.IO.File.Exists(System.IO.Path.Combine(Environment.CurrentDirectory, defaultFileName)) ||
+                       System.IO.File.Exists(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), defaultFileName)))
+                {
+                    defaultFileName = $"{baseFileName} ({counter}).docx";
+                    counter++;
+                }
+
+                sfd.FileName = defaultFileName;
+
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    var generator = new OrderReportGenerator();
+                    string genError = generator.GenerateWord(reportData, sfd.FileName);
+
+                    if (string.IsNullOrEmpty(genError))
+                    {
+                        MessageBox.Show($"Отчёт по заказу №{selectedOrder.ContractNumber} успешно сформирован.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show(genError, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
     }
 }
