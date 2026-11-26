@@ -11,24 +11,32 @@ using YPMarsLib;
 
 namespace YPMars
 {
-    public partial class WarehouseWriteOffForm : Form
+    public partial class WarehouseWriteOffControl : UserControl
     {
-        public WarehouseItem WriteOffItem { get; private set; }
-        private readonly List<WarehouseItem> _items;
+        private List<WarehouseItem> _items;
+        private WarehouseModel _model;
+        private User _currentUser;
+        private Action _onSuccess;
 
-        public WarehouseWriteOffForm(List<WarehouseItem> items)
+        public WarehouseWriteOffControl()
         {
             InitializeComponent();
-            _items = items ?? new List<WarehouseItem>();
+            QuantityNumeric.ValueChanged += (s, e) => UpdateTotal();
+            NomenclatureComboBox.SelectedIndexChanged += (s, e) => OnNomenclatureChanged();
+        }
 
+        public void Initialize(WarehouseModel model, User currentUser, Action onSuccess)
+        {
+            _model = model;
+            _currentUser = currentUser;
+            _onSuccess = onSuccess;
+
+            _items = _model.Items ?? new List<WarehouseItem>();
             NomenclatureComboBox.DataSource = _items;
             NomenclatureComboBox.DisplayMember = nameof(WarehouseItem.NomenclatureName);
             NomenclatureComboBox.SelectedIndex = _items.Count > 0 ? 0 : -1;
-
-            NomenclatureComboBox.SelectedIndexChanged += (s, e) => OnNomenclatureChanged();
-            QuantityNumeric.ValueChanged += (s, e) => UpdateTotal();
             OnNomenclatureChanged();
-        }       
+        }
 
         private void UpdateTotal()
         {
@@ -60,27 +68,23 @@ namespace YPMars
         {
             if (!(NomenclatureComboBox.SelectedItem is WarehouseItem selected))
             {
-                MessageBox.Show("Необходимо указать наименование номенклатуры.", "Ошибка валидации", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                DialogResult = DialogResult.None;
+                MessageBox.Show("Необходимо выбрать номенклатуру.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (QuantityNumeric.Value <= 0)
             {
-                MessageBox.Show("Количество списания должно быть больше нуля.", "Ошибка валидации", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                DialogResult = DialogResult.None;
+                MessageBox.Show("Количество должно быть больше нуля.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (QuantityNumeric.Value > selected.AvailableQuantity)
             {
-                MessageBox.Show($"Недостаточно доступного остатка для списания. Доступно: {selected.AvailableQuantity} шт.",
-                    "Ошибка валидации", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                DialogResult = DialogResult.None;
+                MessageBox.Show($"Недостаточно остатка. Доступно: {selected.AvailableQuantity} шт.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            WriteOffItem = new WarehouseItem
+            var writeOffItem = new WarehouseItem
             {
                 NomenclatureName = selected.NomenclatureName,
                 StorageZone = selected.StorageZone,
@@ -89,14 +93,25 @@ namespace YPMars
                 UnitPrice = selected.UnitPrice
             };
 
-            DialogResult = DialogResult.OK;
-            Close();
-        }       
-
-        private void CancelButton_Click(object sender, EventArgs e)
+            if (_model.RegisterWriteOff(writeOffItem, _currentUser?.Login ?? "", out string error))
+            {
+                MessageBox.Show("Списание успешно оформлено!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _onSuccess?.Invoke(); 
+                Initialize(_model, _currentUser, _onSuccess); 
+            }
+            else
+            {
+                MessageBox.Show(error, "Ошибка БД", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void ReportButton_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Cancel;
-            Close();
+            if (_model == null) return;
+
+            using (var form = new WarehouseWriteOffReportForm(_model))
+            {
+                form.ShowDialog(this);
+            }
         }
 
     }

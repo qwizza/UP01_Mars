@@ -26,15 +26,12 @@ namespace YPMars
             string login = tbLogin.Text.Trim();
             string password = tbPassword.Text.Trim();
 
-            // Проверка на пустые поля
             if (string.IsNullOrEmpty(login) || string.IsNullOrEmpty(password))
             {
                 MessageBox.Show("Введите логин и пароль", "Предупреждение",
                                 MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
-            // 2. Вызываем метод проверки логина и пароля из репозитория
             bool isAuthSuccess = loader_.AuthenticateUser(login, password);
 
             if (!isAuthSuccess)
@@ -47,17 +44,12 @@ namespace YPMars
                 return;
             }
 
-            // 3. Если авторизация успешна, получаем данные пользователя
             currentUser_ = loader_.GetUserByLogin(login);
 
-            MessageBox.Show($"Добро пожаловать, {currentUser_.FullName ?? currentUser_.Login}!",
-                            "Успешный вход", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            // 4. Открываем главную форму
             MainForm mainForm = new MainForm(loader_, currentUser_);
             mainForm.Show();
 
-            this.Hide(); // Скрываем форму входа
+            this.Hide();
         }
 
         private void Cancel_Click(object sender, EventArgs e)
@@ -67,12 +59,10 @@ namespace YPMars
 
         private void ToggleButton_Click(object sender, EventArgs e)
         {
-            // Если символы скрыты (true), то показываем их (false)
             if (tbPassword.UseSystemPasswordChar)
             {
                 tbPassword.UseSystemPasswordChar = false;                              
             }
-            // Иначе скрываем обратно
             else
             {
                 tbPassword.UseSystemPasswordChar = true;

@@ -158,17 +158,17 @@
     <Compile Include="WarehouseControl.Designer.cs">
       <DependentUpon>WarehouseControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="WarehouseReceiptForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="WarehouseReceiptControl .cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="WarehouseReceiptForm.Designer.cs">
-      <DependentUpon>WarehouseReceiptForm.cs</DependentUpon>
+    <Compile Include="WarehouseReceiptControl .Designer.cs">
+      <DependentUpon>WarehouseReceiptControl .cs</DependentUpon>
     </Compile>
-    <Compile Include="WarehouseWriteOffForm.cs">
-      <SubType>Form</SubType>
+    <Compile Include="WarehouseWriteOffControl.cs">
+      <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="WarehouseWriteOffForm.Designer.cs">
-      <DependentUpon>WarehouseWriteOffForm.cs</DependentUpon>
+    <Compile Include="WarehouseWriteOffControl.Designer.cs">
+      <DependentUpon>WarehouseWriteOffControl.cs</DependentUpon>
     </Compile>
     <Compile Include="WarehouseWriteOffReportForm.cs">
       <SubType>Form</SubType>
@@ -208,11 +208,11 @@
     <EmbeddedResource Include="WarehouseControl.resx">
       <DependentUpon>WarehouseControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WarehouseReceiptForm.resx">
-      <DependentUpon>WarehouseReceiptForm.cs</DependentUpon>
+    <EmbeddedResource Include="WarehouseReceiptControl .resx">
+      <DependentUpon>WarehouseReceiptControl .cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WarehouseWriteOffForm.resx">
-      <DependentUpon>WarehouseWriteOffForm.cs</DependentUpon>
+    <EmbeddedResource Include="WarehouseWriteOffControl.resx">
+      <DependentUpon>WarehouseWriteOffControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WarehouseWriteOffReportForm.resx">
       <DependentUpon>WarehouseWriteOffReportForm.cs</DependentUpon>

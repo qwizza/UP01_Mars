@@ -11,36 +11,40 @@ using YPMarsLib;
 
 namespace YPMars
 {
-    public partial class WarehouseReceiptForm : Form
+    public partial class WarehouseReceiptControl : UserControl
     {
-        private readonly List<WarehouseItem> _currentStock;
-        public WarehouseItem ReceiptItem { get; private set; }
+        private List<WarehouseItem> _currentStock;
+        private WarehouseModel _model;
+        private Action _onSuccess;
 
-        public WarehouseReceiptForm(List<WarehouseItem> currentStock)
+        public WarehouseReceiptControl()
         {
             InitializeComponent();
-            _currentStock = currentStock ?? new List<WarehouseItem>();
-
+        }
+        public void Initialize(WarehouseModel model, Action onSuccess)
+        {
+            _model = model;
+            _onSuccess = onSuccess;
             LoadNomenclatureList();
         }
+
         private void LoadNomenclatureList()
         {
             NomenclatureComboBox.Items.Clear();
+            _currentStock = _model.Items ?? new List<WarehouseItem>();
+
             foreach (var item in _currentStock)
             {
                 NomenclatureComboBox.Items.Add(item.NomenclatureName);
             }
 
             if (NomenclatureComboBox.Items.Count > 0)
-            {
                 NomenclatureComboBox.SelectedIndex = 0;
-            }
             else
-            {
                 CurrentQuantityTextBox.Text = "0 (новая позиция)";
-            }
         }
-        private void UpdateSelectedInfo()
+
+        private void NomenclatureComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             string name = NomenclatureComboBox.Text.Trim();
             var existing = _currentStock.FirstOrDefault(
@@ -56,15 +60,6 @@ namespace YPMars
                 CurrentQuantityTextBox.Text = "0 (новая позиция)";
             }
         }
-        private void NomenclatureComboBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            UpdateSelectedInfo();
-        }
-
-        private void NomenclatureComboBox_TextChanged(object sender, EventArgs e)
-        {
-            UpdateSelectedInfo();
-        }
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
@@ -74,21 +69,16 @@ namespace YPMars
 
             if (string.IsNullOrWhiteSpace(name))
             {
-                MessageBox.Show("Необходимо указать наименование номенклатуры.", "Ошибка валидации",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                DialogResult = DialogResult.None;
+                MessageBox.Show("Необходимо указать наименование номенклатуры.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             if (quantity <= 0)
             {
-                MessageBox.Show("Количество поступления должно быть больше нуля.", "Ошибка валидации",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                DialogResult = DialogResult.None;
+                MessageBox.Show("Количество поступления должно быть больше нуля.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            ReceiptItem = new WarehouseItem
+            var receiptItem = new WarehouseItem
             {
                 NomenclatureName = name,
                 StorageZone = "Основной склад",
@@ -96,13 +86,18 @@ namespace YPMars
                 UnitPrice = unitPrice
             };
 
-            DialogResult = DialogResult.OK;
-            Close();
-        }
-        private void CancelButton_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-            Close();
+            if (_model.RegisterReceipt(receiptItem, out string error))
+            {
+                MessageBox.Show("Поступление успешно оформлено!", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                NomenclatureComboBox.Text = "";
+                QuantityNumericUpDown.Value = 1;
+                _onSuccess?.Invoke();
+                LoadNomenclatureList();
+            }
+            else
+            {
+                MessageBox.Show(error, "Ошибка БД", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

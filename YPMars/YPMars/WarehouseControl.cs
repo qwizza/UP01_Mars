@@ -31,8 +31,6 @@ namespace YPMars
                 bool canManage = currentUser.Role == User.UserRole.Warehouser
                               || currentUser.Role == User.UserRole.SuperUser;
 
-                ReceiptButton.Visible = canManage;
-                WriteOffButton.Visible = canManage; 
                 ReportButton.Visible = canManage;  
             }
             LoadStock();
@@ -76,47 +74,7 @@ namespace YPMars
         private void RefreshButton_Click(object sender, EventArgs e)
         {
             LoadStock();
-        }
-
-        private void ReceiptButton_Click(object sender, EventArgs e)
-        {
-            if (_warehouseModel == null) return;
-
-            using (var form = new WarehouseReceiptForm(_warehouseModel.Items))
-            {
-                if (form.ShowDialog(this) == DialogResult.OK)
-                {
-                    if (_warehouseModel.RegisterReceipt(form.ReceiptItem, out string error))
-                    {
-                        LoadStock();
-                    }
-                    else
-                    {
-                        MessageBox.Show(error, "Ошибка оприходования", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                }
-            }
-        }
-
-        private void WriteOffButton_Click(object sender, EventArgs e)
-        {
-            if (_warehouseModel == null) return;
-
-            using (var form = new WarehouseWriteOffForm(_warehouseModel.Items))
-            {
-                if (form.ShowDialog(this) == DialogResult.OK)
-                {
-                    if (_warehouseModel.RegisterWriteOff(form.WriteOffItem, _currentUser?.Login ?? "", out string error))
-                    {
-                        LoadStock();
-                    }
-                    else
-                    {
-                        MessageBox.Show(error, "Ошибка списания", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                }
-            }
-        }
+        } 
 
         private void ReportButton_Click(object sender, EventArgs e)
         {
@@ -127,6 +85,5 @@ namespace YPMars
                 form.ShowDialog(this);
             }
         }
-
     }
 }

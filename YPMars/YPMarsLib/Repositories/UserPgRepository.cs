@@ -46,7 +46,8 @@ namespace YPMarsLib
                             {
                                 Login = reader["login"].ToString(),
                                 PasswordHash = reader["password_hash"].ToString(),
-                                Role = (User.UserRole)Enum.Parse(typeof(User.UserRole), reader["role"].ToString())
+                                Role = (User.UserRole)Enum.Parse(typeof(User.UserRole), reader["role"].ToString()),
+                                FullName = reader["full_name"].ToString()
                             };
                         }
                     }

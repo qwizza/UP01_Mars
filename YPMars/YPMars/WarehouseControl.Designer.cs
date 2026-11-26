@@ -11,8 +11,6 @@
         private System.Windows.Forms.Label TotalCountLabel;
         private System.Windows.Forms.Label TotalSumLabel;
         private System.Windows.Forms.Label TotalAvailableLabel;
-        private System.Windows.Forms.Button ReceiptButton;
-        private System.Windows.Forms.Button WriteOffButton;
         private System.Windows.Forms.Button ReportButton;
 
         private System.Windows.Forms.DataGridView WarehouseDataGridView;
@@ -31,10 +29,8 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelTopWarehouse = new System.Windows.Forms.Panel();
-            this.RefreshButton = new System.Windows.Forms.Button();
-            this.ReceiptButton = new System.Windows.Forms.Button();
-            this.WriteOffButton = new System.Windows.Forms.Button(); 
             this.ReportButton = new System.Windows.Forms.Button();
+            this.RefreshButton = new System.Windows.Forms.Button();
             this.panelSummaryWarehouse = new System.Windows.Forms.Panel();
             this.TotalCountLabel = new System.Windows.Forms.Label();
             this.TotalSumLabel = new System.Windows.Forms.Label();
@@ -49,64 +45,13 @@
             // 
             this.panelTopWarehouse.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.panelTopWarehouse.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelTopWarehouse.Controls.Add(this.ReportButton);
             this.panelTopWarehouse.Controls.Add(this.RefreshButton);
-            this.panelTopWarehouse.Controls.Add(this.ReceiptButton);
             this.panelTopWarehouse.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTopWarehouse.Location = new System.Drawing.Point(0, 0);
             this.panelTopWarehouse.Name = "panelTopWarehouse";
             this.panelTopWarehouse.Size = new System.Drawing.Size(1340, 50);
             this.panelTopWarehouse.TabIndex = 0;
-            // 
-            // RefreshButton
-            // 
-            this.RefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.RefreshButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
-            this.RefreshButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.RefreshButton.FlatAppearance.BorderSize = 0;
-            this.RefreshButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.RefreshButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
-            this.RefreshButton.ForeColor = System.Drawing.Color.White;
-            this.RefreshButton.Location = new System.Drawing.Point(800, 10); // СДВИНУТО ЛЕВЕЕ
-            this.RefreshButton.Name = "RefreshButton";
-            this.RefreshButton.Size = new System.Drawing.Size(115, 28);
-            this.RefreshButton.TabIndex = 0;
-            this.RefreshButton.Text = "Обновить";
-            this.RefreshButton.UseVisualStyleBackColor = false;
-            this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
-            // 
-            // ReceiptButton
-            // 
-            this.ReceiptButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ReceiptButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(150)))), ((int)(((byte)(90)))));
-            this.ReceiptButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ReceiptButton.FlatAppearance.BorderSize = 0;
-            this.ReceiptButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ReceiptButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
-            this.ReceiptButton.ForeColor = System.Drawing.Color.White;
-            this.ReceiptButton.Location = new System.Drawing.Point(925, 10); // СДВИНУТО ЛЕВЕЕ
-            this.ReceiptButton.Name = "ReceiptButton";
-            this.ReceiptButton.Size = new System.Drawing.Size(140, 28);
-            this.ReceiptButton.TabIndex = 1;
-            this.ReceiptButton.Text = "Поступление";
-            this.ReceiptButton.UseVisualStyleBackColor = false;
-            this.ReceiptButton.Click += new System.EventHandler(this.ReceiptButton_Click);
-            // 
-            // WriteOffButton 
-            // 
-            this.WriteOffButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.WriteOffButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(200)))), ((int)(((byte)(50)))), ((int)(((byte)(50)))));
-            this.WriteOffButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.WriteOffButton.FlatAppearance.BorderSize = 0;
-            this.WriteOffButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.WriteOffButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
-            this.WriteOffButton.ForeColor = System.Drawing.Color.White;
-            this.WriteOffButton.Location = new System.Drawing.Point(1075, 10);
-            this.WriteOffButton.Name = "WriteOffButton";
-            this.WriteOffButton.Size = new System.Drawing.Size(120, 28);
-            this.WriteOffButton.TabIndex = 2;
-            this.WriteOffButton.Text = "Списание";
-            this.WriteOffButton.UseVisualStyleBackColor = false;
-            this.WriteOffButton.Click += new System.EventHandler(this.WriteOffButton_Click);
             // 
             // ReportButton
             // 
@@ -124,6 +69,23 @@
             this.ReportButton.Text = "Отчет";
             this.ReportButton.UseVisualStyleBackColor = false;
             this.ReportButton.Click += new System.EventHandler(this.ReportButton_Click);
+            // 
+            // RefreshButton
+            // 
+            this.RefreshButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.RefreshButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
+            this.RefreshButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.RefreshButton.FlatAppearance.BorderSize = 0;
+            this.RefreshButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.RefreshButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
+            this.RefreshButton.ForeColor = System.Drawing.Color.White;
+            this.RefreshButton.Location = new System.Drawing.Point(1074, 10);
+            this.RefreshButton.Name = "RefreshButton";
+            this.RefreshButton.Size = new System.Drawing.Size(115, 28);
+            this.RefreshButton.TabIndex = 0;
+            this.RefreshButton.Text = "Обновить";
+            this.RefreshButton.UseVisualStyleBackColor = false;
+            this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
             // 
             // panelSummaryWarehouse
             // 
@@ -213,10 +175,6 @@
             this.panelSummaryWarehouse.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.WarehouseDataGridView)).EndInit();
             this.ResumeLayout(false);
-            this.panelTopWarehouse.Controls.Add(this.ReportButton);
-            this.panelTopWarehouse.Controls.Add(this.WriteOffButton);
-            this.panelTopWarehouse.Controls.Add(this.ReceiptButton);
-            this.panelTopWarehouse.Controls.Add(this.RefreshButton);
 
         }
     }
