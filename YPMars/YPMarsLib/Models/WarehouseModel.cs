@@ -80,5 +80,30 @@ namespace YPMarsLib
         {
             return repository_.GetWriteOffReport(filter, out error);
         }
+        public List<string> GetStorageZones(out string error)
+        {
+            return repository_.GetStorageZones(out error);
+        }
+
+        public bool UpdateItem(string nomenclatureName, string storageZone, decimal unitPrice, int newReservedQuantity, out string error)
+        {
+            if (string.IsNullOrWhiteSpace(storageZone))
+            {
+                error = "Выберите зону хранения.";
+                return false;
+            }
+            if (unitPrice < 0)
+            {
+                error = "Цена за единицу не может быть отрицательной.";
+                return false;
+            }
+            if (newReservedQuantity < 0)
+            {
+                error = "Количество в резерве не может быть отрицательным.";
+                return false;
+            }
+
+            return repository_.UpdateWarehouseItem(nomenclatureName, storageZone, unitPrice, newReservedQuantity, out error);
+        }
     }
 }

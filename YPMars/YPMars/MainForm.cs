@@ -47,8 +47,10 @@ namespace YPMars
             OrdersDataGridView.CellDoubleClick += OrdersDataGridView_CellDoubleClick;
 
             var dir = new Directory();
-            cmbCounterparty.DataSource = dir.GetCounterparties();
-            cmbCounterparty.SelectedIndex = -1;
+            var counterparties = dir.GetCounterparties();
+            counterparties.Insert(0, "Все контрагенты");
+            cmbCounterparty.DataSource = counterparties;
+            cmbCounterparty.SelectedIndex = 0;
 
             // ФИО и роль
             string displayName = string.IsNullOrWhiteSpace(currentUser_.FullName) ? currentUser_.Login : currentUser_.FullName;
@@ -114,7 +116,9 @@ namespace YPMars
                 return;
             }
 
-            if (cmbCounterparty.SelectedIndex >= 0 && !string.IsNullOrWhiteSpace(cmbCounterparty.Text))
+            if (cmbCounterparty.SelectedIndex > 0 &&
+                !string.IsNullOrWhiteSpace(cmbCounterparty.Text) &&
+                cmbCounterparty.Text != "Все контрагенты")
             {
                 orders = orders.Where(o => o.CounterpartyName == cmbCounterparty.Text).ToList();
             }
@@ -206,9 +210,15 @@ namespace YPMars
 
         private void NewOrderButton_Click(object sender, EventArgs e)
         {
-            using (var form = new OrderEditForm(currentUser_)) form.ShowDialog(this);
-            LoadOrders();
-        }
+            using (var form = new OrderEditForm(currentUser_))
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    LoadOrders();
+                    warehouseControl1.LoadStock();
+                }
+            }
+        } 
 
         private void RegistrButton_Click(object sender, EventArgs e)
         {

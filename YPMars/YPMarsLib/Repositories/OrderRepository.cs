@@ -43,9 +43,9 @@ namespace YPMarsLib
                             int orderId;
                             using (var cmd = new NpgsqlCommand(
                                 @"INSERT INTO customer_orders
-                                (contract_number, order_date, counterparty_id, order_status, planned_shipment_date)
-                              VALUES (@contract_number, @order_date, @counterparty_id, @order_status, @planned_shipment_date)
-                              RETURNING order_id;",
+                        (contract_number, order_date, counterparty_id, order_status, planned_shipment_date)
+                      VALUES (@contract_number, @order_date, @counterparty_id, @order_status, @planned_shipment_date)
+                      RETURNING order_id;",
                                 connection, transaction))
                             {
                                 cmd.Parameters.AddWithValue("contract_number", order.ContractNumber);
@@ -58,35 +58,64 @@ namespace YPMarsLib
                                 orderId = Convert.ToInt32(cmd.ExecuteScalar());
                             }
 
-                            // 3. Вставляем позиции
+                            // 3. Вставляем позиции и списываем со склада
                             foreach (var item in order.Items)
                             {
-                                int nomenclatureId;
+                                int nomenclatureId, totalQty, reservedQty;
+
                                 using (var cmd = new NpgsqlCommand(
-                                    "SELECT item_id FROM nomenclature WHERE name = @name LIMIT 1;",
+                                    @"SELECT item_id,
+                                     COALESCE(total_quantity, 0) AS total_quantity,
+                                     COALESCE(reserved_quantity, 0) AS reserved_quantity
+                              FROM nomenclature
+                              WHERE name = @name
+                              LIMIT 1
+                              FOR UPDATE;",
                                     connection, transaction))
                                 {
                                     cmd.Parameters.AddWithValue("name", item.NomenclatureName);
-                                    var result = cmd.ExecuteScalar();
-                                    if (result == null || result == DBNull.Value)
+                                    using (var reader = cmd.ExecuteReader())
                                     {
-                                        transaction.Rollback();
-                                        return $"Номенклатура \"{item.NomenclatureName}\" не найдена в справочнике";
+                                        if (!reader.Read())
+                                        {
+                                            transaction.Rollback();
+                                            return $"Номенклатура \"{item.NomenclatureName}\" не найдена в справочнике";
+                                        }
+                                        nomenclatureId = Convert.ToInt32(reader["item_id"]);
+                                        totalQty = Convert.ToInt32(reader["total_quantity"]);
+                                        reservedQty = Convert.ToInt32(reader["reserved_quantity"]);
                                     }
-                                    nomenclatureId = Convert.ToInt32(result);
+                                }
+
+                                int available = Math.Max(0, totalQty - reservedQty);
+                                if (item.Quantity > available)
+                                {
+                                    transaction.Rollback();
+                                    return $"Недостаточно товара \"{item.NomenclatureName}\" на складе. Доступно: {available} шт.";
                                 }
 
                                 // total_price НЕ указываем — БД считает его сама (generated column)
                                 using (var cmd = new NpgsqlCommand(
                                     @"INSERT INTO order_items
-                                    (order_id, item_id, quantity, unit_price)
-                                  VALUES (@order_id, @item_id, @quantity, @unit_price);",
+                            (order_id, item_id, quantity, unit_price)
+                          VALUES (@order_id, @item_id, @quantity, @unit_price);",
                                     connection, transaction))
                                 {
                                     cmd.Parameters.AddWithValue("order_id", orderId);
                                     cmd.Parameters.AddWithValue("item_id", nomenclatureId);
                                     cmd.Parameters.AddWithValue("quantity", item.Quantity);
                                     cmd.Parameters.AddWithValue("unit_price", item.UnitPrice);
+                                    cmd.ExecuteNonQuery();
+                                }
+
+                                using (var cmd = new NpgsqlCommand(
+                                    @"UPDATE nomenclature
+                              SET total_quantity = COALESCE(total_quantity, 0) - @quantity
+                              WHERE item_id = @item_id;",
+                                    connection, transaction))
+                                {
+                                    cmd.Parameters.AddWithValue("quantity", item.Quantity);
+                                    cmd.Parameters.AddWithValue("item_id", nomenclatureId);
                                     cmd.ExecuteNonQuery();
                                 }
                             }

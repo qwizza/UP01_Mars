@@ -16,13 +16,15 @@ namespace YPMarsLib
             var stockList = new List<WarehouseItem>();
 
             string query = @"
-                SELECT 
-                    name AS nomenclature_name,
-                    'Основной склад' AS storage_zone,
-                    COALESCE(total_quantity, 0) AS total_quantity,
-                    COALESCE(reserved_quantity, 0) AS reserved_quantity,
-                    COALESCE(unit_price, 0) AS unit_price
-                FROM nomenclature";
+        SELECT 
+            n.name AS nomenclature_name,
+            COALESCE(w.warehouse_name, 'Склад готовой продукции (СГП)') AS storage_zone,
+            COALESCE(n.total_quantity, 0) AS total_quantity,
+            COALESCE(n.reserved_quantity, 0) AS reserved_quantity,
+            COALESCE(n.unit_price, 0) AS unit_price
+        FROM nomenclature n
+        LEFT JOIN warehouses w ON n.warehouse_id = w.warehouse_id
+        ORDER BY n.name;";
 
             try
             {
@@ -30,21 +32,18 @@ namespace YPMarsLib
                 {
                     connection.Open();
                     using (var command = new NpgsqlCommand(query, connection))
+                    using (var reader = command.ExecuteReader())
                     {
-                        using (var reader = command.ExecuteReader())
+                        while (reader.Read())
                         {
-                            while (reader.Read())
+                            stockList.Add(new WarehouseItem
                             {
-                                var item = new WarehouseItem
-                                {
-                                    NomenclatureName = reader["nomenclature_name"].ToString(),
-                                    StorageZone = reader["storage_zone"].ToString(),
-                                    TotalQuantity = Convert.ToInt32(reader["total_quantity"]),
-                                    ReservedQuantity = Convert.ToInt32(reader["reserved_quantity"]),
-                                    UnitPrice = Convert.ToDecimal(reader["unit_price"])
-                                };
-                                stockList.Add(item);
-                            }
+                                NomenclatureName = reader["nomenclature_name"].ToString(),
+                                StorageZone = reader["storage_zone"].ToString(),
+                                TotalQuantity = Convert.ToInt32(reader["total_quantity"]),
+                                ReservedQuantity = Convert.ToInt32(reader["reserved_quantity"]),
+                                UnitPrice = Convert.ToDecimal(reader["unit_price"])
+                            });
                         }
                     }
                 }
@@ -321,6 +320,155 @@ namespace YPMarsLib
             }
 
             return records;
+        }
+
+        public List<string> GetStorageZones(out string error)
+        {
+            error = string.Empty;
+            var zones = new List<string>();
+            const string query = "SELECT warehouse_name FROM warehouses ORDER BY warehouse_name;";
+
+            try
+            {
+                using (var connection = DBConnection.GetConnection())
+                {
+                    connection.Open();
+                    using (var cmd = new NpgsqlCommand(query, connection))
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            zones.Add(reader["warehouse_name"].ToString());
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                error = "Ошибка загрузки зон хранения: " + ex.Message;
+            }
+
+            return zones;
+        }
+
+        public bool UpdateWarehouseItem(string nomenclatureName,string newStorageZone, decimal newUnitPrice, int newReservedQuantity, out string error)
+        {
+            error = string.Empty;
+
+            if (string.IsNullOrWhiteSpace(nomenclatureName))
+            {
+                error = "Не указано наименование номенклатуры.";
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(newStorageZone))
+            {
+                error = "Необходимо выбрать зону хранения.";
+                return false;
+            }
+            if (newUnitPrice < 0)
+            {
+                error = "Цена за единицу не может быть отрицательной.";
+                return false;
+            }
+            if (newReservedQuantity < 0)
+            {
+                error = "Количество в резерве не может быть отрицательным.";
+                return false;
+            }
+
+            const string selectItemQuery = @"
+        SELECT item_id,
+               COALESCE(total_quantity, 0) AS total_quantity
+        FROM nomenclature
+        WHERE LOWER(name) = LOWER(@name)
+        FOR UPDATE;";
+
+            const string selectZoneQuery = @"
+        SELECT warehouse_id
+        FROM warehouses
+        WHERE warehouse_name = @zoneName
+        LIMIT 1;";
+
+            const string updateQuery = @"
+        UPDATE nomenclature
+        SET warehouse_id = @warehouseId,
+            unit_price = @unitPrice,
+            reserved_quantity = @newReserved
+        WHERE item_id = @itemId;";
+
+            try
+            {
+                using (var connection = DBConnection.GetConnection())
+                {
+                    connection.Open();
+                    using (var transaction = connection.BeginTransaction())
+                    {
+                        try
+                        {
+                            int itemId, totalQty;
+
+                            using (var cmd = new NpgsqlCommand(selectItemQuery, connection, transaction))
+                            {
+                                cmd.Parameters.AddWithValue("name", nomenclatureName.Trim());
+                                using (var reader = cmd.ExecuteReader())
+                                {
+                                    if (!reader.Read())
+                                    {
+                                        transaction.Rollback();
+                                        error = "Номенклатура не найдена на складе.";
+                                        return false;
+                                    }
+                                    itemId = Convert.ToInt32(reader["item_id"]);
+                                    totalQty = Convert.ToInt32(reader["total_quantity"]);
+                                }
+                            }
+
+                            if (newReservedQuantity > totalQty)
+                            {
+                                transaction.Rollback();
+                                error = $"В резерв нельзя положить больше общего остатка ({totalQty} шт.).";
+                                return false;
+                            }
+
+                            object warehouseIdObj;
+                            using (var zoneCmd = new NpgsqlCommand(selectZoneQuery, connection, transaction))
+                            {
+                                zoneCmd.Parameters.AddWithValue("zoneName", newStorageZone.Trim());
+                                warehouseIdObj = zoneCmd.ExecuteScalar();
+                            }
+
+                            if (warehouseIdObj == null || warehouseIdObj == DBNull.Value)
+                            {
+                                transaction.Rollback();
+                                error = "Выбранная зона хранения не найдена в базе данных.";
+                                return false;
+                            }
+
+                            using (var updateCmd = new NpgsqlCommand(updateQuery, connection, transaction))
+                            {
+                                updateCmd.Parameters.AddWithValue("warehouseId", Convert.ToInt32(warehouseIdObj));
+                                updateCmd.Parameters.AddWithValue("unitPrice", newUnitPrice);
+                                updateCmd.Parameters.AddWithValue("newReserved", newReservedQuantity);
+                                updateCmd.Parameters.AddWithValue("itemId", itemId);
+                                updateCmd.ExecuteNonQuery();
+                            }
+
+                            transaction.Commit();
+                            return true;
+                        }
+                        catch
+                        {
+                            transaction.Rollback();
+                            throw;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                error = "Ошибка базы данных при обновлении позиции: " + ex.Message;
+                return false;
+            }
         }
     }
 }
