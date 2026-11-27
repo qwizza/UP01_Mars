@@ -12,6 +12,21 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,6 +50,12 @@
   <ItemGroup>
     <Reference Include="Castle.Core, Version=5.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
       <HintPath>..\packages\Castle.Core.5.1.1\lib\net462\Castle.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=3.5.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.3.5.1\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml.Framework, Version=3.5.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.Framework.3.5.1\lib\net46\DocumentFormat.OpenXml.Framework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
@@ -100,6 +121,7 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AuthForm.cs">
@@ -107,11 +129,6 @@
     </Compile>
     <Compile Include="AuthForm.Designer.cs">
       <DependentUpon>AuthForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="AuthForm1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>AuthForm.resx</DependentUpon>
     </Compile>
     <Compile Include="ItemEditForm.cs">
       <SubType>Form</SubType>
@@ -139,6 +156,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReceiptItemEditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReceiptItemEditForm.Designer.cs">
+      <DependentUpon>ReceiptItemEditForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="RegistrForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -151,11 +174,29 @@
     <Compile Include="WarehouseControl.Designer.cs">
       <DependentUpon>WarehouseControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="WarehouseReceiptForm.cs">
+    <Compile Include="WarehouseItemEditForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WarehouseReceiptForm.Designer.cs">
-      <DependentUpon>WarehouseReceiptForm.cs</DependentUpon>
+    <Compile Include="WarehouseItemEditForm.Designer.cs">
+      <DependentUpon>WarehouseItemEditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WarehouseReceiptControl .cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WarehouseReceiptControl .Designer.cs">
+      <DependentUpon>WarehouseReceiptControl .cs</DependentUpon>
+    </Compile>
+    <Compile Include="WarehouseWriteOffControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WarehouseWriteOffControl.Designer.cs">
+      <DependentUpon>WarehouseWriteOffControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WarehouseWriteOffReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WarehouseWriteOffReportForm.Designer.cs">
+      <DependentUpon>WarehouseWriteOffReportForm.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="AuthForm.resx">
       <DependentUpon>AuthForm.cs</DependentUpon>
@@ -182,15 +223,28 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="ReceiptItemEditForm.resx">
+      <DependentUpon>ReceiptItemEditForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="RegistrForm.resx">
       <DependentUpon>RegistrForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WarehouseControl.resx">
       <DependentUpon>WarehouseControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WarehouseReceiptForm.resx">
-      <DependentUpon>WarehouseReceiptForm.cs</DependentUpon>
+    <EmbeddedResource Include="WarehouseItemEditForm.resx">
+      <DependentUpon>WarehouseItemEditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WarehouseReceiptControl .resx">
+      <DependentUpon>WarehouseReceiptControl .cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WarehouseWriteOffControl.resx">
+      <DependentUpon>WarehouseWriteOffControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WarehouseWriteOffReportForm.resx">
+      <DependentUpon>WarehouseWriteOffReportForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -211,6 +265,21 @@
       <Project>{e94142bd-873e-40c9-852b-e59537aa30ba}</Project>
       <Name>YPMarsLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MarsIco-_2_-Photoroom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.7.2 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

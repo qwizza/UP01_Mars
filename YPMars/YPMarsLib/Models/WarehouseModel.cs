@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using YPMarsLib.Models;
 using YPMarsLib.Validation;
 
 namespace YPMarsLib
@@ -59,6 +60,50 @@ namespace YPMarsLib
                 return false;
 
             return repository_.RegisterStockReceipt(receiptItem, out error);
+        }
+        public bool ValidateWriteOff(WarehouseItem writeOffItem, out string error)
+        {
+            if (!WarehouseValidate.ValidateWriteOff(writeOffItem, out error))
+                return false;
+            return true;
+        }
+
+        public bool RegisterWriteOff(WarehouseItem writeOffItem, string userName, out string error)
+        {
+            if (!ValidateWriteOff(writeOffItem, out error))
+                return false;
+
+            return repository_.RegisterStockWriteOff(writeOffItem, userName, out error);
+        }
+
+        public List<WarehouseWriteOffRecord> GetWriteOffReport(WarehouseWriteOffFilter filter, out string error)
+        {
+            return repository_.GetWriteOffReport(filter, out error);
+        }
+        public List<string> GetStorageZones(out string error)
+        {
+            return repository_.GetStorageZones(out error);
+        }
+
+        public bool UpdateItem(string nomenclatureName, string storageZone, decimal unitPrice, int newReservedQuantity, out string error)
+        {
+            if (string.IsNullOrWhiteSpace(storageZone))
+            {
+                error = "Выберите зону хранения.";
+                return false;
+            }
+            if (unitPrice < 0)
+            {
+                error = "Цена за единицу не может быть отрицательной.";
+                return false;
+            }
+            if (newReservedQuantity < 0)
+            {
+                error = "Количество в резерве не может быть отрицательным.";
+                return false;
+            }
+
+            return repository_.UpdateWarehouseItem(nomenclatureName, storageZone, unitPrice, newReservedQuantity, out error);
         }
     }
 }

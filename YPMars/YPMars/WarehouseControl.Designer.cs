@@ -5,13 +5,18 @@
         private System.ComponentModel.IContainer components = null;
 
         private System.Windows.Forms.Panel panelTopWarehouse;
+        private System.Windows.Forms.Label SearchLabel;
+        private System.Windows.Forms.TextBox SearchTextBox;
+        private System.Windows.Forms.Label ZoneFilterLabel;
+        private System.Windows.Forms.ComboBox ZoneFilterComboBox;
+        private System.Windows.Forms.Button EditButton;
         private System.Windows.Forms.Button RefreshButton;
 
         private System.Windows.Forms.Panel panelSummaryWarehouse;
         private System.Windows.Forms.Label TotalCountLabel;
         private System.Windows.Forms.Label TotalSumLabel;
         private System.Windows.Forms.Label TotalAvailableLabel;
-        private System.Windows.Forms.Button ReceiptButton;
+        private System.Windows.Forms.Button ReportButton;
 
         private System.Windows.Forms.DataGridView WarehouseDataGridView;
 
@@ -26,11 +31,16 @@
 
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panelTopWarehouse = new System.Windows.Forms.Panel();
+            this.SearchLabel = new System.Windows.Forms.Label();
+            this.SearchTextBox = new System.Windows.Forms.TextBox();
+            this.ZoneFilterLabel = new System.Windows.Forms.Label();
+            this.ZoneFilterComboBox = new System.Windows.Forms.ComboBox();
+            this.EditButton = new System.Windows.Forms.Button();
+            this.ReportButton = new System.Windows.Forms.Button();
             this.RefreshButton = new System.Windows.Forms.Button();
-            this.ReceiptButton = new System.Windows.Forms.Button();
             this.panelSummaryWarehouse = new System.Windows.Forms.Panel();
             this.TotalCountLabel = new System.Windows.Forms.Label();
             this.TotalSumLabel = new System.Windows.Forms.Label();
@@ -45,13 +55,92 @@
             // 
             this.panelTopWarehouse.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.panelTopWarehouse.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelTopWarehouse.Controls.Add(this.SearchLabel);
+            this.panelTopWarehouse.Controls.Add(this.SearchTextBox);
+            this.panelTopWarehouse.Controls.Add(this.ZoneFilterLabel);
+            this.panelTopWarehouse.Controls.Add(this.ZoneFilterComboBox);
+            this.panelTopWarehouse.Controls.Add(this.EditButton);
+            this.panelTopWarehouse.Controls.Add(this.ReportButton);
             this.panelTopWarehouse.Controls.Add(this.RefreshButton);
-            this.panelTopWarehouse.Controls.Add(this.ReceiptButton);
             this.panelTopWarehouse.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTopWarehouse.Location = new System.Drawing.Point(0, 0);
             this.panelTopWarehouse.Name = "panelTopWarehouse";
             this.panelTopWarehouse.Size = new System.Drawing.Size(1340, 50);
             this.panelTopWarehouse.TabIndex = 0;
+            // 
+            // SearchLabel
+            // 
+            this.SearchLabel.AutoSize = true;
+            this.SearchLabel.Font = new System.Drawing.Font("Times New Roman", 13F);
+            this.SearchLabel.Location = new System.Drawing.Point(12, 15);
+            this.SearchLabel.Name = "SearchLabel";
+            this.SearchLabel.Size = new System.Drawing.Size(166, 20);
+            this.SearchLabel.TabIndex = 5;
+            this.SearchLabel.Text = "Поиск по названию:";
+            // 
+            // SearchTextBox
+            // 
+            this.SearchTextBox.Font = new System.Drawing.Font("Times New Roman", 13F);
+            this.SearchTextBox.Location = new System.Drawing.Point(184, 11);
+            this.SearchTextBox.Name = "SearchTextBox";
+            this.SearchTextBox.Size = new System.Drawing.Size(300, 27);
+            this.SearchTextBox.TabIndex = 4;
+            this.SearchTextBox.TextChanged += new System.EventHandler(this.SearchTextBox_TextChanged);
+            // 
+            // ZoneFilterLabel
+            // 
+            this.ZoneFilterLabel.AutoSize = true;
+            this.ZoneFilterLabel.Font = new System.Drawing.Font("Times New Roman", 13F);
+            this.ZoneFilterLabel.Location = new System.Drawing.Point(500, 15);
+            this.ZoneFilterLabel.Name = "ZoneFilterLabel";
+            this.ZoneFilterLabel.Size = new System.Drawing.Size(49, 20);
+            this.ZoneFilterLabel.TabIndex = 7;
+            this.ZoneFilterLabel.Text = "Зона:";
+            // 
+            // ZoneFilterComboBox
+            // 
+            this.ZoneFilterComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ZoneFilterComboBox.Font = new System.Drawing.Font("Times New Roman", 13F);
+            this.ZoneFilterComboBox.FormattingEnabled = true;
+            this.ZoneFilterComboBox.Location = new System.Drawing.Point(555, 11);
+            this.ZoneFilterComboBox.Name = "ZoneFilterComboBox";
+            this.ZoneFilterComboBox.Size = new System.Drawing.Size(270, 28);
+            this.ZoneFilterComboBox.TabIndex = 8;
+            this.ZoneFilterComboBox.SelectedIndexChanged += new System.EventHandler(this.ZoneFilterComboBox_SelectedIndexChanged);
+            // 
+            // EditButton
+            // 
+            this.EditButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.EditButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(215)))), ((int)(((byte)(160)))), ((int)(((byte)(0)))));
+            this.EditButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.EditButton.FlatAppearance.BorderSize = 0;
+            this.EditButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.EditButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
+            this.EditButton.ForeColor = System.Drawing.Color.White;
+            this.EditButton.Location = new System.Drawing.Point(938, 10);
+            this.EditButton.Name = "EditButton";
+            this.EditButton.Size = new System.Drawing.Size(130, 28);
+            this.EditButton.TabIndex = 6;
+            this.EditButton.Text = "Изменить";
+            this.EditButton.UseVisualStyleBackColor = false;
+            this.EditButton.Click += new System.EventHandler(this.EditButton_Click);
+            // 
+            // ReportButton
+            // 
+            this.ReportButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ReportButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(120)))), ((int)(((byte)(215)))));
+            this.ReportButton.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.ReportButton.FlatAppearance.BorderSize = 0;
+            this.ReportButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ReportButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
+            this.ReportButton.ForeColor = System.Drawing.Color.White;
+            this.ReportButton.Location = new System.Drawing.Point(1205, 10);
+            this.ReportButton.Name = "ReportButton";
+            this.ReportButton.Size = new System.Drawing.Size(120, 28);
+            this.ReportButton.TabIndex = 3;
+            this.ReportButton.Text = "Отчет";
+            this.ReportButton.UseVisualStyleBackColor = false;
+            this.ReportButton.Click += new System.EventHandler(this.ReportButton_Click);
             // 
             // RefreshButton
             // 
@@ -62,30 +151,13 @@
             this.RefreshButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.RefreshButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
             this.RefreshButton.ForeColor = System.Drawing.Color.White;
-            this.RefreshButton.Location = new System.Drawing.Point(1054, 10);
+            this.RefreshButton.Location = new System.Drawing.Point(1079, 10);
             this.RefreshButton.Name = "RefreshButton";
             this.RefreshButton.Size = new System.Drawing.Size(115, 28);
             this.RefreshButton.TabIndex = 0;
             this.RefreshButton.Text = "Обновить";
             this.RefreshButton.UseVisualStyleBackColor = false;
             this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
-            // 
-            // ReceiptButton
-            // 
-            this.ReceiptButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.ReceiptButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(150)))), ((int)(((byte)(90)))));
-            this.ReceiptButton.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.ReceiptButton.FlatAppearance.BorderSize = 0;
-            this.ReceiptButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.ReceiptButton.Font = new System.Drawing.Font("Times New Roman", 14.25F);
-            this.ReceiptButton.ForeColor = System.Drawing.Color.White;
-            this.ReceiptButton.Location = new System.Drawing.Point(1175, 10);
-            this.ReceiptButton.Name = "ReceiptButton";
-            this.ReceiptButton.Size = new System.Drawing.Size(150, 28);
-            this.ReceiptButton.TabIndex = 1;
-            this.ReceiptButton.Text = "Поступление";
-            this.ReceiptButton.UseVisualStyleBackColor = false;
-            this.ReceiptButton.Click += new System.EventHandler(this.ReceiptButton_Click);
             // 
             // panelSummaryWarehouse
             // 
@@ -135,19 +207,19 @@
             // 
             this.WarehouseDataGridView.AllowUserToAddRows = false;
             this.WarehouseDataGridView.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
-            this.WarehouseDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(248)))), ((int)(((byte)(248)))));
+            this.WarehouseDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.WarehouseDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.WarehouseDataGridView.BackgroundColor = System.Drawing.SystemColors.InactiveBorder;
             this.WarehouseDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.WarehouseDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.WarehouseDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.WarehouseDataGridView.ColumnHeadersHeight = 32;
             this.WarehouseDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.WarehouseDataGridView.Location = new System.Drawing.Point(0, 85);
@@ -159,7 +231,6 @@
             this.WarehouseDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.WarehouseDataGridView.Size = new System.Drawing.Size(1340, 470);
             this.WarehouseDataGridView.TabIndex = 2;
-
             // 
             // WarehouseControl
             // 
@@ -172,11 +243,11 @@
             this.Name = "WarehouseControl";
             this.Size = new System.Drawing.Size(1340, 555);
             this.panelTopWarehouse.ResumeLayout(false);
+            this.panelTopWarehouse.PerformLayout();
             this.panelSummaryWarehouse.ResumeLayout(false);
             this.panelSummaryWarehouse.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.WarehouseDataGridView)).EndInit();
             this.ResumeLayout(false);
-
         }
     }
 }
