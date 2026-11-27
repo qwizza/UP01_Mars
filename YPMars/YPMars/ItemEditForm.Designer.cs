@@ -16,8 +16,8 @@
 
         private void InitializeComponent()
         {
-            this.warehouseControl1 = new YPMars.WarehouseControl();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ItemEditForm));
+            this.warehouseControl1 = new YPMars.WarehouseControl();
             this.panelTop = new System.Windows.Forms.Panel();
             this.NomLabel = new System.Windows.Forms.Label();
             this.NomenclatureComboBox = new System.Windows.Forms.ComboBox();
@@ -32,6 +32,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.QuantityNumericUpDown)).BeginInit();
             this.panelBottom.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // warehouseControl1
+            // 
+            this.warehouseControl1.Font = new System.Drawing.Font("Segoe UI", 9.5F);
+            this.warehouseControl1.Location = new System.Drawing.Point(0, 0);
+            this.warehouseControl1.Name = "warehouseControl1";
+            this.warehouseControl1.Size = new System.Drawing.Size(1340, 555);
+            this.warehouseControl1.TabIndex = 0;
             // 
             // panelTop
             // 

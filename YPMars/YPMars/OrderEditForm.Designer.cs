@@ -38,18 +38,14 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(OrderEditForm));
             this.HeadLabel = new System.Windows.Forms.Label();
-
             this.CounterpartyLabel = new System.Windows.Forms.Label();
             this.CounterpartyTextBox = new System.Windows.Forms.TextBox();
             this.CounterpartyListBox = new System.Windows.Forms.ListBox();
-
             this.PlannedDateLabel = new System.Windows.Forms.Label();
             this.PlannedShipmentDatePicker = new System.Windows.Forms.DateTimePicker();
-
             this.NomenclatureLabel = new System.Windows.Forms.Label();
             this.NomenclatureTextBox = new System.Windows.Forms.TextBox();
             this.NomenclatureListBox = new System.Windows.Forms.ListBox();
-
             this.QuantityLabel = new System.Windows.Forms.Label();
             this.QuantityNumeric = new System.Windows.Forms.NumericUpDown();
             this.AddItemButton = new System.Windows.Forms.Button();
@@ -57,11 +53,9 @@
             this.TotalSumLabel = new System.Windows.Forms.Label();
             this.SaveButton = new System.Windows.Forms.Button();
             this.CancelButton = new System.Windows.Forms.Button();
-
             ((System.ComponentModel.ISupportInitialize)(this.QuantityNumeric)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ItemsGrid)).BeginInit();
             this.SuspendLayout();
-
             // 
             // HeadLabel
             // 
@@ -72,8 +66,6 @@
             this.HeadLabel.Size = new System.Drawing.Size(157, 31);
             this.HeadLabel.TabIndex = 0;
             this.HeadLabel.Text = "Новый заказ";
-
-            // --- Контрагент ---
             // 
             // CounterpartyLabel
             // 
@@ -81,10 +73,9 @@
             this.CounterpartyLabel.Font = new System.Drawing.Font("Times New Roman", 14.25F);
             this.CounterpartyLabel.Location = new System.Drawing.Point(12, 60);
             this.CounterpartyLabel.Name = "CounterpartyLabel";
-            this.CounterpartyLabel.Size = new System.Drawing.Size(102, 21);
+            this.CounterpartyLabel.Size = new System.Drawing.Size(106, 21);
             this.CounterpartyLabel.TabIndex = 1;
             this.CounterpartyLabel.Text = "Контрагент:";
-
             // 
             // CounterpartyTextBox
             // 
@@ -95,7 +86,6 @@
             this.CounterpartyTextBox.TabIndex = 2;
             this.CounterpartyTextBox.TextChanged += new System.EventHandler(this.CounterpartyTextBox_TextChanged);
             this.CounterpartyTextBox.Enter += new System.EventHandler(this.CounterpartyTextBox_Enter);
-
             // 
             // CounterpartyListBox
             // 
@@ -106,10 +96,8 @@
             this.CounterpartyListBox.Name = "CounterpartyListBox";
             this.CounterpartyListBox.Size = new System.Drawing.Size(400, 80);
             this.CounterpartyListBox.TabIndex = 3;
-            this.CounterpartyListBox.Visible = false; // Изначально скрыт
+            this.CounterpartyListBox.Visible = false;
             this.CounterpartyListBox.DoubleClick += new System.EventHandler(this.CounterpartyListBox_DoubleClick);
-
-            // --- Дата отгрузки ---
             // 
             // PlannedDateLabel
             // 
@@ -120,7 +108,6 @@
             this.PlannedDateLabel.Size = new System.Drawing.Size(171, 21);
             this.PlannedDateLabel.TabIndex = 4;
             this.PlannedDateLabel.Text = "План. дата отгрузки";
-
             // 
             // PlannedShipmentDatePicker
             // 
@@ -130,8 +117,6 @@
             this.PlannedShipmentDatePicker.Name = "PlannedShipmentDatePicker";
             this.PlannedShipmentDatePicker.Size = new System.Drawing.Size(180, 29);
             this.PlannedShipmentDatePicker.TabIndex = 5;
-
-            // --- Номенклатура ---
             // 
             // NomenclatureLabel
             // 
@@ -139,10 +124,9 @@
             this.NomenclatureLabel.Font = new System.Drawing.Font("Times New Roman", 14.25F);
             this.NomenclatureLabel.Location = new System.Drawing.Point(12, 225);
             this.NomenclatureLabel.Name = "NomenclatureLabel";
-            this.NomenclatureLabel.Size = new System.Drawing.Size(124, 21);
+            this.NomenclatureLabel.Size = new System.Drawing.Size(128, 21);
             this.NomenclatureLabel.TabIndex = 6;
             this.NomenclatureLabel.Text = "Номенклатура:";
-
             // 
             // NomenclatureTextBox
             // 
@@ -153,7 +137,6 @@
             this.NomenclatureTextBox.TabIndex = 7;
             this.NomenclatureTextBox.TextChanged += new System.EventHandler(this.NomenclatureTextBox_TextChanged);
             this.NomenclatureTextBox.Enter += new System.EventHandler(this.NomenclatureTextBox_Enter);
-
             // 
             // NomenclatureListBox
             // 
@@ -164,10 +147,8 @@
             this.NomenclatureListBox.Name = "NomenclatureListBox";
             this.NomenclatureListBox.Size = new System.Drawing.Size(400, 80);
             this.NomenclatureListBox.TabIndex = 8;
-            this.NomenclatureListBox.Visible = false; // Изначально скрыт
+            this.NomenclatureListBox.Visible = false;
             this.NomenclatureListBox.DoubleClick += new System.EventHandler(this.NomenclatureListBox_DoubleClick);
-
-            // --- Количество ---
             // 
             // QuantityLabel
             // 
@@ -178,7 +159,6 @@
             this.QuantityLabel.Size = new System.Drawing.Size(105, 21);
             this.QuantityLabel.TabIndex = 9;
             this.QuantityLabel.Text = "Количество";
-
             // 
             // QuantityNumeric
             // 
@@ -187,7 +167,6 @@
             this.QuantityNumeric.Name = "QuantityNumeric";
             this.QuantityNumeric.Size = new System.Drawing.Size(120, 29);
             this.QuantityNumeric.TabIndex = 10;
-
             // 
             // AddItemButton
             // 
@@ -204,7 +183,6 @@
             this.AddItemButton.Text = "Добавить позицию";
             this.AddItemButton.UseVisualStyleBackColor = false;
             this.AddItemButton.Click += new System.EventHandler(this.AddItemButton_Click);
-
             // 
             // ItemsGrid
             // 
@@ -215,7 +193,6 @@
             this.ItemsGrid.Name = "ItemsGrid";
             this.ItemsGrid.Size = new System.Drawing.Size(778, 150);
             this.ItemsGrid.TabIndex = 12;
-
             // 
             // TotalSumLabel
             // 
@@ -227,7 +204,6 @@
             this.TotalSumLabel.Size = new System.Drawing.Size(235, 22);
             this.TotalSumLabel.TabIndex = 13;
             this.TotalSumLabel.Text = "Итоговая сумма: 0,00 руб.";
-
             // 
             // SaveButton
             // 
@@ -244,7 +220,6 @@
             this.SaveButton.Text = "Сохранить заказ";
             this.SaveButton.UseVisualStyleBackColor = false;
             this.SaveButton.Click += new System.EventHandler(this.SaveButton_Click);
-
             // 
             // CancelButton
             // 
@@ -257,14 +232,13 @@
             this.CancelButton.Text = "Отмена";
             this.CancelButton.UseVisualStyleBackColor = false;
             this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
-
             // 
             // OrderEditForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
-            this.ClientSize = new System.Drawing.Size(810, 585); // Увеличили высоту формы для новых элементов
+            this.ClientSize = new System.Drawing.Size(810, 585);
             this.Controls.Add(this.HeadLabel);
             this.Controls.Add(this.CounterpartyLabel);
             this.Controls.Add(this.CounterpartyTextBox);
@@ -292,7 +266,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.ItemsGrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
         }
     }
 }

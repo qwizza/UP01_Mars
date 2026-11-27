@@ -332,9 +332,9 @@
             // 
             this.warehouseControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.warehouseControl1.Font = new System.Drawing.Font("Segoe UI", 9.5F);
-            this.warehouseControl1.Location = new System.Drawing.Point(0, 40);
+            this.warehouseControl1.Location = new System.Drawing.Point(0, 125);
             this.warehouseControl1.Name = "warehouseControl1";
-            this.warehouseControl1.Size = new System.Drawing.Size(1340, 555);
+            this.warehouseControl1.Size = new System.Drawing.Size(1340, 470);
             this.warehouseControl1.TabIndex = 5;
             this.warehouseControl1.Visible = false;
             // 
@@ -435,6 +435,7 @@
             this.panelBottom.ResumeLayout(false);
             this.panelBottom.PerformLayout();
             this.ResumeLayout(false);
+
         }
     }
 }

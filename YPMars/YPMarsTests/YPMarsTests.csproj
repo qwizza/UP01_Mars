@@ -106,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CreateOrderTest.cs" />
+    <Compile Include="WarehouseReceivingTests.cs" />
     <Compile Include="WarehouseStockTests.cs" />
     <Compile Include="OrderItemTests.cs" />
     <Compile Include="OrderTest.cs" />

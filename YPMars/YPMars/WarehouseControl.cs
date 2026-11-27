@@ -20,9 +20,14 @@ namespace YPMars
             InitializeComponent();
         }
 
-        public void Initialize(WarehouseModel warehouseModel)
+        public void Initialize(WarehouseModel warehouseModel, User currentUser = null)
         {
             _warehouseModel = warehouseModel;
+            if (currentUser != null)
+            {
+                ReceiptButton.Visible = currentUser.Role == User.UserRole.Warehouser
+                                     || currentUser.Role == User.UserRole.SuperUser;
+            }
             LoadStock();
         }
 
@@ -64,6 +69,25 @@ namespace YPMars
         private void RefreshButton_Click(object sender, EventArgs e)
         {
             LoadStock();
+        }
+        private void ReceiptButton_Click(object sender, EventArgs e)
+        {
+            if (_warehouseModel == null) return;
+
+            using (var form = new WarehouseReceiptForm(_warehouseModel.Items))
+            {
+                if (form.ShowDialog(this) == DialogResult.OK)
+                {
+                    if (_warehouseModel.RegisterReceipt(form.ReceiptItem, out string error))
+                    {
+                        LoadStock();
+                    }
+                    else
+                    {
+                        MessageBox.Show(error, "Ошибка оприходования", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                }
+            }
         }
     }
 }

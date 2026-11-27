@@ -78,5 +78,6 @@ namespace YPMars
                 tbPassword.UseSystemPasswordChar = true;
             }
         }
+
     }
 }

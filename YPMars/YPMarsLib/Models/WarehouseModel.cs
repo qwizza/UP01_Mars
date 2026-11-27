@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using YPMarsLib.Validation;
 
 namespace YPMarsLib
 {
@@ -51,6 +52,13 @@ namespace YPMarsLib
                 return 0;
 
             return items.Sum(item => item.AvailableQuantity);
+        }
+        public bool RegisterReceipt(WarehouseItem receiptItem, out string error)
+        {
+            if (!WarehouseValidate.ValidateReceipt(receiptItem, out error))
+                return false;
+
+            return repository_.RegisterStockReceipt(receiptItem, out error);
         }
     }
 }

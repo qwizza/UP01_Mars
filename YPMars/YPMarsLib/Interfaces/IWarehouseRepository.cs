@@ -9,5 +9,6 @@ namespace YPMarsLib
     public interface IWarehouseRepository
     {
         List<WarehouseItem> GetWarehouseStock(out string error);
+        bool RegisterStockReceipt(WarehouseItem receiptItem, out string error);
     }
 }
